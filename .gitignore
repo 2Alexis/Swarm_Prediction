@@ -1,0 +1,28 @@
+# Environnement virtuel Python
+.venv/
+env/
+venv/
+
+# Données brutes (trop volumineuses pour GitHub)
+data/raw/
+data/processed/
+
+# Données nettoyées (gros fichiers CSV)
+data/cleaned/
+
+# Jupyter checkpoints
+.ipynb_checkpoints/
+**/.ipynb_checkpoints/
+
+# Python cache
+__pycache__/
+*.py[cod]
+*.pyc
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/

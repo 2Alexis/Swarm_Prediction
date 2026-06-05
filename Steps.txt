@@ -1,0 +1,3 @@
+recup données
+nettoyage clasique
+filtre d'unité pour en garder quune 
