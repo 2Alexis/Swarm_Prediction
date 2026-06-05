@@ -1,0 +1,148 @@
+--------------------------------------------------------------------------------
+File: faostat\climat_indicateurs\Changement_climatique_Indicateurs_émissions_F_Toutes_les_Données_(Normalisé).csv
+  Detected columns: Product: Produit, Element: Élément, Month: None
+  Unique Products (17):
+    - AFOLU
+    - Autre
+    - Changement d'utilisation des terres
+    - Déchets
+    - Farm gate
+    - GIEC Agriculture
+    - PIUP
+    - Pré-production et post-production
+    - Soutes internationales
+    - Systèmes agroalimentaires
+    - Total des émissions avec UTCATF
+    - Total des émissions sans UTCATF
+    - UTCATF
+    - Émissions imputables aux cultures
+    - Émissions imputables à l'élevage
+    - Émissions sur les terres agricoles
+    - Énergie
+  Unique Elements (8):
+    - Part CO2eq (AR5)
+    - Part des émissions (CO2eq) (AR5) (F-gases)
+    - Part des émissions totales venant de CH4
+    - Part des émissions totales venant de CO2
+    - Part des émissions totales venant de N2O
+    - Émissions par habitant
+    - Émissions par la valeur de la production agricole
+    - Émissions par superficie de terres agricoles
+--------------------------------------------------------------------------------
+File: faostat\temperature\Environnement_variation_temperature_F_Toutes_les_Données_(Normalisé).csv
+  Detected columns: Product: None, Element: Élément, Month: Mois
+  Unique Products (0):
+  Unique Elements (2):
+    - Variation de température
+    - Écart-type
+  Unique Months/Periods (17):
+    - Année météorologique
+    - Août
+    - Avril
+    - Décembre
+    - Déc–jan–fév
+    - Février
+    - Janvier
+    - Juillet
+    - Juin
+    - Jui–juil–aoû
+    - Mai
+    - Mars
+    - Mar–avr–mai
+    - Novembre
+    - Octobre
+    - Septembre
+    - Sep–Oct–Nov
+--------------------------------------------------------------------------------
+File: faostat\sol_nutritif\Environnement_Bilan_nutritif_des_sols_F_Toutes_les_Données_(Normalisé).csv
+  Error: 'utf-8' codec can't decode byte 0xc9 in position 57: invalid continuation byte
+--------------------------------------------------------------------------------
+File: faostat\terres_utilisation\Intrants_TerresUtilisation_F_Toutes_les_Données_(Normalisé).csv
+  Detected columns: Product: Produit, Element: Élément, Month: None
+  Unique Products (45):
+    - Agriculture
+    - Autres terres
+    - Bâtiments et cours de ferme
+    - Cultures permanentes
+    - Cultures temporaires
+    - Eaux continent. utilisées pour aquacult. ou bassins de stabulat.
+    - Eaux continent. utilisées pour la pêche de capture
+    - Eaux continentales
+    - Eaux côtières
+    - Eaux côtières utilisées pour aquacult. ou bassins de stabulat.
+    - Eaux côtières utilisées pour la pêche de capture
+    - Forêt naturellement régénérée
+    - Forêt plantée
+    - Forêt primaire
+    - Jachères (temporaires)
+    - Prairies et de pâturages temporaires
+    - Prairies et pâturages permanents
+    - Prairies et pâturages permanents cultivés
+    - Prairies et pâturages permanents naturels
+    - Superficie des terres
+    - Superficie des terres réellement irriguée
+    - Superficie du pays
+    - Superficie équipée de systèmes d'irrigation
+    - Terr. agricoles certifiées biologiques
+    - Terr. agricoles sous agriculture biologique
+    - Terr. de prairies et de pâturages perm. certifiées biologiques
+    - Terr. de prairies et de pâturages perm. réellement irriguées
+    - Terr. de prairies et de pâturages perm. sous agriculture biologique
+    - Terr. en culture sous agriculture biologique
+    - Terr. utilisées aux fins de la sylvicult. réellement irriguées
+    - Terres agricole réellement irriguées
+    - Terres agricoles
+    - Terres arables
+    - Terres en culture
+    - Terres en culture avec travail du sol conventionnel
+    - Terres en culture avec travail du sol de conservation
+    - Terres en culture certifiées biologiques
+    - Terres en culture réellement irriguées
+    - Terres en culture sans travail du sol
+    - Terres en culture sous couvert protecteur
+    - Terres forestières
+    - Terres utilisées pour l’aquaculture
+    - ZEE utilisées pour aquacult. ou bassins de stabulat.
+    - ZEE utilisées pour la pêche de capture
+    - Zone économique exclusive (ZEE)
+  Unique Elements (8):
+    - Part de superficie des terres
+    - Part de terres agricoles
+    - Part de terres en culture
+    - Part de terres forestières
+    - Stock de carbone dans la biomasse vivante
+    - Superficie
+    - Superficie par habitant
+    - Valeur de la production agricole (Int.$) par superficie
+--------------------------------------------------------------------------------
+File: faostat\forets\Emissions_Utilisation_des_terres_Forêts_F_Toutes_les_Données_(Normalisé).csv
+  Detected columns: Product: Produit, Element: Élément, Month: None
+  Unique Products (3):
+    - Conversion nette de forêt
+    - Terres forestières
+    - Variations des stocks de carbone dans les forêts
+  Unique Elements (2):
+    - Net émissions/absorptions (CO2) (Terres forestières)
+    - Superficie
+--------------------------------------------------------------------------------
+File: faostat\bioenergie\Environnement_Bioénergie_F_Toutes_les_Données_(Normalisé).csv
+  Detected columns: Product: Produit, Element: Élément, Month: None
+  Unique Products (15):
+    - Autres biocarburants liquides
+    - Autres matières végétales et résidus
+    - Bagasse
+    - Biocarburants gazeux
+    - Biocarburants liquides
+    - Biocarburants solides
+    - Biodiesel
+    - Biogaz
+    - Biogazole
+    - Bois de chauffage
+    - Charbon de bois
+    - Déchets animaux
+    - Kérosène bio jet
+    - Liqueur noire
+    - Total Bioénergie
+  Unique Elements (2):
+    - Consommation d'énergie
+    - Production d'énergie

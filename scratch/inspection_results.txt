@@ -1,0 +1,311 @@
+Found 62 CSV files.
+--------------------------------------------------------------------------------
+File: acled\UcdpPrioConflict_v24_1.csv (0.58 MB)
+  Line 1: "conflict_id","location","side_a","side_a_id","side_a_2nd","side_b","side_b_id","side_b_2nd","incompatibility","territory_name","year","intensity_level","cumulative_intensity","type_of_conflict","start_date","start_prec","start_date2","start_prec2","ep_end","ep_end_date","ep_end_prec","gwno_a","gwno
+  Line 2: "11342","India","Government of India","141","","GNLA","1163","","1","Garoland","2012","1","0","3","1997-05-29","1","2012-11-15","1","1","2012-12-21","","750","","","","750","3","24.1"
+  Line 3: "11342","India","Government of India","141","","GNLA","1163","","1","Garoland","2014","1","0","3","1997-05-29","1","2014-07-01","1","1","2014-11-27","","750","","","","750","3","24.1"
+--------------------------------------------------------------------------------
+File: faostat\bilans_alimentaires\BilansAlimentaires_F_Toutes_les_Données_(Normalisé).csv (682.04 MB)
+  Line 1: Code zone,Code zone (M49),Zone,Code Produit,Code Produit (FBS),Produit,Code Élément,Élément,Code année,Année,Unité,Valeur,Symbole,Note
+  Line 2: "2","'004","Afghanistan","2501","'S2501","Population","511","Population totale","2010","2010","1000 No","28284.090000","X",
+  Line 3: "2","'004","Afghanistan","2501","'S2501","Population","511","Population totale","2011","2011","1000 No","29347.710000","X",
+--------------------------------------------------------------------------------
+File: faostat\bioenergie\Environnement_Bioénergie_F_Toutes_les_Données_(Normalisé).csv (15.32 MB)
+  Line 1: Code zone,Code zone (M49),Zone,Code Produit,Produit,Code Élément,Élément,Code année,Année,Unité,Valeur,Symbole
+  Line 2: "2","'004","Afghanistan","6524","Charbon de bois","5852","Production d'énergie","1990","1990","Terajoule","1150.323000","X"
+  Line 3: "2","'004","Afghanistan","6524","Charbon de bois","5852","Production d'énergie","1991","1991","Terajoule","1190.236500","X"
+--------------------------------------------------------------------------------
+File: faostat\climat_indicateurs\Changement_climatique_Indicateurs_émissions_F_Toutes_les_Données_(Normalisé).csv (91.61 MB)
+  Line 1: Code zone,Code zone (M49),Zone,Code Produit,Produit,Code Élément,Élément,Code année,Année,Unité,Valeur,Symbole
+  Line 2: "2","'004","Afghanistan","6996","Farm gate","726313","Part CO2eq (AR5)","1990","1990","%","72.430000","E"
+  Line 3: "2","'004","Afghanistan","6996","Farm gate","726313","Part CO2eq (AR5)","1991","1991","%","73.710000","E"
+--------------------------------------------------------------------------------
+File: faostat\commerce_agri\Commerce_CultureProduitsAnimaux_F_Toutes_les_Données_(Normalisé).csv (2626.54 MB)
+  Line 1: Code zone,Code zone (M49),Zone,Code Produit,Code Produit (CPC),Produit,Code Élément,Élément,Code année,Année,Unité,Valeur,Symbole,Note
+  Line 2: "2","'004","Afghanistan","1059","'21160.01","Abats et foies comestibles de poulets et de pintades, frais, réfrigérés ou congelés","5610","Importations - quantité","2014","2014","tonnes","52.060000","X","Données estimées en utilisant les données des pays partenaires"
+  Line 3: "202","'710","Afrique du Sud","809","'01929.07","Abaca, chanvre de manille, brut","5610","Importations - quantité","1961","1961","tonnes","0.000000","A",
+--------------------------------------------------------------------------------
+File: faostat\consumer_price_index\ConsumerPriceIndices_E_All_Data_(Normalized).csv (35.46 MB)
+  Line 1: Area Code,Area Code (M49),Area,Item Code,Item,Element Code,Element,Months Code,Months,Year Code,Year,Unit,Value,Flag,Note
+  Line 2: "2","'004","Afghanistan","23013","Consumer Prices, Food Indices (2015 = 100)","6125","Value","7001","January","2000","2000","","24.356332","I","base year is 2015"
+  Line 3: "2","'004","Afghanistan","23013","Consumer Prices, Food Indices (2015 = 100)","6125","Value","7001","January","2001","2001","","29.944592","I","base year is 2015"
+--------------------------------------------------------------------------------
+File: faostat\consumer_price_index\ConsumerPriceIndices_E_AreaCodes.csv (0.01 MB)
+  Line 1: Area Code,M49 Code,Area
+  Line 2: 2,'004,Afghanistan
+  Line 3: 5100,'002,Africa
+--------------------------------------------------------------------------------
+File: faostat\consumer_price_index\ConsumerPriceIndices_E_Elements.csv (0.00 MB)
+  Line 1: Element Code,Element
+  Line 2: 6121,Value
+  Line 3: 6125,Value
+--------------------------------------------------------------------------------
+File: faostat\consumer_price_index\ConsumerPriceIndices_E_Flags.csv (0.00 MB)
+  Line 1: Flag, Description
+  Line 2: A,Official figure
+  Line 3: E,Estimated value
+--------------------------------------------------------------------------------
+File: faostat\consumer_price_index\ConsumerPriceIndices_E_ItemCodes.csv (0.00 MB)
+  Line 1: Item Code,CPC Code,Item
+  Line 2: 23013,,Consumer Prices; Food Indices (2015 = 100)
+  Line 3: 230132,,Consumer Prices; Food Indices (2015 = 100); median
+--------------------------------------------------------------------------------
+File: faostat\emissions_ges\Emissions_Totaux_F_Toutes_les_Données_(Normalisé).csv (388.14 MB)
+  Line 1: Code zone,Code zone (M49),Zone,Code Produit,Produit,Code Élément,Élément,Code année,Année,Code source,Source,Unité,Valeur,Symbole,Note
+  Line 2: "2","'004","Afghanistan","5064","Résidus de récoltes","7234","Émissions directes (N2O)","1961","1961","3050","FAO TIER 1","kilotonnes","0.876200","E",
+  Line 3: "2","'004","Afghanistan","5064","Résidus de récoltes","7234","Émissions directes (N2O)","1962","1962","3050","FAO TIER 1","kilotonnes","0.882900","E",
+--------------------------------------------------------------------------------
+File: faostat\emploi_agri\Indicateurs_de_l_emploi_agriculture_F_Toutes_les_Données_(Normalisé).csv (43.19 MB)
+  Line 1: Code zone,Code zone (M49),Zone,Code source,Source,Code indicateur,Indicateur,Code sexe,Sexe,Code Élément,Élément,Code année,Année,Unité,Valeur,Symbole,Note
+  Line 2: "2","'004","Afghanistan","3044","FAO Model","21160","Emploi total dans les systèmes agroalimentaires (AFS)","1","Total","6199","Valeur","2000","2000","1000 No","3367.930000","E","Modelled FAO"
+  Line 3: "2","'004","Afghanistan","3044","FAO Model","21160","Emploi total dans les systèmes agroalimentaires (AFS)","1","Total","6199","Valeur","2001","2001","1000 No","3333.570000","E","Modelled FAO"
+--------------------------------------------------------------------------------
+File: faostat\forets\Emissions_Utilisation_des_terres_Forêts_F_Toutes_les_Données_(Normalisé).csv (10.94 MB)
+  Line 1: Code zone,Code zone (M49),Zone,Code Produit,Produit,Code Élément,Élément,Code année,Année,Code source,Source,Unité,Valeur,Symbole,Note
+  Line 2: "2","'004","Afghanistan","6751","Terres forestières","5110","Superficie","1990","1990","3050","FAO TIER 1","1000 ha","1209.440000","X",
+  Line 3: "2","'004","Afghanistan","6751","Terres forestières","5110","Superficie","1991","1991","3050","FAO TIER 1","1000 ha","1209.440000","I",
+--------------------------------------------------------------------------------
+File: faostat\indices_prix_conso\IndicesPrixConsommation_F_Toutes_les_Données_(Normalisé).csv (38.23 MB)
+  Line 1: Code zone,Code zone (M49),Zone,Code Produit,Produit,Code Élément,Élément,Code Mois,Mois,Code année,Année,Unité,Valeur,Symbole,Note
+  Line 2: "2","'004","Afghanistan","23014","Food price inflation","6121","Valeur","7001","Janvier","2001","2001","%","22.943765","E",
+  Line 3: "2","'004","Afghanistan","23014","Food price inflation","6121","Valeur","7001","Janvier","2002","2002","%","11.612646","E",
+--------------------------------------------------------------------------------
+File: faostat\macro_fao\Statistiques-macro_Indicateurs_clés_F_Toutes_les_Données_(Normalisé).csv (115.86 MB)
+  Line 1: Code zone,Code zone (M49),Zone,Code Produit,Produit,Code Élément,Élément,Code année,Année,Unité,Valeur,Symbole,Note
+  Line 2: "2","'004","Afghanistan","22008","Produit Intérieur Brut","6224","Valeur en devise locale standardisée","1970","1970","millions de MLS","78.69714600000","X",
+  Line 3: "2","'004","Afghanistan","22008","Produit Intérieur Brut","6224","Valeur en devise locale standardisée","1971","1971","millions de MLS","82.39702400000","X",
+--------------------------------------------------------------------------------
+File: faostat\pesticides\Environnement_Pesticides_F_Toutes_les_Données_(Normalisé).csv (2.14 MB)
+  Line 1: Code zone,Code zone (M49),Zone,Code Produit,Produit,Code lment,lment,Code anne,Anne,Unit,Valeur,Symbole
+  Line 2: "202","'710","Afrique du Sud","1357","Pesticides (total)","5172","Utilisation par habitant","1990","1990","kg/cap","0.450000","E"
+  Line 3: "202","'710","Afrique du Sud","1357","Pesticides (total)","5172","Utilisation par habitant","1991","1991","kg/cap","0.440000","E"
+--------------------------------------------------------------------------------
+File: faostat\population_fao\Population_F_Toutes_les_Données_(Normalisé).csv (20.11 MB)
+  Line 1: Code zone,Code zone (M49),Zone,Code Produit,Produit,Code Élément,Élément,Code année,Année,Unité,Valeur,Symbole,Note
+  Line 2: "2","'004","Afghanistan","3010","Population-Estimations","511","Population totale","1950","1950","1000 No","7776.176000","X",
+  Line 3: "2","'004","Afghanistan","3010","Population-Estimations","511","Population totale","1951","1951","1000 No","7879.339000","X",
+--------------------------------------------------------------------------------
+File: faostat\prix\Prix_F_Toutes_les_Données_(Normalisé).csv (219.89 MB)
+  Line 1: Code zone,Code zone (M49),Zone,Code Produit,Code Produit (CPC),Produit,Code Élément,Élément,Code année,Année,Code Mois,Mois,Unité,Valeur,Symbole
+  Line 2: "2","'004","Afghanistan","526","'01343","Abricots","5530","Prix à la Production (LCU/tonne)","1993","1993","7021","Valeur annuel","UML","29000.000000","A"
+  Line 3: "2","'004","Afghanistan","526","'01343","Abricots","5530","Prix à la Production (LCU/tonne)","1994","1994","7021","Valeur annuel","UML","33000.000000","A"
+--------------------------------------------------------------------------------
+File: faostat\production_agricole\Production_Cultures_ProduitsAnimaux_F_Toutes_les_Données_(Normalisé).csv (558.61 MB)
+  Line 1: Code zone,Code zone (M49),Zone,Code Produit,Code Produit (CPC),Produit,Code Élément,Élément,Code année,Année,Unité,Valeur,Symbole,Note
+  Line 2: "2","'004","Afghanistan","1128","'21159.02","Abats comestibles de chameaux et autres camélidés, frais, réfrigérés ou congelés","5510","Production","1961","1961","tonnes","540.000000","I",
+  Line 3: "2","'004","Afghanistan","1128","'21159.02","Abats comestibles de chameaux et autres camélidés, frais, réfrigérés ou congelés","5510","Production","1962","1962","tonnes","604.610000","I",
+--------------------------------------------------------------------------------
+File: faostat\sdg_indicators\SDG_BulkDownloads_F_Toutes_les_Données_(Normalisé).csv (123.18 MB)
+  Line 1: Code zone,Code zone (M49),Zone,Code Produit,Code Produit (SDG),Produit,Code Élément,Élément,Code année,Année,Unité,Valeur,Symbole,Note
+  Line 2: "2","'004","Afghanistan","24001","'SN_ITK_DEFCN","2.1.1 Number of undernourished people","6132","Valeur","2001","2001","millions de No","9.4","E","Estimated | Food and Agriculture Organization of the United Nations (FAO) | 3-year average of the period 2000-2002."
+  Line 3: "2","'004","Afghanistan","24001","'SN_ITK_DEFCN","2.1.1 Number of undernourished people","6132","Valeur","2002","2002","millions de No","9.3","E","Estimated | Food and Agriculture Organization of the United Nations (FAO) | 3-year average of the period 2001-2003."
+--------------------------------------------------------------------------------
+File: faostat\securite_alimentaire\Données_de_la_sécurité_alimentaire_F_Toutes_les_Données_(Normalisé).csv (52.97 MB)
+  Line 1: Code zone,Code zone (M49),Zone,Code Produit,Produit,Code Élément,Élément,Code année,Année,Unité,Valeur,Symbole,Note
+  Line 2: "2","'004","Afghanistan","21010","Suffisance des apports énergétiques alimentaires moyens (%) (moyenne sur 3 ans)","6121","Valeur","20002002","2000-2002","%","87","E",
+  Line 3: "2","'004","Afghanistan","21010","Suffisance des apports énergétiques alimentaires moyens (%) (moyenne sur 3 ans)","6121","Valeur","20012003","2001-2003","%","88","E",
+--------------------------------------------------------------------------------
+File: faostat\sol_nutritif\Environnement_Bilan_nutritif_des_sols_F_Toutes_les_Données_(Normalisé).csv (30.25 MB)
+  Line 1: Code zone,Code zone (M49),Zone,Code Produit,Produit,Code lment,lment,Code anne,Anne,Unit,Valeur,Symbole
+  Line 2: "2","'004","Afghanistan","5061","Engrais synthtiques","7275","Flux d'lments nutritifs des terres cultives","1961","1961","tonnes","1000.000000","E"
+  Line 3: "2","'004","Afghanistan","5061","Engrais synthtiques","7275","Flux d'lments nutritifs des terres cultives","1962","1962","tonnes","1000.000000","E"
+--------------------------------------------------------------------------------
+File: faostat\taux_change\Taux_de_change_F_Toutes_les_Données_(Normalisé).csv (20.29 MB)
+  Line 1: Code zone,Code zone (M49),Zone,Code Élément,Élément,Code de devise ISO,Devise,Code année,Année,Code Mois,Mois,Unité,Valeur,Symbole
+  Line 2: "2","'004","Afghanistan","LCU","Unités de monnaie locale par USD","AFA","Afghani","1970","1970","7021","Valeur annuel","","44.998427079999999","X"
+  Line 3: "2","'004","Afghanistan","LCU","Unités de monnaie locale par USD","AFA","Afghani","1970","1970","7001","Janvier","","38.692261547690499","X"
+--------------------------------------------------------------------------------
+File: faostat\temperature\Environnement_variation_temperature_F_Toutes_les_Données_(Normalisé).csv (61.02 MB)
+  Line 1: Code zone,Code zone (M49),Zone,Code Mois,Mois,Code Élément,Élément,Code année,Année,Unité,Valeur,Symbole
+  Line 2: "2","'004","Afghanistan","7001","Janvier","7271","Variation de température","1961","1961","°C","0.792000","E"
+  Line 3: "2","'004","Afghanistan","7001","Janvier","7271","Variation de température","1962","1962","°C","0.066000","E"
+--------------------------------------------------------------------------------
+File: faostat\terres_utilisation\Intrants_TerresUtilisation_F_Toutes_les_Données_(Normalisé).csv (51.45 MB)
+  Line 1: Code zone,Code zone (M49),Zone,Code Produit,Produit,Code Élément,Élément,Code année,Année,Unité,Valeur,Symbole,Note
+  Line 2: "2","'004","Afghanistan","6600","Superficie du pays","5110","Superficie","1961","1961","1000 ha","65286.000000","A",
+  Line 3: "2","'004","Afghanistan","6600","Superficie du pays","5110","Superficie","1962","1962","1000 ha","65286.000000","A",
+--------------------------------------------------------------------------------
+File: owid\owid_co2_emissions.csv (13.67 MB)
+  Line 1: country,year,iso_code,population,gdp,cement_co2,cement_co2_per_capita,co2,co2_growth_abs,co2_growth_prct,co2_including_luc,co2_including_luc_growth_abs,co2_including_luc_growth_prct,co2_including_luc_per_capita,co2_including_luc_per_gdp,co2_including_luc_per_unit_energy,co2_per_capita,co2_per_gdp,co
+  Line 2: Afghanistan,1750,AFG,2802560,,0.000,0.000,,,,,,,,,,,,,,,,,,0.000,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+  Line 3: Afghanistan,1751,AFG,,,0.000,,,,,,,,,,,,,,,,,,,0.000,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+--------------------------------------------------------------------------------
+File: owid\owid_energy.csv (8.80 MB)
+  Line 1: country,year,iso_code,population,gdp,biofuel_cons_change_pct,biofuel_cons_change_twh,biofuel_cons_per_capita,biofuel_consumption,biofuel_elec_per_capita,biofuel_electricity,biofuel_share_elec,biofuel_share_energy,carbon_intensity_elec,coal_cons_change_pct,coal_cons_change_twh,coal_cons_per_capita,co
+  Line 2: ASEAN (Ember),2000,,,,,,,,,5.870,1.550,,572.580,,,,,,76.030,,,,,20.073,,378.760,,378.760,,,,,,,,,305.530,,,80.666,,,,,,164.260,,,,,,43.368,,216.870,,,,,50.430,,13.314,,,,,,73.230,,19.334,,,,,,,,0.000,,0.000,,,,,,65.240,,,,,,17.225,,,22.800,16.930,,,,,,6.020,4.470,,,,,,,,73.230,,19.334,,,,,,0.000,,0.
+  Line 3: ASEAN (Ember),2001,,,,,,,,,6.460,1.595,,570.270,,,,,,86.260,,,,,21.294,,405.090,,405.090,,,,,,,,,327.900,,,80.945,,,,,,190.410,,,,,,47.004,,231.010,,,,,54.330,,13.412,,,,,,77.190,,19.055,,,,,,,,0.000,,0.000,,,,,,51.230,,,,,,12.647,,,22.860,16.400,,,,,,5.643,4.048,,,,,,,,77.190,,19.055,,,,,,0.000,,0.
+--------------------------------------------------------------------------------
+File: owid\owid_hdi.csv (0.21 MB)
+  Line 1: Entity,Code,Year,Human Development Index,World region according to OWID
+  Line 2: Afghanistan,AFG,1990,0.285,Asia
+  Line 3: Afghanistan,AFG,1991,0.291,Asia
+--------------------------------------------------------------------------------
+File: owid\owid_poverty.csv (7.41 MB)
+  Line 1: country,year,reporting_level,welfare_type,ppp_version,survey_year,survey_comparability,headcount_ratio_international_povline,headcount_ratio_lower_mid_income_povline,headcount_ratio_upper_mid_income_povline,headcount_ratio_100,headcount_ratio_1000,headcount_ratio_2000,headcount_ratio_3000,headcount_
+  Line 2: Albania,1996,national,consumption,2011,1996.0,0.0,0.92066900711367,11.17414933675462,44.61841668638992,0.0574158126534935,86.17520773919996,99.63207914995569,99.91246507775932,99.9516562083065,2.7688211170843,7.54812303918347,14.8025141997288,29167.0,354001.0,1413526.0,1819.0,2730059.0,3156377.0,316
+  Line 3: Albania,2002,national,consumption,2011,2002.0,1.0,1.57084335862702,14.13211815688005,49.66963515999645,0.0463706233257104,85.33831702536492,98.08006084701104,99.63838560500017,99.84308111495416,3.21228322967181,8.406372784532019,16.02055356185178,47927.0,431172.0,1515426.0,1415.0,2603681.0,2992432.0
+--------------------------------------------------------------------------------
+File: who\global_hunger_index.csv (0.01 MB)
+  Line 1: Entity,Code,Year,Global Hunger Index,Global Hunger Index (Annotations)
+  Line 2: Afghanistan,AFG,2000,50.9,
+  Line 3: Afghanistan,AFG,2006,42.7,
+--------------------------------------------------------------------------------
+File: who\owid_child_mortality.csv (0.39 MB)
+  Line 1: Entity,Code,Year,Under-five mortality rate (selected)
+  Line 2: Afghanistan,AFG,1957,37.13
+  Line 3: Afghanistan,AFG,1958,36.52
+--------------------------------------------------------------------------------
+File: who\owid_life_expectancy.csv (0.58 MB)
+  Line 1: Entity,Code,Year,Life expectancy
+  Line 2: Afghanistan,AFG,1950,28.1563
+  Line 3: Afghanistan,AFG,1951,28.5836
+--------------------------------------------------------------------------------
+File: worldbank\wb_agricultural_land_pct.csv (1.11 MB)
+  Line 1: country_iso3,country_name,year,indicator,indicator_name,value
+  Line 2: AFE,Africa Eastern and Southern,2022,AG.LND.AGRI.ZS,agricultural_land_pct,46.541210005602
+  Line 3: AFE,Africa Eastern and Southern,2021,AG.LND.AGRI.ZS,agricultural_land_pct,46.5105662241913
+--------------------------------------------------------------------------------
+File: worldbank\wb_birth_rate.csv (0.95 MB)
+  Line 1: country_iso3,country_name,year,indicator,indicator_name,value
+  Line 2: AFE,Africa Eastern and Southern,2024,SP.DYN.CBRT.IN,birth_rate,32.5841148225913
+  Line 3: AFE,Africa Eastern and Southern,2023,SP.DYN.CBRT.IN,birth_rate,32.9554537670713
+--------------------------------------------------------------------------------
+File: worldbank\wb_child_mortality.csv (0.73 MB)
+  Line 1: country_iso3,country_name,year,indicator,indicator_name,value
+  Line 2: AFE,Africa Eastern and Southern,2024,SH.DYN.MORT,child_mortality,57.2468824778745
+  Line 3: AFE,Africa Eastern and Southern,2023,SH.DYN.MORT,child_mortality,59.3756488709871
+--------------------------------------------------------------------------------
+File: worldbank\wb_death_rate.csv (0.94 MB)
+  Line 1: country_iso3,country_name,year,indicator,indicator_name,value
+  Line 2: AFE,Africa Eastern and Southern,2024,SP.DYN.CDRT.IN,death_rate,6.91510801460987
+  Line 3: AFE,Africa Eastern and Southern,2023,SP.DYN.CDRT.IN,death_rate,6.97878741988466
+--------------------------------------------------------------------------------
+File: worldbank\wb_deaths_communicable_disease.csv (0.11 MB)
+  Line 1: country_iso3,country_name,year,indicator,indicator_name,value
+  Line 2: AFE,Africa Eastern and Southern,2021,SH.DTH.COMM.ZS,deaths_communicable_disease,51.6592045905318
+  Line 3: AFE,Africa Eastern and Southern,2020,SH.DTH.COMM.ZS,deaths_communicable_disease,50.3865538346411
+--------------------------------------------------------------------------------
+File: worldbank\wb_electricity_access_pct.csv (0.51 MB)
+  Line 1: country_iso3,country_name,year,indicator,indicator_name,value
+  Line 2: AFE,Africa Eastern and Southern,2023,EG.ELC.ACCS.ZS,electricity_access_pct,50.6675157944854
+  Line 3: AFE,Africa Eastern and Southern,2022,EG.ELC.ACCS.ZS,electricity_access_pct,48.8012579607658
+--------------------------------------------------------------------------------
+File: worldbank\wb_energy_use_per_capita.csv (0.52 MB)
+  Line 1: country_iso3,country_name,year,indicator,indicator_name,value
+  Line 2: AFE,Africa Eastern and Southern,2023,EG.USE.PCAP.KG.OE,energy_use_per_capita,565.221624381903
+  Line 3: AFE,Africa Eastern and Southern,2022,EG.USE.PCAP.KG.OE,energy_use_per_capita,568.382394434424
+--------------------------------------------------------------------------------
+File: worldbank\wb_forest_area_pct.csv (0.58 MB)
+  Line 1: country_iso3,country_name,year,indicator,indicator_name,value
+  Line 2: AFE,Africa Eastern and Southern,2022,AG.LND.FRST.ZS,forest_area_pct,29.7372051021705
+  Line 3: AFE,Africa Eastern and Southern,2021,AG.LND.FRST.ZS,forest_area_pct,29.9551937873237
+--------------------------------------------------------------------------------
+File: worldbank\wb_freshwater_withdrawal_pct.csv (0.49 MB)
+  Line 1: country_iso3,country_name,year,indicator,indicator_name,value
+  Line 2: AFE,Africa Eastern and Southern,2021,ER.H2O.FWTL.ZS,freshwater_withdrawal_pct,5.04173888731344
+  Line 3: AFE,Africa Eastern and Southern,2020,ER.H2O.FWTL.ZS,freshwater_withdrawal_pct,5.01201100451766
+--------------------------------------------------------------------------------
+File: worldbank\wb_gdp_current_usd.csv (0.99 MB)
+  Line 1: country_iso3,country_name,year,indicator,indicator_name,value
+  Line 2: AFE,Africa Eastern and Southern,2024,NY.GDP.MKTP.CD,gdp_current_usd,1242693542929.85
+  Line 3: AFE,Africa Eastern and Southern,2023,NY.GDP.MKTP.CD,gdp_current_usd,1179359054880.45
+--------------------------------------------------------------------------------
+File: worldbank\wb_gdp_per_capita.csv (0.98 MB)
+  Line 1: country_iso3,country_name,year,indicator,indicator_name,value
+  Line 2: AFE,Africa Eastern and Southern,2024,NY.GDP.PCAP.CD,gdp_per_capita,1615.39635562849
+  Line 3: AFE,Africa Eastern and Southern,2023,NY.GDP.PCAP.CD,gdp_per_capita,1571.44918918981
+--------------------------------------------------------------------------------
+File: worldbank\wb_gini_index.csv (0.11 MB)
+  Line 1: country_iso3,country_name,year,indicator,indicator_name,value
+  Line 2: ALB,Albania,2020,SI.POV.GINI,gini_index,29.4
+  Line 3: ALB,Albania,2019,SI.POV.GINI,gini_index,30.1
+--------------------------------------------------------------------------------
+File: worldbank\wb_health_expenditure_gdp.csv (0.42 MB)
+  Line 1: country_iso3,country_name,year,indicator,indicator_name,value
+  Line 2: AFE,Africa Eastern and Southern,2023,SH.XPD.CHEX.GD.ZS,health_expenditure_gdp,5.54080975848282
+  Line 3: AFE,Africa Eastern and Southern,2022,SH.XPD.CHEX.GD.ZS,health_expenditure_gdp,5.55902129039591
+--------------------------------------------------------------------------------
+File: worldbank\wb_hiv_prevalence.csv (0.33 MB)
+  Line 1: country_iso3,country_name,year,indicator,indicator_name,value
+  Line 2: AFE,Africa Eastern and Southern,2023,SH.DYN.AIDS.ZS,hiv_prevalence,4.41506303269652
+  Line 3: AFE,Africa Eastern and Southern,2022,SH.DYN.AIDS.ZS,hiv_prevalence,4.59421132174566
+--------------------------------------------------------------------------------
+File: worldbank\wb_hospital_beds_per_1000.csv (0.40 MB)
+  Line 1: country_iso3,country_name,year,indicator,indicator_name,value
+  Line 2: AFE,Africa Eastern and Southern,1990,SH.MED.BEDS.ZS,hospital_beds_per_1000,1.01187679426614
+  Line 3: AFE,Africa Eastern and Southern,1970,SH.MED.BEDS.ZS,hospital_beds_per_1000,1.72594204776273
+--------------------------------------------------------------------------------
+File: worldbank\wb_inflation_cpi.csv (0.57 MB)
+  Line 1: country_iso3,country_name,year,indicator,indicator_name,value
+  Line 2: AFE,Africa Eastern and Southern,2024,FP.CPI.TOTL.ZG,inflation_cpi,4.77085731915833
+  Line 3: AFE,Africa Eastern and Southern,2023,FP.CPI.TOTL.ZG,inflation_cpi,7.39918558080627
+--------------------------------------------------------------------------------
+File: worldbank\wb_internet_users_pct.csv (0.44 MB)
+  Line 1: country_iso3,country_name,year,indicator,indicator_name,value
+  Line 2: AFE,Africa Eastern and Southern,2025,IT.NET.USER.ZS,internet_users_pct,30.4
+  Line 3: AFE,Africa Eastern and Southern,2024,IT.NET.USER.ZS,internet_users_pct,28.8
+--------------------------------------------------------------------------------
+File: worldbank\wb_life_expectancy.csv (1.07 MB)
+  Line 1: country_iso3,country_name,year,indicator,indicator_name,value
+  Line 2: AFE,Africa Eastern and Southern,2024,SP.DYN.LE00.IN,life_expectancy,65.3499304660954
+  Line 3: AFE,Africa Eastern and Southern,2023,SP.DYN.LE00.IN,life_expectancy,65.1462279163724
+--------------------------------------------------------------------------------
+File: worldbank\wb_malaria_incidence.csv (0.12 MB)
+  Line 1: country_iso3,country_name,year,indicator,indicator_name,value
+  Line 2: AFG,Afghanistan,2023,SH.STA.MALR,malaria_incidence,174169
+  Line 3: AFG,Afghanistan,2022,SH.STA.MALR,malaria_incidence,121758
+--------------------------------------------------------------------------------
+File: worldbank\wb_mobile_subscriptions.csv (0.88 MB)
+  Line 1: country_iso3,country_name,year,indicator,indicator_name,value
+  Line 2: AFE,Africa Eastern and Southern,2025,IT.CEL.SETS.P2,mobile_subscriptions,93.1
+  Line 3: AFE,Africa Eastern and Southern,2024,IT.CEL.SETS.P2,mobile_subscriptions,87.3
+--------------------------------------------------------------------------------
+File: worldbank\wb_net_migration.csv (0.92 MB)
+  Line 1: country_iso3,country_name,year,indicator,indicator_name,value
+  Line 2: AFE,Africa Eastern and Southern,2025,SM.POP.NETM,net_migration,114862
+  Line 3: AFE,Africa Eastern and Southern,2024,SM.POP.NETM,net_migration,-670014
+--------------------------------------------------------------------------------
+File: worldbank\wb_population_growth.csv (1.15 MB)
+  Line 1: country_iso3,country_name,year,indicator,indicator_name,value
+  Line 2: AFE,Africa Eastern and Southern,2024,SP.POP.GROW,population_growth,2.47280147854539
+  Line 3: AFE,Africa Eastern and Southern,2023,SP.POP.GROW,population_growth,2.51916664518144
+--------------------------------------------------------------------------------
+File: worldbank\wb_population_total.csv (0.97 MB)
+  Line 1: country_iso3,country_name,year,indicator,indicator_name,value
+  Line 2: AFE,Africa Eastern and Southern,2023,SP.POP.TOTL,population_total,750491370
+  Line 3: AFE,Africa Eastern and Southern,2022,SP.POP.TOTL,population_total,731821393
+--------------------------------------------------------------------------------
+File: worldbank\wb_poverty_rate_190.csv (0.16 MB)
+  Line 1: country_iso3,country_name,year,indicator,indicator_name,value
+  Line 2: EAS,East Asia & Pacific,2024,SI.POV.DDAY,poverty_rate_190,2
+  Line 3: EAS,East Asia & Pacific,2023,SI.POV.DDAY,poverty_rate_190,2.2
+--------------------------------------------------------------------------------
+File: worldbank\wb_public_debt_gdp.csv (0.12 MB)
+  Line 1: country_iso3,country_name,year,indicator,indicator_name,value
+  Line 2: CSS,Caribbean small states,2007,GC.DOD.TOTL.GD.ZS,public_debt_gdp,27.1686756472154
+  Line 3: CSS,Caribbean small states,2006,GC.DOD.TOTL.GD.ZS,public_debt_gdp,27.2381964011351
+--------------------------------------------------------------------------------
+File: worldbank\wb_rd_expenditure_gdp.csv (0.21 MB)
+  Line 1: country_iso3,country_name,year,indicator,indicator_name,value
+  Line 2: AFE,Africa Eastern and Southern,2010,GB.XPD.RSDV.GD.ZS,rd_expenditure_gdp,0.586779084367876
+  Line 3: AFE,Africa Eastern and Southern,2007,GB.XPD.RSDV.GD.ZS,rd_expenditure_gdp,0.659864661576848
+--------------------------------------------------------------------------------
+File: worldbank\wb_renewable_energy_pct.csv (0.52 MB)
+  Line 1: country_iso3,country_name,year,indicator,indicator_name,value
+  Line 2: AFE,Africa Eastern and Southern,2020,EG.FEC.RNEW.ZS,renewable_energy_pct,65.7823798017466
+  Line 3: AFE,Africa Eastern and Southern,2019,EG.FEC.RNEW.ZS,renewable_energy_pct,62.6907096127666
+--------------------------------------------------------------------------------
+File: worldbank\wb_trade_gdp.csv (0.68 MB)
+  Line 1: country_iso3,country_name,year,indicator,indicator_name,value
+  Line 2: AFE,Africa Eastern and Southern,2024,NE.TRD.GNFS.ZS,trade_gdp,54.422178323254
+  Line 3: AFE,Africa Eastern and Southern,2023,NE.TRD.GNFS.ZS,trade_gdp,56.1705277452305
+--------------------------------------------------------------------------------
+File: worldbank\wb_unemployment_rate.csv (0.51 MB)
+  Line 1: country_iso3,country_name,year,indicator,indicator_name,value
+  Line 2: AFE,Africa Eastern and Southern,2025,SL.UEM.TOTL.ZS,unemployment_rate,7.53923442390472
+  Line 3: AFE,Africa Eastern and Southern,2024,SL.UEM.TOTL.ZS,unemployment_rate,7.57169749274654
+--------------------------------------------------------------------------------
+File: worldbank\wb_urban_population_pct.csv (1.30 MB)
+  Line 1: country_iso3,country_name,year,indicator,indicator_name,value
+  Line 2: AFE,Africa Eastern and Southern,2024,SP.URB.TOTL.IN.ZS,urban_population_pct,38.2414414289603
+  Line 3: AFE,Africa Eastern and Southern,2023,SP.URB.TOTL.IN.ZS,urban_population_pct,37.7723012408349

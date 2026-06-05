@@ -1,0 +1,697 @@
+================================================================================
+File: faostat\bilans_alimentaires\BilansAlimentaires_F_Toutes_les_Données_(Normalisé).csv
+Size: 682.04 MB
+  SKIPPED scanning products/elements (File too large for fast scan, but headers printed)
+  Header (utf-8): Code zone,Code zone (M49),Zone,Code Produit,Code Produit (FBS),Produit,Code Élément,Élément,Code année,Année,Unité,Valeur,Symbole,Note
+  Line 1 (utf-8): "2","'004","Afghanistan","2501","'S2501","Population","511","Population totale","2010","2010","1000 No","28284.090000","X",
+================================================================================
+File: faostat\bioenergie\Environnement_Bioénergie_F_Toutes_les_Données_(Normalisé).csv
+Size: 15.32 MB
+  Detected columns: Product: Produit, Element: Élément, Month: None (encoding: utf-8)
+  Unique Products (15):
+    - Autres biocarburants liquides
+    - Autres matières végétales et résidus
+    - Bagasse
+    - Biocarburants gazeux
+    - Biocarburants liquides
+    - Biocarburants solides
+    - Biodiesel
+    - Biogaz
+    - Biogazole
+    - Bois de chauffage
+    - Charbon de bois
+    - Déchets animaux
+    - Kérosène bio jet
+    - Liqueur noire
+    - Total Bioénergie
+  Unique Elements (2):
+    - Consommation d'énergie
+    - Production d'énergie
+================================================================================
+File: faostat\climat_indicateurs\Changement_climatique_Indicateurs_émissions_F_Toutes_les_Données_(Normalisé).csv
+Size: 91.61 MB
+  Detected columns: Product: Produit, Element: Élément, Month: None (encoding: utf-8)
+  Unique Products (17):
+    - AFOLU
+    - Autre
+    - Changement d'utilisation des terres
+    - Déchets
+    - Farm gate
+    - GIEC Agriculture
+    - PIUP
+    - Pré-production et post-production
+    - Soutes internationales
+    - Systèmes agroalimentaires
+    - Total des émissions avec UTCATF
+    - Total des émissions sans UTCATF
+    - UTCATF
+    - Émissions imputables aux cultures
+    - Émissions imputables à l'élevage
+    - Émissions sur les terres agricoles
+    - Énergie
+  Unique Elements (8):
+    - Part CO2eq (AR5)
+    - Part des émissions (CO2eq) (AR5) (F-gases)
+    - Part des émissions totales venant de CH4
+    - Part des émissions totales venant de CO2
+    - Part des émissions totales venant de N2O
+    - Émissions par habitant
+    - Émissions par la valeur de la production agricole
+    - Émissions par superficie de terres agricoles
+================================================================================
+File: faostat\commerce_agri\Commerce_CultureProduitsAnimaux_F_Toutes_les_Données_(Normalisé).csv
+Size: 2626.54 MB
+  SKIPPED scanning products/elements (File too large for fast scan, but headers printed)
+  Header (utf-8): Code zone,Code zone (M49),Zone,Code Produit,Code Produit (CPC),Produit,Code Élément,Élément,Code année,Année,Unité,Valeur,Symbole,Note
+  Line 1 (utf-8): "2","'004","Afghanistan","1059","'21160.01","Abats et foies comestibles de poulets et de pintades, frais, réfrigérés ou congelés","5610","Importations - quantité","2014","2014","tonnes","52.060000","X
+================================================================================
+File: faostat\consumer_price_index\ConsumerPriceIndices_E_All_Data_(Normalized).csv
+Size: 35.46 MB
+  Detected columns: Product: Item, Element: Element, Month: Months (encoding: utf-8)
+  Unique Products (9):
+    - Consumer Prices, Food Indices (2015 = 100)
+    - Consumer Prices, Food Indices (2015 = 100), median
+    - Consumer Prices, Food Indices (2015 = 100), weighted average
+    - Consumer Prices, General Indices (2015 = 100)
+    - Consumer Prices, General Indices (2015 = 100), median
+    - Consumer Prices, General Indices (2015 = 100), weighted average
+    - Food price inflation
+    - Food price inflation, median
+    - Food price inflation, weighted average
+  Unique Elements (1):
+    - Value
+  Unique Months/Periods (12):
+    - April
+    - August
+    - December
+    - February
+    - January
+    - July
+    - June
+    - March
+    - May
+    - November
+    - October
+    - September
+================================================================================
+File: faostat\consumer_price_index\ConsumerPriceIndices_E_AreaCodes.csv
+Size: 0.01 MB
+  Detected columns: Product: None, Element: None, Month: None (encoding: utf-8)
+  Unique Products (0):
+  Unique Elements (0):
+================================================================================
+File: faostat\consumer_price_index\ConsumerPriceIndices_E_Elements.csv
+Size: 0.00 MB
+  Detected columns: Product: None, Element: Element, Month: None (encoding: utf-8)
+  Unique Products (0):
+  Unique Elements (1):
+    - Value
+================================================================================
+File: faostat\consumer_price_index\ConsumerPriceIndices_E_Flags.csv
+Size: 0.00 MB
+  Detected columns: Product: None, Element: None, Month: None (encoding: utf-8)
+  Unique Products (0):
+  Unique Elements (0):
+================================================================================
+File: faostat\consumer_price_index\ConsumerPriceIndices_E_ItemCodes.csv
+Size: 0.00 MB
+  Detected columns: Product: Item, Element: None, Month: None (encoding: utf-8)
+  Unique Products (9):
+    - Consumer Prices; Food Indices (2015 = 100)
+    - Consumer Prices; Food Indices (2015 = 100); median
+    - Consumer Prices; Food Indices (2015 = 100); weighted average
+    - Consumer Prices; General Indices (2015 = 100)
+    - Consumer Prices; General Indices (2015 = 100); median
+    - Consumer Prices; General Indices (2015 = 100); weighted average
+    - Food price inflation
+    - Food price inflation; median
+    - Food price inflation; weighted average
+  Unique Elements (0):
+================================================================================
+File: faostat\emissions_ges\Emissions_Totaux_F_Toutes_les_Données_(Normalisé).csv
+Size: 388.14 MB
+  SKIPPED scanning products/elements (File too large for fast scan, but headers printed)
+  Header (utf-8): Code zone,Code zone (M49),Zone,Code Produit,Produit,Code Élément,Élément,Code année,Année,Code source,Source,Unité,Valeur,Symbole,Note
+  Line 1 (utf-8): "2","'004","Afghanistan","5064","Résidus de récoltes","7234","Émissions directes (N2O)","1961","1961","3050","FAO TIER 1","kilotonnes","0.876200","E",
+================================================================================
+File: faostat\emploi_agri\Indicateurs_de_l_emploi_agriculture_F_Toutes_les_Données_(Normalisé).csv
+Size: 43.19 MB
+  Detected columns: Product: None, Element: Élément, Month: None (encoding: utf-8)
+  Unique Products (0):
+  Unique Elements (1):
+    - Valeur
+================================================================================
+File: faostat\forets\Emissions_Utilisation_des_terres_Forêts_F_Toutes_les_Données_(Normalisé).csv
+Size: 10.94 MB
+  Detected columns: Product: Produit, Element: Élément, Month: None (encoding: utf-8)
+  Unique Products (3):
+    - Conversion nette de forêt
+    - Terres forestières
+    - Variations des stocks de carbone dans les forêts
+  Unique Elements (2):
+    - Net émissions/absorptions (CO2) (Terres forestières)
+    - Superficie
+================================================================================
+File: faostat\indices_prix_conso\IndicesPrixConsommation_F_Toutes_les_Données_(Normalisé).csv
+Size: 38.23 MB
+  Detected columns: Product: Produit, Element: Élément, Month: Mois (encoding: utf-8)
+  Unique Products (9):
+    - Food price inflation
+    - Food price inflation, median
+    - Food price inflation, weighted average
+    - Prix à la Consommation, Indices d'alimentation (2015 = 100)
+    - Prix à la Consommation, Indices d'alimentation (2015 = 100), moyenne pondérée
+    - Prix à la Consommation, Indices d'alimentation (2015 = 100), médiane
+    - Prix à la Consommation, Indices généraux (2015 = 100)
+    - Prix à la Consommation, Indices généraux (2015 = 100), moyenne pondérée
+    - Prix à la Consommation, Indices généraux (2015 = 100), médiane
+  Unique Elements (1):
+    - Valeur
+  Unique Months/Periods (12):
+    - Août
+    - Avril
+    - Décembre
+    - Février
+    - Janvier
+    - Juillet
+    - Juin
+    - Mai
+    - Mars
+    - Novembre
+    - Octobre
+    - Septembre
+================================================================================
+File: faostat\macro_fao\Statistiques-macro_Indicateurs_clés_F_Toutes_les_Données_(Normalisé).csv
+Size: 115.86 MB
+  Detected columns: Product: Produit, Element: Élément, Month: None (encoding: utf-8)
+  Unique Products (11):
+    - Formation brute de capital fixe
+    - Production brute (Agriculture)
+    - Production brute (Agriculture, Sylviculture et Pêche)
+    - Produit Intérieur Brut
+    - Revenu national brut
+    - Valeur ajoutée (Agriculture)
+    - Valeur ajoutée (Fabrication de produits alimentaires et boissons)
+    - Valeur ajoutée (Fabrication de produits alimentaires, boissons et de produits à base de tabac)
+    - Valeur ajoutée (Fabrication de produits à base de tabac)
+    - Valeur ajoutée (Industrie manufacturière)
+    - Valeur ajoutée (agriculture, sylviculture et pêche)
+  Unique Elements (20):
+    - Croissance annuelle US$
+    - Croissance annuelle US$ par habitant
+    - Croissance annuelle US$ par habitant, aux prix de 2015
+    - Croissance annuelle US$, aux prix de 2015
+    - Croissance annuelle en devise locale standardisée
+    - Croissance annuelle en devise locale standardisée, aux prix de 2015
+    - Part de la valeur ajoutée (industrie manufacturière) US$
+    - Part de la valeur ajoutée (industrie manufacturière) en devise locale standardisée
+    - Part du PIB US$
+    - Part du PIB US$, aux prix de 2015
+    - Part du PIB en devise locale standardisée
+    - Part du PIB en devise locale standardisée, aux prix de 2015
+    - Ratio de la valeur ajoutée (Agriculture, Sylviculture et Pêche) US$
+    - Ratio de la valeur ajoutée (Agriculture, Sylviculture et Pêche) en devise locale standardisée
+    - Valeur US$
+    - Valeur US$ par habitant
+    - Valeur US$ par habitant, aux prix de 2015
+    - Valeur US$, aux prix de 2015
+    - Valeur en devise locale standardisée
+    - Valeur en devise locale standardisée, aux prix de 2015
+================================================================================
+File: faostat\pesticides\Environnement_Pesticides_F_Toutes_les_Données_(Normalisé).csv
+Size: 2.14 MB
+  Detected columns: Product: Produit, Element: Élément, Month: None (encoding: latin-1)
+  Unique Products (1):
+    - Pesticides (total)
+  Unique Elements (3):
+    - Utilisation par habitant
+    - Utilisation par la valeur de la production agricole
+    - Utilisation par superficie de terres en culture
+================================================================================
+File: faostat\population_fao\Population_F_Toutes_les_Données_(Normalisé).csv
+Size: 20.11 MB
+  Detected columns: Product: Produit, Element: Élément, Month: None (encoding: utf-8)
+  Unique Products (1):
+    - Population-Estimations
+  Unique Elements (5):
+    - Femmes
+    - Hommes
+    - Population rurale
+    - Population totale
+    - Population urbaine
+================================================================================
+File: faostat\prix\Prix_F_Toutes_les_Données_(Normalisé).csv
+Size: 219.89 MB
+  SKIPPED scanning products/elements (File too large for fast scan, but headers printed)
+  Header (utf-8): Code zone,Code zone (M49),Zone,Code Produit,Code Produit (CPC),Produit,Code Élément,Élément,Code année,Année,Code Mois,Mois,Unité,Valeur,Symbole
+  Line 1 (utf-8): "2","'004","Afghanistan","526","'01343","Abricots","5530","Prix à la Production (LCU/tonne)","1993","1993","7021","Valeur annuel","UML","29000.000000","A"
+================================================================================
+File: faostat\production_agricole\Production_Cultures_ProduitsAnimaux_F_Toutes_les_Données_(Normalisé).csv
+Size: 558.61 MB
+  SKIPPED scanning products/elements (File too large for fast scan, but headers printed)
+  Header (utf-8): Code zone,Code zone (M49),Zone,Code Produit,Code Produit (CPC),Produit,Code Élément,Élément,Code année,Année,Unité,Valeur,Symbole,Note
+  Line 1 (utf-8): "2","'004","Afghanistan","1128","'21159.02","Abats comestibles de chameaux et autres camélidés, frais, réfrigérés ou congelés","5510","Production","1961","1961","tonnes","540.000000","I",
+================================================================================
+File: faostat\sdg_indicators\SDG_BulkDownloads_F_Toutes_les_Données_(Normalisé).csv
+Size: 123.18 MB
+  Detected columns: Product: Produit, Element: Élément, Month: None (encoding: utf-8)
+  Unique Products (234):
+    - 12.3.1a Food loss percentage: cereals and pulses
+    - 12.3.1a Food loss percentage: fruits and vegetables
+    - 12.3.1a Food loss percentage: meat and animals products
+    - 12.3.1a Food loss percentage: roots, tubers and oil-bearing crops
+    - 12.3.1a Food loss percentage: total
+    - 12.3.1a Global food loss index: cereals and pulses
+    - 12.3.1a Global food loss index: fruits and vegetables
+    - 12.3.1a Global food loss index: meat and animals products
+    - 12.3.1a Global food loss index: roots, tubers and oil-bearing crops
+    - 12.3.1a Global food loss index: total
+    - 14.4.1 Proportion of fish stocks within biologically sustainable levels
+    - 14.6.1 International instruments to combat IUU fishing
+    - 14.7.1 Sustainable fisheries as a proportion of GDP
+    - 14.b.1 Protection of access rights for small-scale fisheries
+    - 15.1.1 Forest area
+    - 15.1.1 Forest area as a proportion of total land area
+    - 15.1.1 Land area
+    - 15.2.1 Above-ground biomass in forest
+    - 15.2.1 Annual forest area change rate
+    - 15.2.1 Forest area under an independently verified forest management certification scheme
+    - 15.2.1 Proportion of forest area with a long-term management plan
+    - 15.2.1 Proportion of forest area within legally established protected areas
+    - 15.4.2 Mountain area: Alpine
+    - 15.4.2 Mountain area: Montane
+    - 15.4.2 Mountain area: Nival
+    - 15.4.2 Mountain area: Remaining moutain area
+    - 15.4.2 Mountain area: Total
+    - 15.4.2a Mountain Green Cover Index: Alpine; Land Cover: Artificial surfaces
+    - 15.4.2a Mountain Green Cover Index: Alpine; Land Cover: Croplands
+    - 15.4.2a Mountain Green Cover Index: Alpine; Land Cover: Grassland
+    - 15.4.2a Mountain Green Cover Index: Alpine; Land Cover: Inland water bodies
+    - 15.4.2a Mountain Green Cover Index: Alpine; Land Cover: MGCI
+    - 15.4.2a Mountain Green Cover Index: Alpine; Land Cover: Permanent snow and glaciers
+    - 15.4.2a Mountain Green Cover Index: Alpine; Land Cover: Shrub-covered areas
+    - 15.4.2a Mountain Green Cover Index: Alpine; Land Cover: Shrubs and/or herbaceous vegetation, aquatic or regularly flooded
+    - 15.4.2a Mountain Green Cover Index: Alpine; Land Cover: Sparsely natural vegetated areas
+    - 15.4.2a Mountain Green Cover Index: Alpine; Land Cover: Terrestrial barren land
+    - 15.4.2a Mountain Green Cover Index: Alpine; Land Cover: Tree-covered areas
+    - 15.4.2a Mountain Green Cover Index: Montane; Land Cover: Artificial surfaces
+    - 15.4.2a Mountain Green Cover Index: Montane; Land Cover: Croplands
+    - 15.4.2a Mountain Green Cover Index: Montane; Land Cover: Grassland
+    - 15.4.2a Mountain Green Cover Index: Montane; Land Cover: Inland water bodies
+    - 15.4.2a Mountain Green Cover Index: Montane; Land Cover: MGCI
+    - 15.4.2a Mountain Green Cover Index: Montane; Land Cover: Permanent snow and glaciers
+    - 15.4.2a Mountain Green Cover Index: Montane; Land Cover: Shrub-covered areas
+    - 15.4.2a Mountain Green Cover Index: Montane; Land Cover: Shrubs and/or herbaceous vegetation, aquatic or regularly flooded
+    - 15.4.2a Mountain Green Cover Index: Montane; Land Cover: Sparsely natural vegetated areas
+    - 15.4.2a Mountain Green Cover Index: Montane; Land Cover: Terrestrial barren land
+    - 15.4.2a Mountain Green Cover Index: Montane; Land Cover: Tree-covered areas
+    - 15.4.2a Mountain Green Cover Index: Nival; Land Cover: Artificial surfaces
+    - 15.4.2a Mountain Green Cover Index: Nival; Land Cover: Croplands
+    - 15.4.2a Mountain Green Cover Index: Nival; Land Cover: Grassland
+    - 15.4.2a Mountain Green Cover Index: Nival; Land Cover: Inland water bodies
+    - 15.4.2a Mountain Green Cover Index: Nival; Land Cover: MGCI
+    - 15.4.2a Mountain Green Cover Index: Nival; Land Cover: Permanent snow and glaciers
+    - 15.4.2a Mountain Green Cover Index: Nival; Land Cover: Shrub-covered areas
+    - 15.4.2a Mountain Green Cover Index: Nival; Land Cover: Shrubs and/or herbaceous vegetation, aquatic or regularly flooded
+    - 15.4.2a Mountain Green Cover Index: Nival; Land Cover: Sparsely natural vegetated areas
+    - 15.4.2a Mountain Green Cover Index: Nival; Land Cover: Terrestrial barren land
+    - 15.4.2a Mountain Green Cover Index: Nival; Land Cover: Tree-covered areas
+    - 15.4.2a Mountain Green Cover Index: Remaining moutain area; Land Cover: Artificial surfaces
+    - 15.4.2a Mountain Green Cover Index: Remaining moutain area; Land Cover: Croplands
+    - 15.4.2a Mountain Green Cover Index: Remaining moutain area; Land Cover: Grassland
+    - 15.4.2a Mountain Green Cover Index: Remaining moutain area; Land Cover: Inland water bodies
+    - 15.4.2a Mountain Green Cover Index: Remaining moutain area; Land Cover: MGCI
+    - 15.4.2a Mountain Green Cover Index: Remaining moutain area; Land Cover: Permanent snow and glaciers
+    - 15.4.2a Mountain Green Cover Index: Remaining moutain area; Land Cover: Shrub-covered areas
+    - 15.4.2a Mountain Green Cover Index: Remaining moutain area; Land Cover: Shrubs and/or herbaceous vegetation, aquatic or regularly flooded
+    - 15.4.2a Mountain Green Cover Index: Remaining moutain area; Land Cover: Sparsely natural vegetated areas
+    - 15.4.2a Mountain Green Cover Index: Remaining moutain area; Land Cover: Terrestrial barren land
+    - 15.4.2a Mountain Green Cover Index: Remaining moutain area; Land Cover: Tree-covered areas
+    - 15.4.2a Mountain Green Cover Index: Total; Land Cover: Artificial surfaces
+    - 15.4.2a Mountain Green Cover Index: Total; Land Cover: Croplands
+    - 15.4.2a Mountain Green Cover Index: Total; Land Cover: Grassland
+    - 15.4.2a Mountain Green Cover Index: Total; Land Cover: Inland water bodies
+    - 15.4.2a Mountain Green Cover Index: Total; Land Cover: MGCI
+    - 15.4.2a Mountain Green Cover Index: Total; Land Cover: Permanent snow and glaciers
+    - 15.4.2a Mountain Green Cover Index: Total; Land Cover: Shrub-covered areas
+    - 15.4.2a Mountain Green Cover Index: Total; Land Cover: Shrubs and/or herbaceous vegetation, aquatic or regularly flooded
+    - 15.4.2a Mountain Green Cover Index: Total; Land Cover: Sparsely natural vegetated areas
+    - 15.4.2a Mountain Green Cover Index: Total; Land Cover: Terrestrial barren land
+    - 15.4.2a Mountain Green Cover Index: Total; Land Cover: Tree-covered areas
+    - 15.4.2a Mountain green cover area: Alpine; Land Cover: Artificial surfaces
+    - 15.4.2a Mountain green cover area: Alpine; Land Cover: Croplands
+    - 15.4.2a Mountain green cover area: Alpine; Land Cover: Grassland
+    - 15.4.2a Mountain green cover area: Alpine; Land Cover: Inland water bodies
+    - 15.4.2a Mountain green cover area: Alpine; Land Cover: MGCI
+    - 15.4.2a Mountain green cover area: Alpine; Land Cover: Permanent snow and glaciers
+    - 15.4.2a Mountain green cover area: Alpine; Land Cover: Shrub-covered areas
+    - 15.4.2a Mountain green cover area: Alpine; Land Cover: Shrubs and/or herbaceous vegetation, aquatic or regularly flooded
+    - 15.4.2a Mountain green cover area: Alpine; Land Cover: Sparsely natural vegetated areas
+    - 15.4.2a Mountain green cover area: Alpine; Land Cover: Terrestrial barren land
+    - 15.4.2a Mountain green cover area: Alpine; Land Cover: Tree-covered areas
+    - 15.4.2a Mountain green cover area: Montane; Land Cover: Artificial surfaces
+    - 15.4.2a Mountain green cover area: Montane; Land Cover: Croplands
+    - 15.4.2a Mountain green cover area: Montane; Land Cover: Grassland
+    - 15.4.2a Mountain green cover area: Montane; Land Cover: Inland water bodies
+    - 15.4.2a Mountain green cover area: Montane; Land Cover: MGCI
+    - 15.4.2a Mountain green cover area: Montane; Land Cover: Permanent snow and glaciers
+    - 15.4.2a Mountain green cover area: Montane; Land Cover: Shrub-covered areas
+    - 15.4.2a Mountain green cover area: Montane; Land Cover: Shrubs and/or herbaceous vegetation, aquatic or regularly flooded
+    - 15.4.2a Mountain green cover area: Montane; Land Cover: Sparsely natural vegetated areas
+    - 15.4.2a Mountain green cover area: Montane; Land Cover: Terrestrial barren land
+    - 15.4.2a Mountain green cover area: Montane; Land Cover: Tree-covered areas
+    - 15.4.2a Mountain green cover area: Nival; Land Cover: Artificial surfaces
+    - 15.4.2a Mountain green cover area: Nival; Land Cover: Croplands
+    - 15.4.2a Mountain green cover area: Nival; Land Cover: Grassland
+    - 15.4.2a Mountain green cover area: Nival; Land Cover: Inland water bodies
+    - 15.4.2a Mountain green cover area: Nival; Land Cover: MGCI
+    - 15.4.2a Mountain green cover area: Nival; Land Cover: Permanent snow and glaciers
+    - 15.4.2a Mountain green cover area: Nival; Land Cover: Shrub-covered areas
+    - 15.4.2a Mountain green cover area: Nival; Land Cover: Shrubs and/or herbaceous vegetation, aquatic or regularly flooded
+    - 15.4.2a Mountain green cover area: Nival; Land Cover: Sparsely natural vegetated areas
+    - 15.4.2a Mountain green cover area: Nival; Land Cover: Terrestrial barren land
+    - 15.4.2a Mountain green cover area: Nival; Land Cover: Tree-covered areas
+    - 15.4.2a Mountain green cover area: Remaining moutain area; Land Cover: Artificial surfaces
+    - 15.4.2a Mountain green cover area: Remaining moutain area; Land Cover: Croplands
+    - 15.4.2a Mountain green cover area: Remaining moutain area; Land Cover: Grassland
+    - 15.4.2a Mountain green cover area: Remaining moutain area; Land Cover: Inland water bodies
+    - 15.4.2a Mountain green cover area: Remaining moutain area; Land Cover: MGCI
+    - 15.4.2a Mountain green cover area: Remaining moutain area; Land Cover: Permanent snow and glaciers
+    - 15.4.2a Mountain green cover area: Remaining moutain area; Land Cover: Shrub-covered areas
+    - 15.4.2a Mountain green cover area: Remaining moutain area; Land Cover: Shrubs and/or herbaceous vegetation, aquatic or regularly flooded
+    - 15.4.2a Mountain green cover area: Remaining moutain area; Land Cover: Sparsely natural vegetated areas
+    - 15.4.2a Mountain green cover area: Remaining moutain area; Land Cover: Terrestrial barren land
+    - 15.4.2a Mountain green cover area: Remaining moutain area; Land Cover: Tree-covered areas
+    - 15.4.2a Mountain green cover area: Total; Land Cover: Artificial surfaces
+    - 15.4.2a Mountain green cover area: Total; Land Cover: Croplands
+    - 15.4.2a Mountain green cover area: Total; Land Cover: Grassland
+    - 15.4.2a Mountain green cover area: Total; Land Cover: Inland water bodies
+    - 15.4.2a Mountain green cover area: Total; Land Cover: MGCI
+    - 15.4.2a Mountain green cover area: Total; Land Cover: Permanent snow and glaciers
+    - 15.4.2a Mountain green cover area: Total; Land Cover: Shrub-covered areas
+    - 15.4.2a Mountain green cover area: Total; Land Cover: Shrubs and/or herbaceous vegetation, aquatic or regularly flooded
+    - 15.4.2a Mountain green cover area: Total; Land Cover: Sparsely natural vegetated areas
+    - 15.4.2a Mountain green cover area: Total; Land Cover: Terrestrial barren land
+    - 15.4.2a Mountain green cover area: Total; Land Cover: Tree-covered areas
+    - 15.4.2b Area of degraded mountain land: Alpine
+    - 15.4.2b Area of degraded mountain land: Montane
+    - 15.4.2b Area of degraded mountain land: Nival
+    - 15.4.2b Area of degraded mountain land: Remaining moutain area
+    - 15.4.2b Area of degraded mountain land: Total
+    - 15.4.2b Proportion of degraded mountain land: Alpine
+    - 15.4.2b Proportion of degraded mountain land: Montane
+    - 15.4.2b Proportion of degraded mountain land: Nival
+    - 15.4.2b Proportion of degraded mountain land: Remaining moutain area
+    - 15.4.2b Proportion of degraded mountain land: Total
+    - 15.6.1 Countries that are contracting Parties to the International Treaty on PGRFA
+    - 15.6.1 Countries with legislative, administrative and policy framework or measures on the International Treaty on PGRFA
+    - 15.6.1 Total reported number of Standard Material Transfer Agreements (SMTAs)
+    - 2.1.1 Number of undernourished people
+    - 2.1.1 Prevalence of undernourishment
+    - 2.1.2 Number of moderately or severely food insecure people (both sexes or no breakdown by sex) (all age ranges or no breakdown by age)
+    - 2.1.2 Number of moderately or severely food insecure people (female) (15 years old and over)
+    - 2.1.2 Number of moderately or severely food insecure people (male) (15 years old and over)
+    - 2.1.2 Number of severely food insecure people (both sexes or no breakdown by sex) (all age ranges or no breakdown by age)
+    - 2.1.2 Number of severely food insecure people (female) (15 years old and over)
+    - 2.1.2 Number of severely food insecure people (male) (15 years old and over)
+    - 2.1.2 Prevalence of moderate or severe food insecurity (both sexes or no breakdown by sex) (15 years old and over) (city)
+    - 2.1.2 Prevalence of moderate or severe food insecurity (both sexes or no breakdown by sex) (15 years old and over) (rural)
+    - 2.1.2 Prevalence of moderate or severe food insecurity (both sexes or no breakdown by sex) (15 years old and over) (town and semi-dense area)
+    - 2.1.2 Prevalence of moderate or severe food insecurity (both sexes or no breakdown by sex) (all age ranges or no breakdown by age) (no breakdown by urbanisation)
+    - 2.1.2 Prevalence of moderate or severe food insecurity (female) (15 years old and over) (no breakdown by urbanisation)
+    - 2.1.2 Prevalence of moderate or severe food insecurity (male) (15 years old and over) (no breakdown by urbanisation)
+    - 2.1.2 Prevalence of severe food insecurity (both sexes or no breakdown by sex) (15 years old and over) (city)
+    - 2.1.2 Prevalence of severe food insecurity (both sexes or no breakdown by sex) (15 years old and over) (rural)
+    - 2.1.2 Prevalence of severe food insecurity (both sexes or no breakdown by sex) (15 years old and over) (town and semi-dense area)
+    - 2.1.2 Prevalence of severe food insecurity (both sexes or no breakdown by sex) (all age ranges or no breakdown by age) (no breakdown by urbanisation)
+    - 2.1.2 Prevalence of severe food insecurity (female) (15 years old and over) (no breakdown by urbanisation)
+    - 2.1.2 Prevalence of severe food insecurity (male) (15 years old and over) (no breakdown by urbanisation)
+    - 2.2.4 Prevalence of minimum dietary diversity among non-pregnant women aged 15-49 years
+    - 2.3.1 Productivity of large-scale food producers (both sexes or no breakdown by sex) (2017 base period)
+    - 2.3.1 Productivity of large-scale food producers (female) (2017 base period)
+    - 2.3.1 Productivity of large-scale food producers (male) (2017 base period)
+    - 2.3.1 Productivity of small-scale food producers (both sexes or no breakdown by sex) (2017 base period)
+    - 2.3.1 Productivity of small-scale food producers (female) (2017 base period)
+    - 2.3.1 Productivity of small-scale food producers (male) (2017 base period)
+    - 2.3.2 Average income of large-scale food producers (both sexes or no breakdown by sex) (2017 base period)
+    - 2.3.2 Average income of large-scale food producers (female) (2017 base period)
+    - 2.3.2 Average income of large-scale food producers (male) (2017 base period)
+    - 2.3.2 Average income of small-scale food producers (both sexes or no breakdown by sex) (2017 base period)
+    - 2.3.2 Average income of small-scale food producers (female) (2017 base period)
+    - 2.3.2 Average income of small-scale food producers (male) (2017 base period)
+    - 2.4.1 Proportion of agricultural area under productive and sustainable agriculture
+    - 2.4.1 Proportion of agricultural land area that has achieved an acceptable or desirable level of farm output value per hectare
+    - 2.4.1 Proportion of agricultural land area that has achieved an acceptable or desirable level of food security
+    - 2.4.1 Proportion of agricultural land area that has achieved an acceptable or desirable level of management of fertilizers
+    - 2.4.1 Proportion of agricultural land area that has achieved an acceptable or desirable level of management of pesticides
+    - 2.4.1 Proportion of agricultural land area that has achieved an acceptable or desirable level of net farm income
+    - 2.4.1 Proportion of agricultural land area that has achieved an acceptable or desirable level of risk mitigation mechanisms
+    - 2.4.1 Proportion of agricultural land area that has achieved an acceptable or desirable level of secure tenure rights to agricultural land
+    - 2.4.1 Proportion of agricultural land area that has achieved an acceptable or desirable level of soil degradation
+    - 2.4.1 Proportion of agricultural land area that has achieved an acceptable or desirable level of use of agro-biodiversity supportive practices
+    - 2.4.1 Proportion of agricultural land area that has achieved an acceptable or desirable level of variation in water availability
+    - 2.4.1 Proportion of agricultural land area that has achieved an acceptable or desirable level of wage rate in agriculture
+    - 2.4.1 [PROXY] Progress toward productive and sustainable agriculture, current status score
+    - 2.4.1 [PROXY] Progress toward productive and sustainable agriculture, trend score
+    - 2.5.1a Plant genetic resources accessions stored ex situ (number)
+    - 2.5.1b Number of local breeds for which sufficient genetic resources are stored for reconstitution
+    - 2.5.1b Number of local breeds kept in the country
+    - 2.5.1b Number of transboundary breeds (including extinct ones)
+    - 2.5.1b Number of transboundary breeds for which sufficient genetic resources are stored for reconstitution
+    - 2.5.2 Number of local breeds (not extinct)
+    - 2.5.2 Number of local breeds with unknown risk status
+    - 2.5.2 Number of transboundary breeds (not extinct)
+    - 2.5.2 Number of transboundary breeds with unknown risk status
+    - 2.5.2 Proportion of local breeds classified as being at risk of extinction
+    - 2.5.2 Proportion of transboundary breeds classified as being at risk of extinction
+    - 2.a.1 Agriculture orientation index for government expenditures
+    - 2.a.1 Agriculture share of Government Expenditure
+    - 2.a.1: Contributions de la valeur ajoutée agricole au PIB
+    - 2.c.1 Indicator of Food Price Anomalies (IFPA), by Food CPI
+    - 2.c.1 Indicator of Food Price Anomalies (IFPA), by type of product: Maize
+    - 2.c.1 Indicator of Food Price Anomalies (IFPA), by type of product: Millet
+    - 2.c.1 Indicator of Food Price Anomalies (IFPA), by type of product: Rice
+    - 2.c.1 Indicator of Food Price Anomalies (IFPA), by type of product: Sorghum
+    - 2.c.1 Indicator of Food Price Anomalies (IFPA), by type of product: Wheat
+    - 2.c.1 Proportion of countries recording abnormally high or moderately high food prices; No breakdown
+    - 2.c.1 Proportion of countries recording abnormally high or moderately high food prices; Severity of price levels: Abnormal: High food prices
+    - 2.c.1 Proportion of countries recording abnormally high or moderately high food prices; Severity of price levels: Moderate: Moderately high food prices
+    - 5.a.1 Proportion of people with ownership or secure rights over agricultural land, by sex (both sexes or no breakdown by sex)
+    - 5.a.1 Proportion of people with ownership or secure rights over agricultural land, by sex (female)
+    - 5.a.1 Proportion of people with ownership or secure rights over agricultural land, by sex (male)
+    - 5.a.1 Proportion of people with ownership or secure rights over agricultural land, by sex (not available)
+    - 5.a.1 Share of women among owners or rights-bearers of agricultural land
+    - 5.a.2 Legal guarantees to women’s equal rights to land ownership and/or control
+    - 6.4.1 Water Use Efficiency (Agriculture (ISIC4 A01 A0210 A0322))
+    - 6.4.1 Water Use Efficiency (Industries)
+    - 6.4.1 Water Use Efficiency (No breakdown)
+    - 6.4.1 Water Use Efficiency (Services (G to T))
+    - 6.4.2 Level of water stress (Agriculture (ISIC4 A01 A0210 A0322))
+    - 6.4.2 Level of water stress (Industries)
+    - 6.4.2 Level of water stress (No breakdown)
+    - 6.4.2 Level of water stress (Services (G to T))
+  Unique Elements (4):
+    - Confidence interval: Lower bound
+    - Confidence interval: Upper bound
+    - Valeur
+    - Valeur (prix constants de 2017)
+================================================================================
+File: faostat\securite_alimentaire\Données_de_la_sécurité_alimentaire_F_Toutes_les_Données_(Normalisé).csv
+Size: 52.97 MB
+  Detected columns: Product: Produit, Element: Élément, Month: None (encoding: utf-8)
+  Unique Products (68):
+    - Besoins énergétiques alimentaires minimaux (kcal/personne/jour)
+    - Besoins énergétiques alimentaires moyens (kcal/personne/jour)
+    - Coefficient de variation de la distribution de la consommation calorique habituelle (vraie valeur)
+    - Densité du réseau ferroviaire (pour 100 km carrés de surface totale du pays)
+    - Disponibilité alimentaire par habitant utilisée dans l'estimation de la prévalence de la sous-alimentation (kcal/personne/jour)
+    - Disponibilité alimentaire par habitant utilisée dans l'estimation de la prévalence de la sous-alimentation (kcal/personne/jour) (moyenne sur 3 ans)
+    - Disponibilités moyennes de matière grasse (g/personne/jour) (moyenne sur 3 ans)
+    - Disponibilités protéines moyennes d’origine animale (g/personne/jour) (moyenne sur 3 ans)
+    - Disponibilités protéiques moyennes (g/personne/jour) (moyenne sur 3 ans)
+    - Incidence des pertes caloriques au niveau de la vente au détail (%)
+    - Nombre d'adultes (18 ans ou plus) obèses (millions)
+    - Nombre d'enfants de moins de 5 ans présentant un excès pondéral (estimation modélisée) (millions)
+    - Nombre d'enfants de moins de 5 ans présentant un retard de croissance (estimation modélisée) (millions)
+    - Nombre d'enfants de moins de 5 ans émaciés (millions)
+    - Nombre de d’hommes adultes en situation d’insécurité alimentaire grave (millions) (valeur annuelle)
+    - Nombre de femmes adultes en situation d’insécurité alimentaire grave (millions) (moyenne sur 3 ans)
+    - Nombre de femmes adultes en situation d’insécurité alimentaire grave (millions) (valeur annuelle)
+    - Nombre de femmes adultes en situation d’insécurité alimentaire modérée ou grave (millions) (moyenne sur 3 ans)
+    - Nombre de femmes adultes en situation d’insécurité alimentaire modérée ou grave (millions) (valeur annuelle)
+    - Nombre de femmes en âge de procréer (15-49 ans) anémiques (millions)
+    - Nombre de nouveaux-nés en insuffisance pondérale (millions)
+    - Nombre de personnes en situation d’insécurité alimentaire grave (millions) (moyenne sur 3 ans)
+    - Nombre de personnes en situation d’insécurité alimentaire grave (millions) (valeur annuelle)
+    - Nombre de personnes en situation d’insécurité alimentaire modérée ou grave (millions) (moyenne sur 3 ans)
+    - Nombre de personnes en situation d’insécurité alimentaire modérée ou grave (millions) (valeur annuelle)
+    - Nombre de personnes sous-alimentées (millions) (moyenne sur 3 ans)
+    - Nombre de personnes sous-alimentées (millions) (valeur annuelle)
+    - Nombre d’hommes adultes en situation d’insécurité alimentaire modérée ou grave (millions) (moyenne sur 3 ans)
+    - Nombre d’hommes adultes en situation d’insécurité alimentaire modérée ou grave (millions) (valeur annuelle)
+    - PIB par habitant, ($ PPA internationaux constants de 2021)
+    - Part des céréales, des racines et des tubercules dans les apports énergétiques alimentaires (%) (moyenne sur 3 ans)
+    - Pourcentage de la population ayant accès à des services d'assainissement gérés en toute sécurité
+    - Pourcentage de la population ayant accès à des services d'eau potable gérés en toute sécurité
+    - Pourcentage de la population utilisant au moins les services d'assainissement de base
+    - Pourcentage de la population utilisant au moins les services d'eau de base
+    - Pourcentage des enfants de moins de 5 ans présentant un retard de croissance (estimation modélisée) (%)
+    - Pourcentage des enfants de moins de 5 ans émaciés (%)
+    - Pourcentage des terres arables aménagées pour l'irrigation (%) (moyenne sur 3 ans)
+    - Prévalence de l'allaitement exclusif au sein du nourrisson de 0 à 5 mois
+    - Prévalence de l'anémie chez la femme en âge de procréer (15-49 ans)
+    - Prévalence de l'excès pondéral chez l’enfant de moins de 5 ans (estimation modélisée) (%)
+    - Prévalence de l'insuffisance pondérale à la naissance (%)
+    - Prévalence de l'obésité chez l'adulte (18 ans ou plus)
+    - Prévalence de la sous-alimentation (%) (moyenne sur 3 ans)
+    - Prévalence de la sous-alimentation (%) (valeur annuelle)
+    - Prévalence de l’insécurité alimentaire grave au sein de la population adulte vivant dans une ville ou une zone semi-dense (pourcentage) (valeur annuelle)
+    - Prévalence de l’insécurité alimentaire grave au sein de la population rurale adulte (pourcentage) (valeur annuelle)
+    - Prévalence de l’insécurité alimentaire grave au sein de la population urbaine adulte (pourcentage) (valeur annuelle)
+    - Prévalence de l’insécurité alimentaire grave – femmes adultes (%) (moyenne sur 3 ans)
+    - Prévalence de l’insécurité alimentaire grave – femmes adultes (%) (valeur annuelle)
+    - Prévalence de l’insécurité alimentaire grave – hommes adultes (%) (moyenne sur 3 ans)
+    - Prévalence de l’insécurité alimentaire grave – hommes adultes (%) (valeur annuelle)
+    - Prévalence de l’insécurité alimentaire grave – population totale (%) (moyenne sur 3 ans)
+    - Prévalence de l’insécurité alimentaire grave – population totale (%) (valeur annuelle)
+    - Prévalence de l’insécurité alimentaire modérée ou grave au sein de la population adulte vivant dans une ville ou une zone semi-dense (pourcentage) (valeur annuelle)
+    - Prévalence de l’insécurité alimentaire modérée ou grave au sein de la population rurale adulte (pourcentage) (valeur annuelle)
+    - Prévalence de l’insécurité alimentaire modérée ou grave au sein de la population urbaine adulte (pourcentage) (valeur annuelle)
+    - Prévalence de l’insécurité alimentaire modérée ou grave – femmes adultes (%) (moyenne sur 3 ans)
+    - Prévalence de l’insécurité alimentaire modérée ou grave – femmes adultes (%) (valeur annuelle)
+    - Prévalence de l’insécurité alimentaire modérée ou grave – hommes adultes (%) (moyenne sur 3 ans)
+    - Prévalence de l’insécurité alimentaire modérée ou grave – hommes adultes (%) (valeur annuelle)
+    - Prévalence de l’insécurité alimentaire modérée ou grave – population totale (%) (moyenne sur 3 ans)
+    - Prévalence de l’insécurité alimentaire modérée ou grave – population totale (%) (valeur annuelle)
+    - Stabilité politique et absence de violence/terrorisme (indice)
+    - Suffisance des apports énergétiques alimentaires moyens (%) (moyenne sur 3 ans)
+    - Taux de dépendance à l'égard des importations céréalières (%) (moyenne sur 3 ans)
+    - Valeur des importations alimentaires par rapport aux exportations totales de marchandises (%) (moyenne sur 3 ans)
+    - Variabilité des disponibilités alimentaires par habitant (Kcal/personne/jour)
+  Unique Elements (3):
+    - Confidence interval: Lower bound
+    - Confidence interval: Upper bound
+    - Valeur
+================================================================================
+File: faostat\sol_nutritif\Environnement_Bilan_nutritif_des_sols_F_Toutes_les_Données_(Normalisé).csv
+Size: 30.25 MB
+  Detected columns: Product: Produit, Element: Élément, Month: None (encoding: latin-1)
+  Unique Products (8):
+    - Bilan nutritif des sols
+    - Dépôt atmosphérique
+    - Engrais synthétiques
+    - Entrées
+    - Fixation biologique
+    - Fumier appliquée aux sols
+    - Récolte des cultures
+    - Sorties
+  Unique Elements (2):
+    - Flux d'éléments nutritifs des terres cultivées
+    - Flux d'éléments nutritifs des terres cultivées par unité de surface
+================================================================================
+File: faostat\taux_change\Taux_de_change_F_Toutes_les_Données_(Normalisé).csv
+Size: 20.29 MB
+  Detected columns: Product: None, Element: Élément, Month: Mois (encoding: utf-8)
+  Unique Products (0):
+  Unique Elements (2):
+    - Unités de monnaie locale par USD
+    - Unités de monnaie locale standardisée par USD
+  Unique Months/Periods (13):
+    - Août
+    - Avril
+    - Décembre
+    - Février
+    - Janvier
+    - Juillet
+    - Juin
+    - Mai
+    - Mars
+    - Novembre
+    - Octobre
+    - Septembre
+    - Valeur annuel
+================================================================================
+File: faostat\temperature\Environnement_variation_temperature_F_Toutes_les_Données_(Normalisé).csv
+Size: 61.02 MB
+  Detected columns: Product: None, Element: Élément, Month: Mois (encoding: utf-8)
+  Unique Products (0):
+  Unique Elements (2):
+    - Variation de température
+    - Écart-type
+  Unique Months/Periods (17):
+    - Année météorologique
+    - Août
+    - Avril
+    - Décembre
+    - Déc–jan–fév
+    - Février
+    - Janvier
+    - Juillet
+    - Juin
+    - Jui–juil–aoû
+    - Mai
+    - Mars
+    - Mar–avr–mai
+    - Novembre
+    - Octobre
+    - Septembre
+    - Sep–Oct–Nov
+================================================================================
+File: faostat\terres_utilisation\Intrants_TerresUtilisation_F_Toutes_les_Données_(Normalisé).csv
+Size: 51.45 MB
+  Detected columns: Product: Produit, Element: Élément, Month: None (encoding: utf-8)
+  Unique Products (45):
+    - Agriculture
+    - Autres terres
+    - Bâtiments et cours de ferme
+    - Cultures permanentes
+    - Cultures temporaires
+    - Eaux continent. utilisées pour aquacult. ou bassins de stabulat.
+    - Eaux continent. utilisées pour la pêche de capture
+    - Eaux continentales
+    - Eaux côtières
+    - Eaux côtières utilisées pour aquacult. ou bassins de stabulat.
+    - Eaux côtières utilisées pour la pêche de capture
+    - Forêt naturellement régénérée
+    - Forêt plantée
+    - Forêt primaire
+    - Jachères (temporaires)
+    - Prairies et de pâturages temporaires
+    - Prairies et pâturages permanents
+    - Prairies et pâturages permanents cultivés
+    - Prairies et pâturages permanents naturels
+    - Superficie des terres
+    - Superficie des terres réellement irriguée
+    - Superficie du pays
+    - Superficie équipée de systèmes d'irrigation
+    - Terr. agricoles certifiées biologiques
+    - Terr. agricoles sous agriculture biologique
+    - Terr. de prairies et de pâturages perm. certifiées biologiques
+    - Terr. de prairies et de pâturages perm. réellement irriguées
+    - Terr. de prairies et de pâturages perm. sous agriculture biologique
+    - Terr. en culture sous agriculture biologique
+    - Terr. utilisées aux fins de la sylvicult. réellement irriguées
+    - Terres agricole réellement irriguées
+    - Terres agricoles
+    - Terres arables
+    - Terres en culture
+    - Terres en culture avec travail du sol conventionnel
+    - Terres en culture avec travail du sol de conservation
+    - Terres en culture certifiées biologiques
+    - Terres en culture réellement irriguées
+    - Terres en culture sans travail du sol
+    - Terres en culture sous couvert protecteur
+    - Terres forestières
+    - Terres utilisées pour l’aquaculture
+    - ZEE utilisées pour aquacult. ou bassins de stabulat.
+    - ZEE utilisées pour la pêche de capture
+    - Zone économique exclusive (ZEE)
+  Unique Elements (8):
+    - Part de superficie des terres
+    - Part de terres agricoles
+    - Part de terres en culture
+    - Part de terres forestières
+    - Stock de carbone dans la biomasse vivante
+    - Superficie
+    - Superficie par habitant
+    - Valeur de la production agricole (Int.$) par superficie
