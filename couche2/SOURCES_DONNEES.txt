@@ -1,0 +1,109 @@
+==============================================================================
+ SOURCES DES DONNEES — COUCHE 2 (Le Sang : Demographie & Epidemiologie)
+==============================================================================
+
+100 % donnees REELLES, publiques et telechargeables. Aucune donnee generee.
+Tout est keye sur (Pays, Annee) — meme cle que la Couche 1 (FAO).
+Telechargement automatique : python couche2/download_data.py  ->  data/couche2/
+
+------------------------------------------------------------------------------
+ 1. NATALITE & FECONDITE
+------------------------------------------------------------------------------
+Fournisseur : World Bank Open Data
+- Birth rate, crude (pour 1000)      code: SP.DYN.CBRT.IN
+  https://data.worldbank.org/indicator/SP.DYN.CBRT.IN
+- Fertility rate, total (enf./femme) code: SP.DYN.TFRT.IN
+  https://data.worldbank.org/indicator/SP.DYN.TFRT.IN
+Couverture : ~200 pays, 1960-2024
+Fichiers : natalite_brute.csv, fecondite_totale.csv
+
+------------------------------------------------------------------------------
+ 2. MORTALITE PAR TRANCHE D'AGE  (infantile vs adulte)
+------------------------------------------------------------------------------
+Fournisseur : World Bank Open Data  (+ UN WPP pour le detail par age)
+- Mortalite infantile (<1 an, /1000) code: SP.DYN.IMRT.IN
+  https://data.worldbank.org/indicator/SP.DYN.IMRT.IN
+- Mortalite moins de 5 ans (/1000)   code: SH.DYN.MORT
+  https://data.worldbank.org/indicator/SH.DYN.MORT
+- Taux de mortalite brut (/1000)     code: SP.DYN.CDRT.IN
+  https://data.worldbank.org/indicator/SP.DYN.CDRT.IN
+- Tables de survie par age (qx)      UN World Population Prospects 2024
+  https://population.un.org/wpp/Download/Standard/Mortality/
+Couverture : 1960-2024 (WB), 1950+ (WPP)
+Fichiers : mortalite_infantile.csv, mortalite_moins5ans.csv, mortalite_brute.csv
+
+------------------------------------------------------------------------------
+ 3. DENSITE DE POPULATION  (hab/km2)
+------------------------------------------------------------------------------
+Fournisseur : World Bank Open Data  (+ FAOSTAT pour la pyramide des ages)
+- Population density (hab/km2)        code: EN.POP.DNST
+  https://data.worldbank.org/indicator/EN.POP.DNST
+- Population, total                   code: SP.POP.TOTL
+  https://data.worldbank.org/indicator/SP.POP.TOTL
+- Population par age/sexe (FAOSTAT)
+  https://data.apps.fao.org/catalog/dataset/faostat-population
+Couverture : 1960-2024
+Fichiers : densite_population.csv, population_totale.csv
+
+------------------------------------------------------------------------------
+ 4. MALNUTRITION / CARENCE   (maillon Couche 1 <-> Couche 2)
+------------------------------------------------------------------------------
+Fournisseur : FAO  (relaye par World Bank)
+- Prevalence of Undernourishment (% pop.)  code: SN.ITK.DEFC.ZS
+  https://data.worldbank.org/indicator/SN.ITK.DEFC.ZS
+- Suite of Food Security Indicators (complet, domaine FS)
+  https://www.fao.org/faostat/en/#data/FS
+Couverture : ~150 pays, 2001-2023
+Fichier : malnutrition_carence.csv
+Note : mesure le % de population dont l'apport calorique est insuffisant
+       = exactement la mecanique de "carence" du moteur.
+
+------------------------------------------------------------------------------
+ 5. EPIDEMIOLOGIE — MODELE SIR  (R0 & Letalite)
+------------------------------------------------------------------------------
+Fournisseur : Project Tycho (University of Pittsburgh)
+- Rougeole, comptages hebdomadaires reels, 51 etats US, 1928-2002
+  Officiel (compte requis) : https://www.tycho.pitt.edu/
+  Miroir CSV (sans login)  : https://gist.github.com/rlvaugh/fd6ce822c98e38849d3ec51e3fd3441d
+  Miroir Kaggle            : https://www.kaggle.com/datasets/pitt/contagious-diseases
+Usage : estimer R0 (paquets R "R0", "EpiEstim") et la letalite (deces / cas).
+Granularite : etat US / semaine -> sert a CALIBRER les parametres, pas a
+              joindre sur (Pays, Annee).
+Fichier : epidemies_rougeole_tycho.csv
+
+------------------------------------------------------------------------------
+ 6. PRESSION MIGRATOIRE
+------------------------------------------------------------------------------
+Fournisseur : World Bank  (+ UNHCR pour les flux origine->asile)
+- Net migration                       code: SM.POP.NETM
+  https://data.worldbank.org/indicator/SM.POP.NETM
+- UNHCR Refugee Population Statistics (flux origine -> asile)
+  https://www.unhcr.org/refugee-statistics/download/
+  API : https://api.unhcr.org/population/v1/population/
+Couverture : 1960+ (WB), 1951+ (UNHCR)
+Fichier : migration_nette.csv
+
+------------------------------------------------------------------------------
+ OPTION HISTORIQUE  (avant 1900, esprit medieval)
+------------------------------------------------------------------------------
+Gapminder — taux de natalite, mortalite infantile, esperance de vie,
+population, RECONSTRUITS depuis 1800 (donnees reelles) :
+  https://www.gapminder.org/data/
+
+------------------------------------------------------------------------------
+ REFERENCE PAYS
+------------------------------------------------------------------------------
+pays_reference.csv : code ISO3, nom, region, niveau de revenu, capitale,
+latitude, longitude (World Bank). Utile pour construire un vrai voisinage
+geographique pour la migration.
+
+==============================================================================
+ RECAP DES CODES (a copier)
+==============================================================================
+ 1. Natalite/Fecondite ... SP.DYN.CBRT.IN , SP.DYN.TFRT.IN
+ 2. Mortalite par age .... SP.DYN.IMRT.IN , SH.DYN.MORT , SP.DYN.CDRT.IN , UN WPP
+ 3. Densite .............. EN.POP.DNST , SP.POP.TOTL , FAOSTAT Population
+ 4. Carence .............. SN.ITK.DEFC.ZS , FAOSTAT FS
+ 5. Epidemiologie (SIR) .. Project Tycho (Contagious Diseases 1888-2014)
+ 6. Migration ............ SM.POP.NETM , UNHCR Refugee Statistics
+==============================================================================
