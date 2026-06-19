@@ -500,7 +500,8 @@ def build_dataset():
     
     # Keep only post-2010 records
     df_master = df_master[df_master['Annee'] >= 2010]
-    df_master = df_master.dropna(subset=['Rendement_kgha'])
+    # 'ISO' = clé de jointure entre couches + groupe du split par pays -> jamais NaN
+    df_master = df_master.dropna(subset=['Rendement_kgha', 'ISO'])
     
     print(f"  -> Nombre total de lignes après fusion : {df_master.shape[0]:,}")
     

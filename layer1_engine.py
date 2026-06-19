@@ -8,7 +8,7 @@ import requests
 from PIL import Image
 
 class Layer1Engine:
-    def __init__(self, raw_dir=r"c:\Users\alexi\Desktop\Swarm_Prediction\data\raw"):
+    def __init__(self, raw_dir=os.path.join("data", "raw")):
         self.raw_dir = raw_dir
         self.climat_dir = os.path.join(raw_dir, "atmosphere_climat")
         self.relief_dir = os.path.join(raw_dir, "topographie_relief")
