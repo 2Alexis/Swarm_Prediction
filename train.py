@@ -1,6 +1,7 @@
 """
 Script d'entraînement du pipeline de Machine Learning pour la prédiction du rendement agricole.
-Prend en compte les relations non-linéaires, les intrants, l'effet temporel, et évite les fuites de données.
+Prend en compte les caractéristiques physiques planétaires (Layer 1), les intrants, 
+les indicateurs de développement, et évite les fuites de données par un split temporel.
 """
 import os
 import joblib
@@ -20,64 +21,16 @@ DATA_DIR = "data/cleaned"
 MODEL_DIR = "models"
 os.makedirs(MODEL_DIR, exist_ok=True)
 
-def clean_columns(df):
-    """Nettoie les colonnes mal encodées."""
-    rename_dict = {}
-    for col in df.columns:
-        if 'l' in col.lower() and 'm' in col.lower() and 'nt' in col.lower():
-            rename_dict[col] = 'Element'
-        elif 'unit' in col.lower():
-            rename_dict[col] = 'Unite'
-    return df.rename(columns=rename_dict)
-
-def load_and_merge_data():
-    print("[INFO] Chargement et fusion des donnees...")
-    
-    # Chargement des datasets
-    df_prod = clean_columns(pd.read_csv(f"{DATA_DIR}/production_cultures.csv"))
-    df_temp = pd.read_csv(f"{DATA_DIR}/mean_temperature.csv").rename(columns={'Valeur': 'Temperature_C'})
-    df_precip = pd.read_csv(f"{DATA_DIR}/precipitations.csv").rename(columns={'Valeur': 'Precipitations_mm'})
-    df_fert = pd.read_csv(f"{DATA_DIR}/fertilizers_nutrient.csv")
-    df_pest = pd.read_csv(f"{DATA_DIR}/pesticides.csv")
-    df_sols = pd.read_csv(f"{DATA_DIR}/bilan_nutritif_sols.csv").rename(columns={'Valeur': 'Bilan_sols_kgha'})
-    
-    # 1. Préparer la cible (Rendement)
-    df_yield = df_prod[df_prod['Element'] == 'Rendement'].copy()
-    df_yield = df_yield.rename(columns={'Valeur': 'Rendement_kgha'})
-    # Supprimer les outliers extrêmes découverts lors de l'EDA
-    df_yield = df_yield[df_yield['Rendement_kgha'] <= 100000]
-    df_yield = df_yield[df_yield['Rendement_kgha'] > 0] # Echelle log requiert des valeurs > 0
-    
-    # 2. Agrégation des intrants par pays/année
-    df_fert_agg = df_fert.groupby(['Pays', 'Annee'])['Valeur'].sum().reset_index().rename(columns={'Valeur': 'Engrais_kgha'})
-    df_pest_agg = df_pest.groupby(['Pays', 'Annee'])['Valeur'].sum().reset_index().rename(columns={'Valeur': 'Pesticides_kgha'})
-    
-    # Agrégation climat (au cas où il y a des doublons)
-    df_temp_agg = df_temp.groupby(['Pays', 'Annee'])['Temperature_C'].mean().reset_index()
-    df_precip_agg = df_precip.groupby(['Pays', 'Annee'])['Precipitations_mm'].mean().reset_index()
-    
-    # 3. Fusion des données
-    # Jointure crop-specific (Rendement + Bilan sols)
-    df_master = pd.merge(
-        df_yield[['Pays', 'Produit', 'Annee', 'Rendement_kgha']],
-        df_sols[['Pays', 'Produit', 'Annee', 'Bilan_sols_kgha']],
-        on=['Pays', 'Produit', 'Annee'],
-        how='left'
-    )
-    
-    # Jointures géographiques/temporelles
-    df_master = pd.merge(df_master, df_temp_agg, on=['Pays', 'Annee'], how='left')
-    df_master = pd.merge(df_master, df_precip_agg, on=['Pays', 'Annee'], how='left')
-    df_master = pd.merge(df_master, df_fert_agg, on=['Pays', 'Annee'], how='left')
-    df_master = pd.merge(df_master, df_pest_agg, on=['Pays', 'Annee'], how='left')
-    
-    print(f"[SUCCESS] Donnees fusionnees avec succes. Nombre total de lignes : {len(df_master):,}")
-    return df_master
+def load_data():
+    dataset_path = os.path.join(DATA_DIR, "dataset_final_modelisation.csv")
+    print(f"[INFO] Chargement du dataset final : {dataset_path}...")
+    df = pd.read_csv(dataset_path)
+    return df
 
 def engineer_features(df):
     print("[INFO] Feature Engineering...")
     
-    # Création des features non-linéaires basées sur les conclusions EDA
+    # Réintroduire les relations quadratiques et les interactions basées sur l'analyse
     df['Temperature_C_sq'] = df['Temperature_C'] ** 2
     df['Precipitations_mm_sq'] = df['Precipitations_mm'] ** 2
     df['Engrais_Temp_interaction'] = df['Engrais_kgha'] * df['Temperature_C']
@@ -85,7 +38,7 @@ def engineer_features(df):
     # Transformation de la cible
     df['log_Rendement'] = np.log1p(df['Rendement_kgha'])
     
-    # Drop rows without targets
+    # Suppression des lignes n'ayant pas de cible valide
     df = df.dropna(subset=['log_Rendement'])
     
     return df
@@ -97,18 +50,17 @@ def build_preprocessing_pipeline(num_cols, cat_cols):
         ('scaler', StandardScaler())
     ])
     
-    # Pipeline pour les variables catégorielles
-    cat_transformer = Pipeline(steps=[
-        ('imputer', SimpleImputer(strategy='constant', fill_value='Unknown')),
-        ('onehot', OneHotEncoder(handle_unknown='ignore', sparse_output=False))
-    ])
+    transformers = [('num', num_transformer, num_cols)]
     
-    # Combiner les deux
-    preprocessor = ColumnTransformer(transformers=[
-        ('num', num_transformer, num_cols),
-        ('cat', cat_transformer, cat_cols)
-    ])
-    
+    # Pipeline pour les variables catégorielles (si spécifiées)
+    if cat_cols:
+        cat_transformer = Pipeline(steps=[
+            ('imputer', SimpleImputer(strategy='constant', fill_value='Unknown')),
+            ('onehot', OneHotEncoder(handle_unknown='ignore', sparse_output=False))
+        ])
+        transformers.append(('cat', cat_transformer, cat_cols))
+        
+    preprocessor = ColumnTransformer(transformers=transformers)
     return preprocessor
 
 def evaluate_model(model, X_train, y_train, X_test, y_test, name):
@@ -145,21 +97,59 @@ def evaluate_model(model, X_train, y_train, X_test, y_test, name):
     }
 
 def main():
-    # 1. Charger et nettoyer
-    df = load_and_merge_data()
+    # 1. Charger et préparer les données
+    df = load_data()
     df = engineer_features(df)
     
-    # Définir les colonnes
-    num_cols = [
-        'Annee', 'Temperature_C', 'Temperature_C_sq', 
-        'Precipitations_mm', 'Precipitations_mm_sq', 
-        'Engrais_kgha', 'Pesticides_kgha', 'Bilan_sols_kgha',
-        'Engrais_Temp_interaction'
-    ]
-    cat_cols = ['Pays', 'Produit']
+    # Détecter dynamiquement les colonnes de type One-Hot-Encoded (pd.get_dummies) de build_dataset.py
+    dummy_prefixes = ('closest_volcano_type_', 'closest_energy_type_', 'closest_mineral_type_', 'closest_fossil_type_')
+    dummy_cols = [col for col in df.columns if col.startswith(dummy_prefixes)]
     
-    # 2. Split temporel (Train <= 2013 | Test > 2013)
-    # Ce split évite le data leakage temporel
+    # Définition de toutes les colonnes numériques incluant les features physiques et les variables d'aléa encodées
+    num_cols = [
+        # Variables temporelles et intrants
+        'Annee', 'Engrais_kgha', 'Pesticides_kgha', 'Bilan_sols_kgha',
+        'log_Engrais_kgha', 'log_Pesticides_kgha',
+        
+        # Climat annuel localisé
+        'Temperature_C', 'Temperature_C_sq', 
+        'Precipitations_mm', 'Precipitations_mm_sq', 
+        'Engrais_Temp_interaction',
+        
+        # Socio-démographie & Santé
+        'GDP_pc', 'Life_Exp', 'Child_Mort', 'HDI', 'Malaria_Incidence', 'Water_Withdrawal_pct',
+        
+        # Features Physiques du Moteur (Climat de référence)
+        'temp_mean', 'temp_max', 'temp_min', 'precip_mean', 'precip_seasonality',
+        'wind_speed_mean', 'solar_radiation_mean', 'vapor_pressure_mean',
+        
+        # Topographie & Relief
+        'elevation', 'slope_pct', 'aspect_deg', 'roughness_m',
+        
+        # Hydrologie
+        'dist_to_river_km', 'dist_to_lake_km', 'dist_to_coast_km', 'dist_to_freshwater_km', 'groundwater_depth_m',
+        
+        # Sols (Qualité de base)
+        'clay_pct', 'silt_pct', 'sand_pct', 'soil_pH', 'organic_carbon_pct',
+        
+        # Risques physiques
+        'dist_to_fault_km', 'Seismic_Hazard_Index', 'dist_to_volcano_km', 'Volcanic_Hazard_Index',
+        
+        # Proximité ressources
+        'dist_to_mineral_resource_km', 'dist_to_fossil_resource_km', 'dist_to_energy_source_km',
+        
+        # Écologie native
+        'npp_g_m2_yr', 'estimated_wood_density_g_cm3', 'fauna_herbivore_biomass_kg_km2', 'fauna_predator_biomass_kg_km2',
+        
+        # Marées, astronomie, vecteurs
+        'tide_amplitude_m', 'vector_suitability_index',
+        'photoperiod_summer_solstice_hours', 'photoperiod_winter_solstice_hours', 'photoperiod_range_hours'
+    ] + dummy_cols
+    
+    # Exclure Pays_EN, Produit, ISO de X en gardant cat_cols vide
+    cat_cols = []
+    
+    # 2. Split temporel (Train <= 2013 | Test > 2013) pour éviter le data leakage temporel
     print("\n[INFO] Division temporelle des donnees...")
     df_train = df[df['Annee'] <= 2013]
     df_test = df[df['Annee'] > 2013]
@@ -211,14 +201,14 @@ def main():
 
     # 5. Sauvegarder le meilleur modèle
     print(f"\n[SUCCESS] Meilleur modele : {best_model_name} avec un Test R2 de {best_r2:.4f}")
-    model_path = f"{MODEL_DIR}/best_model_pipeline.joblib"
+    model_path = os.path.join(MODEL_DIR, "best_model_pipeline.joblib")
     joblib.dump(best_pipeline, model_path)
-    print(f"💾 Pipeline complet sauvegarde dans : {model_path}")
+    print(f"Pipeline complet sauvegarde dans : {model_path}")
     
     # Sauvegarder un échantillon de test pour vérification future
-    test_sample_path = f"{DATA_DIR}/test_sample.csv"
+    test_sample_path = os.path.join(DATA_DIR, "test_sample.csv")
     df_test.sample(min(1000, len(df_test)), random_state=42).to_csv(test_sample_path, index=False)
-    print(f"📝 Echantillon de test sauvegarde dans : {test_sample_path}")
+    print(f"Echantillon de test sauvegarde dans : {test_sample_path}")
 
 if __name__ == "__main__":
     main()

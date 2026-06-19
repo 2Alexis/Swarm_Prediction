@@ -5,3 +5,6 @@ seaborn
 ipykernel
 scikit-learn
 xgboost
+ipympl
+pycountry
+babel
