@@ -1,0 +1,10 @@
+Famille,Cible,Origine,Performance
+① Mesurée (ML),Rendement agricole,FAO (kg/ha),R² = 0.691  (XGBoost)
+① Mesurée (ML),Stress hydrique,World Bank (% prélèvement),R² = -0.094  (Ridge)
+① Mesurée (ML),Dégradation du sol,FAO (bilan nutritif),R² = 0.534  (Ridge)
+① Mesurée (ML),Anomalie thermique,T° annuelle − climatologie,R² = 0.328  (Random Forest)
+② Dérivée (formule),NPP (biomes),"Miami model : min(f(T), g(P))",calculée — contrôle proxy R²=0.66
+② Dérivée (formule),Densité de faune,fauna = 0.05 × NPP,calculée — contrôle proxy R²=0.99
+② Dérivée (formule),Indice parasitaire,VSI = 10·exp(-(T-26)²/50)·(1-exp(-P/800)),calculée — contrôle proxy R²=0.94
+② Dérivée (formule),Risque d'inondation,(elevation ≤ 50) & (dist_eau ≤ 5),calculée — contrôle proxy F1=1.00
+② Dérivée (formule),Probabilité d'érosion,100·exp(-dist_côte/5)·(marée/5) + 50·exp(-dist_riv/1),calculée — contrôle proxy non récupérable (R²<0)
