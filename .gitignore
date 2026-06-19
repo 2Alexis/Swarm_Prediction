@@ -10,6 +10,9 @@ data/processed/
 # Données nettoyées (gros fichiers CSV)
 data/cleaned/
 
+# Données Couche 2 (démographie/épidémio — reproductibles via couche2/download_data.py)
+data/couche2/
+
 # Jupyter checkpoints
 .ipynb_checkpoints/
 **/.ipynb_checkpoints/
