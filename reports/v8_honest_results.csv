@@ -1,0 +1,19 @@
+Cible,Technique,R² Global,R² Global+Cluster,R² PerCluster,MAE Global,N obs
+Rendement céréales,target_yield_cereals,0.6078,0.5858,0.1147,0.346,5823
+Rendement oléagineux,target_yield_oilcrops,0.0807,0.0892,-0.7959,0.516,5964
+Rendement légumineuses,target_yield_pulses,-0.0651,-0.0539,-0.3424,0.492,5500
+Rendement racines,target_yield_roots,0.5345,0.5368,-0.0728,0.352,6310
+Rendement fruits,target_yield_fruits,0.086,0.1484,-0.6614,0.486,6310
+Rendement légumes,target_yield_vegetables,0.405,0.4273,-0.4542,0.453,6292
+Stress hydrique,target_water_stress,0.6308,0.6582,-7.8549,0.741,5170
+Dégradation sol,target_soil_degradation,0.6441,0.6447,-1.1565,25.141,3271
+Anomalie thermique,target_thermal_anomaly,0.8059,0.8145,0.6991,0.19,8024
+Humidité sol,target_soil_moisture_root,0.5118,0.5214,0.1617,0.077,8085
+% forêt,target_forest_share,0.8784,0.8843,0.5456,4.639,7040
+Perte couvert arboré,target_tree_cover_loss,0.5922,0.6154,0.6796,1.64,4368
+Mortalité infantile,target_child_mortality,0.8318,0.8165,0.5588,13.751,6790
+Espérance de vie,target_life_expectancy,0.7472,0.7493,0.4531,2.866,7385
+Croissance démo,target_pop_growth,0.6874,0.6832,0.4637,0.461,7382
+Natalité,target_birth_rate,0.9474,0.9492,0.8277,1.73,7385
+Mortalité brut,target_death_rate,0.6087,0.5815,0.3401,1.549,7385
+Migration nette,target_net_migration,0.0803,0.0774,-0.8199,65968.881,7385

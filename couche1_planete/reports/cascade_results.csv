@@ -1,0 +1,40 @@
+Sous-couche,Cible,Technique,R² test,MAE,N obs,N pays test,N features,Cascade OOF utilisées
+1.1 Atmosphère,Anomalie thermique,target_thermal_anomaly,0.7816,0.206,8024,59,133,0
+1.1 Atmosphère,Émissions CO2 (log),target_co2_emissions,0.4856,1.747,6990,50,138,0
+1.1 Atmosphère,Émissions CH4 (log),target_methane_emissions,0.415,1.721,6580,47,138,0
+1.1 Atmosphère,Émissions N2O (log),target_n2o_emissions,0.2538,1.528,6650,48,138,0
+1.2 Hydrologie,Stress hydrique,target_water_stress,0.4728,0.914,5170,44,79,4
+1.2 Hydrologie,Accès eau potable,target_water_access,0.6086,6.721,5112,53,79,4
+1.2 Hydrologie,Humidité sol racinaire,target_soil_moisture_root,0.5133,0.075,8085,58,54,4
+1.2 Hydrologie,Production halieutique totale (log),target_fish_total,0.4247,1.615,7187,57,79,4
+1.2 Hydrologie,Pêche capture sauvage (log),target_fish_capture,0.4706,1.746,7187,57,79,4
+1.2 Hydrologie,Aquaculture totale (log),target_fish_aquaculture,0.5423,2.106,7187,57,79,4
+1.3 Sols & Écologie,Dégradation du sol,target_soil_degradation,0.6181,26.193,3271,29,41,10
+1.3 Sols & Écologie,% forêt national,target_forest_share,0.5056,12.797,7040,51,47,10
+1.3 Sols & Écologie,Perte couvert arboré (log),target_tree_cover_loss,0.4444,2.084,4368,46,47,10
+1.4 Agriculture végétale,Rendement céréales,target_yield_cereals,0.4163,0.404,5823,44,100,13
+1.4 Agriculture végétale,Rendement racines/tubercules,target_yield_roots,0.4232,0.384,6310,47,100,13
+1.4 Agriculture végétale,Tomate,target_yield_tomato,0.0189,0.6,5009,40,100,13
+1.4 Agriculture végétale,Pomme de terre,target_yield_potato,0.4051,0.411,4959,38,100,13
+1.4 Agriculture végétale,Concombre,target_yield_cucumber,0.371,0.684,4075,33,100,13
+1.4 Agriculture végétale,Colza,target_yield_rapeseed,0.4067,0.3,1974,16,100,13
+1.4 Agriculture végétale,Pois sec,target_yield_drypea,0.1892,0.494,3003,24,100,13
+1.4 Agriculture végétale,Pomme,target_yield_apple,0.1927,0.624,3022,23,100,13
+1.4 Agriculture végétale,Aubergine,target_yield_eggplant,0.0337,0.714,2791,25,100,13
+1.4 Agriculture végétale,Fraise,target_yield_strawberry,0.2762,0.538,2493,20,100,13
+1.4 Agriculture végétale,Coton,target_yield_cotton,0.4796,0.457,2902,23,100,13
+1.4 Agriculture végétale,Arachide,target_yield_groundnut,0.3751,0.364,3696,29,100,13
+1.4 Agriculture végétale,Haricot sec,target_yield_drybean,0.1536,0.464,3785,31,100,13
+1.5 Élevage,Rendement lait (kg/animal),target_milk_yield,0.6982,845.769,6035,45,58,26
+1.5 Élevage,Poids carcasse bovine,target_cattle_carcass,0.2785,45.418,6240,46,58,26
+1.5 Élevage,Poids carcasse poulet,target_chicken_carcass,0.2941,248.281,6260,47,58,26
+1.5 Élevage,Poids carcasse ovin/caprin,target_sheepgoat_carcass,0.2055,3.394,6065,45,58,26
+1.5 Élevage,Poids carcasse porc,target_pig_carcass,-0.0253,18.734,5681,42,58,26
+1.5 Élevage,Rendement œufs,target_eggs_yield,0.3219,51.371,6147,46,58,26
+1.5 Élevage,Production œufs (log),target_livestock_eggs_prod,0.874,0.597,6190,46,58,26
+1.6 Énergie,Solaire TWh (log),target_solar_consumption,0.4843,0.296,5703,50,60,33
+1.6 Énergie,Éolien TWh (log),target_wind_generation,0.6827,0.277,5515,49,60,33
+1.6 Énergie,Hydroélectrique TWh (log),target_hydro_consumption,0.6889,0.67,5636,50,60,33
+1.6 Énergie,Charbon TWh (log),target_coal_production,0.8449,0.667,5553,50,60,33
+1.6 Énergie,Pétrole TWh (log),target_oil_production,0.892,0.606,5688,50,60,33
+1.6 Énergie,Gaz TWh (log),target_gas_production,0.8161,0.624,5682,50,60,33

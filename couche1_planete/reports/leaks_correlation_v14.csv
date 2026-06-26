@@ -1,0 +1,8 @@
+Cible,R²V14,N leaks (r>0.95),N suspects (0.85-0.95),N utiles (0.50-0.85),Top feature,Top |r|
+target_forest_share,0.89,0,0,0,fao_cl_yield_oilcrops_oil_equivalent,0.257
+target_tree_cover_loss,0.99,0,0,0,fra_biomass_agb_tot,0.376
+target_pig_carcass,0.95,0,1,0,fao_cl_yield_meat_of_pig_with_the_bone,0.91
+target_sheepgoat_carcass,0.88,1,0,3,fao_cl_yield_sheep_and_goat_meat,0.96
+target_cattle_carcass,0.85,1,1,5,fao_cl_yield_beef_and_buffalo_meat_pri,0.958
+target_yield_cereals,0.85,0,0,3,fao_cl_yield_cereals_primary,0.765
+target_chicken_carcass,0.82,1,1,0,fao_cl_yield_meat_of_chickens_fresh_or,0.95

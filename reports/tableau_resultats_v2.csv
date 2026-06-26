@@ -1,0 +1,13 @@
+Cible,Technique,Meilleur,R² (pays inconnus),MAE,N test,N features
+Rendement céréales (FAO),target_yield_cereals,XGBoost,0.4765,0.355,1433,126
+Rendement oléagineux (FAO),target_yield_oilcrops,XGBoost,0.3777,0.472,1519,126
+Rendement légumineuses (FAO),target_yield_pulses,XGBoost,0.1059,0.45,1413,126
+Rendement racines/tubercules (FAO),target_yield_roots,XGBoost,0.5353,0.334,1612,126
+Rendement fruits (FAO),target_yield_fruits,XGBoost,0.1266,0.466,1616,126
+Rendement légumes (FAO),target_yield_vegetables,XGBoost,0.4076,0.453,1616,126
+Stress hydrique log(% prélèvement),target_water_stress,RandomForest,0.6248,0.707,1256,141
+Dégradation du sol (kg/ha),target_soil_degradation,RandomForest,0.64,24.59,839,136
+Anomalie thermique annuelle,target_thermal_anomaly,Ridge,0.6149,0.279,2006,136
+Mortalité infantile (WB),target_child_mortality,XGBoost,0.6699,20.579,1715,101
+Espérance de vie (WB),target_life_expectancy,XGBoost,0.6397,3.795,1855,101
+Croissance démographique (WB),target_pop_growth,RandomForest,0.2951,0.764,1855,101

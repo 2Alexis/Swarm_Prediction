@@ -1,0 +1,63 @@
+Sous-couche,Cible,Technique,R² Global,R² Global+Cluster,R² PerCluster,MAE,N obs,N pays test
+Céréales & racines,Rendement céréales,target_yield_cereals,0.6054,0.592,,0.344,5823,44
+Céréales & racines,Rendement racines/tubercules,target_yield_roots,0.5083,0.5381,,0.365,6310,47
+Oléagineux (par culture),Soja,target_yield_soybeans,0.0609,-0.1625,,0.409,3205,26
+Oléagineux (par culture),Colza,target_yield_rapeseed,0.5535,0.5754,,0.263,1974,16
+Oléagineux (par culture),Tournesol,target_yield_sunflower,-0.3367,-0.3196,,0.366,2334,19
+Oléagineux (par culture),Arachide,target_yield_groundnut,0.2275,0.2191,,0.428,3696,29
+Oléagineux (par culture),Olives,target_yield_olives,0.0577,0.0169,,0.744,1332,11
+Oléagineux (par culture),Sésame,target_yield_sesame,0.119,0.1111,,0.388,2404,19
+Oléagineux (par culture),Coco,target_yield_coconut,0.2074,0.1543,,0.657,2933,22
+Oléagineux (par culture),Coton,target_yield_cotton,0.3154,0.2824,,0.563,2902,23
+Fruits (par culture),Pomme,target_yield_apple,0.3611,0.3412,,0.562,3022,23
+Fruits (par culture),Banane,target_yield_banana,0.1078,0.1514,,0.708,3981,31
+Fruits (par culture),Orange,target_yield_orange,0.0361,0.0394,,0.629,3817,30
+Fruits (par culture),Raisin,target_yield_grape,0.2431,0.208,,0.497,2982,23
+Fruits (par culture),Fraise,target_yield_strawberry,0.2148,0.2999,,0.558,2493,20
+Fruits (par culture),Ananas,target_yield_pineapple,0.1271,0.1133,,0.557,2788,22
+Fruits (par culture),Mangue,target_yield_mango,-1.3309,-1.3225,,0.746,3195,26
+Fruits (par culture),Avocat,target_yield_avocado,-0.0198,-0.0722,,0.538,2186,19
+Fruits (par culture),Citron,target_yield_lemon,0.2977,0.2693,,0.551,3475,28
+Fruits (par culture),Pêche,target_yield_peach,0.0208,-0.0066,,0.484,2633,21
+Fruits (par culture),Poire,target_yield_pear,-0.3244,-0.1966,,0.586,2745,22
+Fruits (par culture),Pastèque,target_yield_watermelon,0.0636,0.0933,,0.433,3806,31
+Fruits (par culture),Datte,target_yield_dates,-0.1143,-0.1174,,0.659,1165,9
+Fruits (par culture),Abricot,target_yield_apricot,-0.2236,-0.1464,,0.709,2238,17
+Fruits (par culture),Cerise,target_yield_cherry,-0.1529,-0.3474,,0.693,2098,17
+Fruits (par culture),Prune,target_yield_plum,-0.1256,-0.0823,,0.6,2723,21
+Légumes (par culture),Tomate,target_yield_tomato,0.5415,0.5328,,0.407,5009,40
+Légumes (par culture),Pomme de terre,target_yield_potato,0.436,0.4333,,0.35,4959,38
+Légumes (par culture),Oignon,target_yield_onion,-0.1268,-0.1099,,0.637,1640,15
+Légumes (par culture),Chou,target_yield_cabbage,-0.1272,-0.0003,,0.38,4661,37
+Légumes (par culture),Carotte,target_yield_carrot,0.0948,0.1045,,0.445,4071,32
+Légumes (par culture),Concombre,target_yield_cucumber,0.572,0.5935,,0.571,4075,33
+Légumes (par culture),Aubergine,target_yield_eggplant,0.371,0.3429,,0.575,2791,25
+Légumes (par culture),Chou-fleur,target_yield_cauliflower,0.0323,0.0355,,0.4,3059,25
+Légumes (par culture),Laitue,target_yield_lettuce,0.2371,0.2168,,0.581,3308,27
+Légumineuses (par culture),Pois chiche,target_yield_chickpea,-0.4539,-0.5412,,0.604,1660,15
+Légumineuses (par culture),Haricot sec,target_yield_drybean,0.19,0.2216,,0.461,3785,31
+Légumineuses (par culture),Pois sec,target_yield_drypea,0.4448,0.4529,,0.388,3003,24
+Élevage,Rendement lait (kg/animal),target_milk_yield,0.8204,0.8265,,682.902,6035,45
+Élevage,Poids carcasse bovine (kg),target_cattle_carcass,0.3231,0.3201,,45.796,6240,46
+Élevage,Poids carcasse poulet (g),target_chicken_carcass,0.2902,0.3354,,253.291,6260,47
+Élevage,Poids carcasse ovin/caprin (kg),target_sheepgoat_carcass,0.1143,0.185,,3.298,6065,45
+Élevage,Poids carcasse porc (kg),target_pig_carcass,0.2221,0.2085,,15.696,5681,42
+Élevage,Rendement œufs (kg/poule),target_eggs_yield,0.5482,0.4809,,41.628,6147,46
+Élevage,Production œufs totale (log),target_livestock_eggs_prod,0.8509,0.8526,,0.57,6190,46
+Élevage,Production aquaculture (log),target_aquaculture,0.5997,0.6159,,2.095,6881,51
+Environnement physique,Stress hydrique,target_water_stress,0.6453,0.6551,,0.725,5170,44
+Environnement physique,Dégradation du sol,target_soil_degradation,0.6252,0.6136,,25.769,3271,29
+Environnement physique,Anomalie thermique,target_thermal_anomaly,0.8222,0.8278,,0.183,8024,59
+Environnement physique,Humidité sol racinaire,target_soil_moisture_root,0.4945,0.5093,,0.078,8085,58
+Environnement physique,Accès eau potable (%),target_water_access,0.7999,0.806,,4.781,5112,53
+Écologie,% forêt national,target_forest_share,0.8847,0.8827,,4.435,7040,51
+Écologie,Perte couvert arboré (log),target_tree_cover_loss,0.5787,0.5888,,1.708,4368,46
+Émissions atmosphériques,Émissions CO2 annuelles (log),target_co2_emissions,0.7286,0.7323,,0.558,6990,50
+Émissions atmosphériques,Émissions CH4 totales (log),target_methane_emissions,0.9585,0.9499,,0.33,6580,47
+Émissions atmosphériques,Émissions N2O totales (log),target_n2o_emissions,0.9562,0.9582,,0.325,6650,48
+Énergie,Consommation solaire TWh (log),target_solar_consumption,0.7191,0.7278,,0.167,5703,50
+Énergie,Génération éolienne TWh (log),target_wind_generation,0.7668,0.7531,,0.244,5515,49
+Énergie,Consommation hydroélectrique TWh (log),target_hydro_consumption,0.7723,0.7807,,0.548,5636,50
+Énergie,Production charbon TWh (log),target_coal_production,0.8902,0.8953,,0.566,5553,50
+Énergie,Production pétrole TWh (log),target_oil_production,0.8457,0.8526,,0.713,5688,50
+Énergie,Production gaz TWh (log),target_gas_production,0.7847,0.7786,,0.677,5682,50

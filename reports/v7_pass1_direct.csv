@@ -1,0 +1,23 @@
+Cible,Technique,Modèle,R² (sans stacking),MAE,N test,N feats
+Rendement céréales,target_yield_cereals,XGB-600-6,0.5987,0.338,1433,100
+Rendement oléagineux (agrégé),target_yield_oilcrops,XGB-800-4,0.6043,0.369,1519,100
+Rendement légumineuses (agrégé),target_yield_pulses,XGB-400-5,0.2833,0.31,1413,100
+Rendement racines/tubercules,target_yield_roots,XGB-800-4,0.7395,0.233,1612,100
+Rendement fruits (agrégé),target_yield_fruits,XGB-800-4,0.3218,0.38,1616,100
+Rendement légumes (agrégé),target_yield_vegetables,XGB-600-6,0.5531,0.371,1616,100
+Stress hydrique,target_water_stress,XGB-800-4,0.6955,0.658,1256,100
+Dégradation du sol,target_soil_degradation,XGB-600-6,0.6624,23.478,839,100
+Anomalie thermique,target_thermal_anomaly,XGB-800-4,0.7972,0.198,2006,100
+Humidité sol racinaire,target_soil_moisture_root,XGB-800-4,0.5469,0.072,2030,100
+% forêt national,target_forest_share,XGB-600-6,0.8641,5.673,1755,100
+Perte couvert arboré,target_tree_cover_loss,XGB-800-4,0.5939,1.662,1104,100
+Mortalité infantile,target_child_mortality,XGB-800-4,0.7706,16.918,1715,100
+Espérance de vie,target_life_expectancy,XGB-800-4,0.6988,3.483,1855,100
+Croissance démographique,target_pop_growth,RandomForest,0.3974,0.732,1855,100
+Taux de natalité,target_birth_rate,XGB-800-4,0.7515,3.641,1855,100
+Taux de mortalité brut,target_death_rate,XGB-600-6,0.4801,1.875,1855,100
+Migration nette,target_net_migration,Ridge,-0.0637,91405.156,1855,100
+Taux de fécondité,target_fertility,XGB-600-6,0.7889,0.518,1836,100
+Retard de croissance enfants,target_stunting,XGB-800-4,0.6313,7.576,251,100
+Décès catastrophes,target_disaster_deaths,XGB-800-4,0.5614,1.179,2100,100
+Affectés catastrophes,target_disaster_affected,RandomForest,0.5769,3.092,2100,100

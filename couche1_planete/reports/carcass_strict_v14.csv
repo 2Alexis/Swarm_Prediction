@@ -1,0 +1,5 @@
+target,R2_strict,MAE,n
+target_pig_carcass,0.2877,14.895,5681
+target_sheepgoat_carcass,0.8186,1.231,6065
+target_cattle_carcass,0.5293,36.916,6240
+target_chicken_carcass,0.3421,242.448,6260

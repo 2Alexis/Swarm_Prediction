@@ -1,0 +1,18 @@
+Crop,Meilleur,R²,MAE,N test,N feats
+yield_tomato,"XGB(n=600,d=6,lr=0.05)",0.6117,0.374,1252,80
+yield_cucumber,"XGB(n=1000,d=6,lr=0.02)",0.5649,0.573,1048,80
+yield_rapeseed,"XGB(n=600,d=6,lr=0.05)",0.5233,0.269,495,80
+yield_potato,"XGB(n=1000,d=6,lr=0.02)",0.4176,0.335,1238,80
+yield_apple,RandomForest,0.3937,0.546,772,80
+yield_cotton,RandomForest,0.3925,0.519,747,80
+yield_eggplant,"XGB(n=400,d=5,lr=0.05)",0.3363,0.58,682,80
+yield_groundnut,"XGB(n=800,d=4,lr=0.03)",0.2872,0.417,904,80
+yield_drybean,"XGB(n=600,d=6,lr=0.05)",0.2643,0.431,886,80
+yield_banana,"XGB(n=800,d=4,lr=0.03)",0.2309,0.688,1039,80
+yield_grape,"XGB(n=400,d=5,lr=0.05)",0.2196,0.485,706,80
+yield_soybeans,RandomForest,0.175,0.39,880,80
+yield_sunflower,"XGB(n=800,d=4,lr=0.03)",0.1373,0.286,574,80
+yield_orange,"XGB(n=1000,d=6,lr=0.02)",-0.0164,0.667,990,80
+yield_onion,"XGB(n=1000,d=6,lr=0.02)",-0.0223,0.565,419,80
+yield_chickpea,"XGB(n=600,d=6,lr=0.05)",-0.1719,0.523,387,80
+yield_mango,"XGB(n=800,d=4,lr=0.03)",-0.7182,0.645,830,80

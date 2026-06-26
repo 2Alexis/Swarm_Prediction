@@ -1,0 +1,12 @@
+Cible,Technique,Modèle,R² (stacking),MAE,N OOF utilisées,R² pass1,Δ stacking
+Croissance démographique,target_pop_growth,RandomForest,0.4003,0.725,5,0.3974,0.0029
+Migration nette,target_net_migration,Ridge,-0.0369,87009.229,6,-0.0637,0.0268
+Taux de mortalité brut,target_death_rate,XGB-600-6,0.4683,1.883,3,0.4801,-0.0118
+Rendement légumineuses (agrégé),target_yield_pulses,XGB-400-5,0.2378,0.326,7,0.2833,-0.0455
+Rendement fruits (agrégé),target_yield_fruits,XGB-600-6,0.3895,0.361,1,0.3218,0.0677
+Rendement oléagineux (agrégé),target_yield_oilcrops,XGB-400-5,0.5408,0.396,3,0.6043,-0.0635
+Rendement légumes (agrégé),target_yield_vegetables,XGB-600-6,0.5474,0.38,1,0.5531,-0.0057
+Perte couvert arboré,target_tree_cover_loss,XGB-800-4,0.5733,1.71,2,0.5939,-0.0206
+Décès catastrophes,target_disaster_deaths,XGB-800-4,0.5756,1.156,4,0.5614,0.0142
+Affectés catastrophes,target_disaster_affected,RandomForest,0.5825,3.081,4,0.5769,0.0056
+Retard de croissance enfants,target_stunting,XGB-800-4,0.6532,7.315,3,0.6313,0.0219

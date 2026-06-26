@@ -1,0 +1,19 @@
+Cible,Technique,Meilleur,R² (stacking),MAE,N OOF utilisées
+Croissance démographique,target_pop_growth,RandomForest,0.3042,0.772,9
+Migration nette,target_net_migration,RandomForest,-0.1979,75350.621,6
+Taux de mortalité brut,target_death_rate,"XGB(n=600,d=6)",0.347,1.956,7
+Rendement légumineuses (agrégé),target_yield_pulses,RandomForest,0.0463,0.468,8
+Rendement fruits (agrégé),target_yield_fruits,"XGB(n=600,d=6)",0.0714,0.489,0
+Rendement oléagineux (agrégé),target_yield_oilcrops,"XGB(n=800,d=4)",0.308,0.499,6
+Rendement légumes (agrégé),target_yield_vegetables,"XGB(n=400,d=5)",0.4124,0.44,4
+Rendement Orange,target_yield_orange,"XGB(n=800,d=4)",0.0696,0.629,6
+Rendement Mangue,target_yield_mango,RandomForest,-0.7219,0.662,4
+Rendement Avocat,target_yield_avocado,"XGB(n=800,d=4)",0.0773,0.516,1
+Rendement Pois chiche,target_yield_chickpea,"XGB(n=400,d=5)",-0.3568,0.547,9
+Rendement Chou,target_yield_cabbage,RandomForest,0.1082,0.343,4
+Rendement Citron,target_yield_lemon,"XGB(n=800,d=4)",0.2626,0.568,1
+Rendement Raisin,target_yield_grape,"XGB(n=800,d=4)",0.1925,0.493,1
+Décès catastrophes,target_disaster_deaths,"XGB(n=400,d=5)",0.71,0.868,3
+Affectés catastrophes,target_disaster_affected,RandomForest,0.9999,0.009,5
+Retard de croissance,target_stunting,"XGB(n=400,d=5)",0.621,7.635,6
+Perte couvert arboré,target_tree_cover_loss,RandomForest,1.0,0.004,1

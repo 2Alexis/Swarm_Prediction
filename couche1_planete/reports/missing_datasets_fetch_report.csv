@@ -1,0 +1,26 @@
+Catégorie,Nom,Status,Détail,URL
+Agriculture/FAO,élevage carcasses,FAIL,HTTP Error 403: Forbidden,https://bulks-faostat.fao.org/production/Production_LivestockPrimary_E_All_Data_(Normalized).zip
+Agriculture/FAO,élevage transformé,FAIL,HTTP Error 403: Forbidden,https://bulks-faostat.fao.org/production/Production_LivestockProcessed_E_All_Data_(Normalized).zip
+Agriculture/FAO,cheptel par pays,FAIL,HTTP Error 403: Forbidden,https://bulks-faostat.fao.org/production/Population_LiveStock_E_All_Data_(Normalized).zip
+Agriculture/FAO,cultures + élevage,OK,33.9 MB,https://bulks-faostat.fao.org/production/Production_Crops_Livestock_E_All_Data_(Normalized).zip
+Agriculture/FAO,agri-env indicateurs,FAIL,HTTP Error 403: Forbidden,https://bulks-faostat.fao.org/production/Indicators_AgriEnv_E_All_Data_(Normalized).zip
+Agriculture/FAO,engrais par produit,OK,2.7 MB,https://bulks-faostat.fao.org/production/Inputs_FertilizersProduct_E_All_Data_(Normalized).zip
+Agriculture/FAO,pêche détaillée,FAIL,HTTP Error 403: Forbidden,https://bulks-faostat.fao.org/production/Fisheries_GlobalProduction_E_All_Data_(Normalized).zip
+Agriculture/FAO,forêt prod+trade,FAIL,HTTP Error 403: Forbidden,https://bulks-faostat.fao.org/production/Forestry_Production_Trade_E_All_Data_(Normalized).zip
+Agriculture/FAO,forêt bulk,FAIL,HTTP Error 403: Forbidden,https://bulks-faostat.fao.org/production/Forestry_E_All_Data_E_All_Data_(Normalized).zip
+Agriculture/FAO,trade matrix,FAIL,too big 421MB,https://bulks-faostat.fao.org/production/Trade_DetailedTradeMatrix_E_All_Data_(Normalized).zip
+Agriculture/FAO,intensités émissions,OK,3.6 MB,https://bulks-faostat.fao.org/production/Environment_Emissions_intensities_E_All_Data_(Normalized).zip
+Agriculture/FAO,émissions catégories,FAIL,HTTP Error 403: Forbidden,https://bulks-faostat.fao.org/production/Environment_Emissions_byCategory_E_All_Data_(Normalized).zip
+Géologie,USGS NEIC M5+ historical,OK,"95,138 séismes → data/raw/geologie/usgs_neic_earthquakes_M5plus_1900-2025.csv",
+Sol/Écologie,WDPA Country Summary,OK,0.0 MB,https://wcmc.io/wdpa_country_summary
+Sol/Écologie,FAO FRA 2025,OK,0.0 MB,https://fra-data.fao.org/api/v2/country/_all/_all/FRA2025/_excel
+Élevage,OECD-FAO Outlook,MANUAL,Bulk download nécessite navigation interactive,https://www.agri-outlook.org/data/
+Élevage,JECFA Veterinary Drugs Toolbox,MANUAL,"Toolkit d'évaluation, pas dataset de couverture vaccinale animale",https://www.fao.org/jefca-toolbox-veterinary-drugs-assessment/
+Élevage,WOAH WAHIS Vaccination data,MANUAL,Nécessite compte OIE/WAHIS,https://wahis.woah.org/
+Sol/Écologie,GBIF Occurrences by country,OK,252 pays → cleaned,https://api.gbif.org/v1/occurrence/search?facet=country&limit=0&facetLimit=300
+Agriculture,USDA NASS Quick Stats,MANUAL,API key requise (gratuit),https://quickstats.nass.usda.gov/api/
+EuroStat,Crop production,OK,3.6 MB,https://ec.europa.eu/eurostat/api/dissemination/sdmx/2.1/data/apro_cpsh1/?format=TSV
+EuroStat,Cattle livestock,OK,0.6 MB,https://ec.europa.eu/eurostat/api/dissemination/sdmx/2.1/data/apro_mt_lscatl/?format=TSV
+EuroStat,Pig livestock,OK,0.4 MB,https://ec.europa.eu/eurostat/api/dissemination/sdmx/2.1/data/apro_mt_lspig/?format=TSV
+EuroStat,Goat livestock,OK,0.1 MB,https://ec.europa.eu/eurostat/api/dissemination/sdmx/2.1/data/apro_mt_lsgoat/?format=TSV
+EuroStat,Sheep livestock,FAIL,HTTP Error 404: Not Found,https://ec.europa.eu/eurostat/api/dissemination/sdmx/2.1/data/apro_mt_lsovin/?format=TSV

@@ -1,0 +1,43 @@
+Categorie,Source,Status,Detail,URL
+Atmosphere,EDGAR_GHG_totals_1970-2023.zip,FAIL,HTTP Error 404: Not Found,https://jeodpp.jrc.ec.europa.eu/ftp/jrc-opendata/EDGAR/datasets/v90_GHG_2024/v90_GHG_TOTALS_1970-2023.zip
+Atmosphere,EDGAR_GHG_by_sector.zip,FAIL,HTTP Error 404: Not Found,https://jeodpp.jrc.ec.europa.eu/ftp/jrc-opendata/EDGAR/datasets/v90_GHG_2024/v90_GHG_BY_SECTOR_1970-2023.zip
+Atmosphere,Climate Watch CAIT,OK,0.0 MB,https://www.climatewatchdata.org/data-explorer/historical-emissions
+Atmosphere,NOAA Ozone,MANUAL,Données ozonesondes par station (NetCDF FTP),https://www.esrl.noaa.gov/gmd/ozwv/
+Atmosphere,NASA MCD19A2 AOD,MANUAL,Earthdata login requis (gratuit),https://lpdaac.usgs.gov/products/mcd19a2v061/
+Hydrologie,GRDC River Discharge,MANUAL,Inscription obligatoire (gratuit) sur le portail GRDC,https://www.bafg.de/GRDC/EN/02_srvcs/21_tmsrs/210_prtl/prtl_node.html
+Hydrologie,NASA GRACE Groundwater,MANUAL,HTTP Error 404: Not Found,https://nasagrace.unl.edu/
+Hydrologie,WRI_Aqueduct40_baseline.zip,FAIL,HTTP Error 404: Not Found,https://files.wri.org/d8/s3fs-public/2023-07/Aqueduct40_baseline_annual_y2023m07d05.zip
+Hydrologie,WRI_Aqueduct40_future.zip,FAIL,HTTP Error 404: Not Found,https://files.wri.org/d8/s3fs-public/2023-07/Aqueduct40_future_annual_y2023m07d05.zip
+Hydrologie,FAO AQUASTAT,MANUAL,HTTP Error 404: Not Found,https://www.fao.org/aquastat/statistics/query/index.html?lang=en
+Hydrologie,NOAA COBE2 SST,MANUAL,Trop gros (549MB > 200MB),https://psl.noaa.gov/data/gridded/data.cobe2.html
+Sol_Ecologie,NASA FIRMS Fires,MANUAL,MAP_KEY API gratuit (inscription rapide),https://firms.modaps.eosdis.nasa.gov/active_fire/
+Sol_Ecologie,MODIS NDVI/EVI,MANUAL,Earthdata login + download par tile,https://modis.gsfc.nasa.gov/data/dataprod/mod13.php
+Sol_Ecologie,IUCN Red List,MANUAL,Inscription + export par pays,https://www.iucnredlist.org/search/stats
+Sol_Ecologie,EPI_2024_results.xlsx,FAIL,HTTP Error 404: Not Found,https://epi.yale.edu/downloads/epi2024results06112024.xlsx
+Sol_Ecologie,EPI_2024_expanded.xlsx,FAIL,HTTP Error 404: Not Found,https://epi.yale.edu/downloads/epi2024expandedresults06112024.xlsx
+Sol_Ecologie,GFW Tree Cover Loss,MANUAL,HTTP Error 404: Not Found,https://data.globalforestwatch.org/
+Agriculture,SPAM2020_V1r0_yield.zip,OK,39.6 MB,https://dataverse.harvard.edu/api/access/datafile/10056008
+Agriculture,spam2020_yield.zip,FAIL,HTTP Error 403: Forbidden,https://s3.amazonaws.com/mapspam/2020/v1r0/spam2020_v1r0_global_yield.zip
+Agriculture,spam2020_production.zip,FAIL,HTTP Error 403: Forbidden,https://s3.amazonaws.com/mapspam/2020/v1r0/spam2020_v1r0_global_production.zip
+Agriculture,FAO Crop Calendar,MANUAL,"Interface interactive, pas de bulk",https://cropcalendar.apps.fao.org/
+Agriculture,FAO_fertilizers_nutrient.zip,OK,2.0 MB,https://bulks-faostat.fao.org/production/Inputs_FertilizersNutrient_E_All_Data_(Normalized).zip
+Agriculture,FAO_pesticides_use.zip,OK,0.8 MB,https://bulks-faostat.fao.org/production/Inputs_Pesticides_Use_E_All_Data_(Normalized).zip
+Agriculture,FAO_land_use_inputs.zip,OK,3.0 MB,https://bulks-faostat.fao.org/production/Inputs_LandUse_E_All_Data_(Normalized).zip
+Agriculture,FAO_machinery.zip,FAIL,HTTP Error 403: Forbidden,https://bulks-faostat.fao.org/production/Inputs_Machinery_E_All_Data_(Normalized).zip
+Agriculture,GAEZ 4.0,MANUAL,"Interface géo, download par culture",https://gaez.fao.org/pages/data-access-download
+Agriculture,CGIAR Varieties,MANUAL,<urlopen error [Errno 11001] getaddrinfo failed>,https://data.cgiar.org/dataset/varieties-1980-2014
+Agriculture,WorldPop Cropland,MANUAL,Téléchargement GeoTIFF lourd par pays,https://www.worldpop.org/methods/croplands
+Agriculture,ESA WorldCover 2021,MANUAL,"10m global landcover, très lourd",https://esa-worldcover.org/en
+Elevage,GLW4_cattle_2020.zip,MANUAL,HTTP Error 404: Not Found,https://www.fao.org/livestock-systems/global-distributions/
+Elevage,FAO GLW4 Livestock,MANUAL,Téléchargement TIF par espèce,https://www.fao.org/livestock-systems/global-distributions/cattle/en/
+Elevage,OECD-FAO Outlook,MANUAL,HTTP Error 404: Not Found,https://www.agri-outlook.org/data/
+Elevage,ILRI Research Data,MANUAL,"Multiples datasets, pas de bulk",https://www.ilri.org/research-data
+Elevage,WAHIS Animal Health,MANUAL,"API OIE, inscription requise",https://wahis.woah.org/
+Elevage,FAO Pastoralism,MANUAL,"Documents et études, pas de dataset structuré",https://www.fao.org/pastoralist-knowledge-hub/
+Energie,IRENA_capacity_2024.xlsx,FAIL,HTTP Error 403: Forbidden,https://www.irena.org/-/media/Files/IRENA/Agency/Statistics/Download-statistics/Capacity-and-Generation/CapacityStatistics2024.xlsx
+Energie,IRENA_capacity_2024.pdf,OK,3.9 MB,https://www.irena.org/-/media/Files/IRENA/Agency/Publication/2024/Mar/IRENA_RE_Capacity_Statistics_2024.pdf
+Energie,ember_monthly_electricity.csv,OK,0.1 MB,https://ember-climate.org/app/uploads/2023/07/global-electricity-review-2023-monthly-data.csv
+Energie,ember_yearly_electricity.csv,OK,49.1 MB,https://storage.googleapis.com/emb-prod-bkt-publicdata/public-downloads/yearly_full_release_long_format.csv
+Energie,wb_renewable_pct.json,OK,4.4 MB,https://api.worldbank.org/v2/country/all/indicator/EG.ELC.RNEW.ZS?format=json&per_page=20000
+Energie,wb_renewable_final_pct.json,OK,4.4 MB,https://api.worldbank.org/v2/country/all/indicator/EG.FEC.RNEW.ZS?format=json&per_page=20000
+Energie,wb_elec_access.json,OK,3.9 MB,https://api.worldbank.org/v2/country/all/indicator/EG.ELC.ACCS.ZS?format=json&per_page=20000

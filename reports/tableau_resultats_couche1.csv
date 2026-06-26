@@ -1,5 +1,5 @@
 Famille,Cible,Origine,Performance
-① Mesurée (ML),Rendement agricole,FAO (kg/ha),R² = 0.691  (XGBoost)
+① Mesurée (ML),Rendement agricole,FAO (kg/ha),R² = 0.688  (XGBoost)
 ① Mesurée (ML),Stress hydrique,World Bank (% prélèvement),R² = -0.094  (Ridge)
 ① Mesurée (ML),Dégradation du sol,FAO (bilan nutritif),R² = 0.534  (Ridge)
 ① Mesurée (ML),Anomalie thermique,T° annuelle − climatologie,R² = 0.328  (Random Forest)

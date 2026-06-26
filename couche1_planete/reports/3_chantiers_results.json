@@ -1,0 +1,91 @@
+{
+  "carcass": [
+    {
+      "target": "target_pig_carcass",
+      "R2_v15": 0.233,
+      "R2_v15_oof": 0.261,
+      "best": 0.261
+    },
+    {
+      "target": "target_sheepgoat_carcass",
+      "R2_v15": 0.486,
+      "R2_v15_oof": 0.495,
+      "best": 0.495
+    },
+    {
+      "target": "target_cattle_carcass",
+      "R2_v15": 0.529,
+      "R2_v15_oof": 0.549,
+      "best": 0.549
+    },
+    {
+      "target": "target_chicken_carcass",
+      "R2_v15": 0.347,
+      "R2_v15_oof": 0.339,
+      "best": 0.347
+    }
+  ],
+  "weak_oof": [
+    {
+      "target": "target_yield_eggplant",
+      "R2_base": 0.371,
+      "R2_oof": 0.352,
+      "gain": -0.019
+    },
+    {
+      "target": "target_yield_rapeseed",
+      "R2_base": 0.676,
+      "R2_oof": 0.677,
+      "gain": 0.001
+    },
+    {
+      "target": "target_yield_drypea",
+      "R2_base": 0.583,
+      "R2_oof": 0.581,
+      "gain": -0.002
+    },
+    {
+      "target": "target_yield_strawberry",
+      "R2_base": 0.605,
+      "R2_oof": 0.602,
+      "gain": -0.003
+    },
+    {
+      "target": "target_yield_apple",
+      "R2_base": 0.643,
+      "R2_oof": 0.67,
+      "gain": 0.027
+    },
+    {
+      "target": "target_yield_drybean",
+      "R2_base": 0.611,
+      "R2_oof": 0.592,
+      "gain": -0.019
+    },
+    {
+      "target": "target_yield_cotton",
+      "R2_base": 0.715,
+      "R2_oof": 0.717,
+      "gain": 0.001
+    },
+    {
+      "target": "target_yield_groundnut",
+      "R2_base": 0.404,
+      "R2_oof": 0.391,
+      "gain": -0.013
+    },
+    {
+      "target": "target_biodiversity_species",
+      "R2_base": 0.666,
+      "R2_oof": 0.671,
+      "gain": 0.005
+    }
+  ],
+  "seismic": {
+    "xgb_log": 0.3566,
+    "xgb_log_oof": 0.3009,
+    "xgb_poisson": 0.1756,
+    "xgb_poisson_oof": 0.1745,
+    "best": "xgb_log"
+  }
+}

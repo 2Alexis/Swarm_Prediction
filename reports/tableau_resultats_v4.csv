@@ -1,0 +1,18 @@
+Cible,Technique,Meilleur,R² (pays inconnus),MAE,N test,N features
+Rendement céréales,target_yield_cereals,XGBoost,0.5388,0.37,1433,324
+Rendement oléagineux,target_yield_oilcrops,XGBoost,0.4183,0.466,1519,324
+Rendement légumineuses,target_yield_pulses,XGBoost,0.0744,0.462,1413,324
+Rendement racines/tubercules,target_yield_roots,XGBoost,0.4631,0.37,1612,324
+Rendement fruits,target_yield_fruits,XGBoost,0.0838,0.48,1616,324
+Rendement légumes,target_yield_vegetables,XGBoost,0.4135,0.451,1616,324
+Stress hydrique,target_water_stress,XGBoost,0.6106,0.754,1256,343
+Dégradation du sol,target_soil_degradation,RandomForest,0.6296,25.341,839,341
+Anomalie thermique,target_thermal_anomaly,XGBoost,0.7304,0.227,2006,341
+Mortalité infantile,target_child_mortality,XGBoost,0.7921,16.115,1715,197
+Espérance de vie,target_life_expectancy,XGBoost,0.7053,3.355,1855,197
+Croissance démographique,target_pop_growth,RandomForest,0.3247,0.774,1855,197
+Décès catastrophes,target_disaster_deaths,XGBoost,0.5517,1.214,2100,337
+Affectés catastrophes,target_disaster_affected,RandomForest,0.5467,3.261,2100,337
+Dégâts catastrophes / PIB,target_disaster_damages_pct_gdp,RandomForest,-0.0005,0.0,1778,337
+Retard de croissance enfants,target_stunting,XGBoost,0.5993,7.927,251,197
+Taux de fécondité,target_fertility,XGBoost,0.7838,0.511,1836,197

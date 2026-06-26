@@ -1,0 +1,23 @@
+Cible,Technique,Modèle,R² FINAL,MAE,Méthode
+% forêt national,target_forest_share,XGB-600-6,0.8641,5.673,DIRECT
+Anomalie thermique,target_thermal_anomaly,XGB-800-4,0.7972,0.198,DIRECT
+Taux de fécondité,target_fertility,XGB-600-6,0.7889,0.518,DIRECT
+Mortalité infantile,target_child_mortality,XGB-800-4,0.7706,16.918,DIRECT
+Taux de natalité,target_birth_rate,XGB-800-4,0.7515,3.641,DIRECT
+Rendement racines/tubercules,target_yield_roots,XGB-800-4,0.7395,0.233,DIRECT
+Espérance de vie,target_life_expectancy,XGB-800-4,0.6988,3.483,DIRECT
+Stress hydrique,target_water_stress,XGB-800-4,0.6955,0.658,DIRECT
+Dégradation du sol,target_soil_degradation,XGB-600-6,0.6624,23.478,DIRECT
+Retard de croissance enfants,target_stunting,XGB-800-4,0.6532,7.315,STACKING
+Rendement oléagineux (agrégé),target_yield_oilcrops,XGB-800-4,0.6043,0.369,DIRECT
+Rendement céréales,target_yield_cereals,XGB-600-6,0.5987,0.338,DIRECT
+Perte couvert arboré,target_tree_cover_loss,XGB-800-4,0.5939,1.662,DIRECT
+Affectés catastrophes,target_disaster_affected,RandomForest,0.5825,3.081,STACKING
+Décès catastrophes,target_disaster_deaths,XGB-800-4,0.5756,1.156,STACKING
+Rendement légumes (agrégé),target_yield_vegetables,XGB-600-6,0.5531,0.371,DIRECT
+Humidité sol racinaire,target_soil_moisture_root,XGB-800-4,0.5469,0.072,DIRECT
+Taux de mortalité brut,target_death_rate,XGB-600-6,0.4801,1.875,DIRECT
+Croissance démographique,target_pop_growth,RandomForest,0.4003,0.725,STACKING
+Rendement fruits (agrégé),target_yield_fruits,XGB-600-6,0.3895,0.361,STACKING
+Rendement légumineuses (agrégé),target_yield_pulses,XGB-400-5,0.2833,0.31,DIRECT
+Migration nette,target_net_migration,Ridge,-0.0369,87009.229,STACKING

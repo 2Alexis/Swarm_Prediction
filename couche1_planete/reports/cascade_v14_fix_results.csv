@@ -1,0 +1,16 @@
+Cible,R²V14,R²V3,Δ,MAE,N
+target_seismic_activity,0.195,0.3267,-0.1317,0.942,832
+target_biodiversity_species,0.633,0.486,0.147,0.437,8225
+target_forest_share,0.891,0.4115,0.4795,4.198,7040
+target_tree_cover_loss,0.9914,0.5138,0.4776,0.253,4368
+target_cattle_carcass,0.8487,0.1706,0.6781,12.172,6240
+target_pig_carcass,0.9503,0.1794,0.7709,3.417,5681
+target_sheepgoat_carcass,0.879,-0.1143,0.9933,0.859,6065
+target_chicken_carcass,0.8237,0.3549,0.4688,49.953,6260
+target_yield_cereals,0.8501,0.4181,0.432,0.145,5823
+target_yield_rapeseed,0.4992,0.4586,0.0406,0.253,1974
+target_yield_drypea,0.5042,0.398,0.1062,0.372,3003
+target_yield_strawberry,0.5161,0.389,0.1271,0.455,2493
+target_yield_apple,0.5027,0.3815,0.1212,0.521,3022
+target_yield_drybean,0.4938,0.3769,0.1169,0.347,3785
+target_yield_eggplant,0.2648,0.286,-0.0212,0.599,2791
