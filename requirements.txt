@@ -1,0 +1,11 @@
+pandas
+numpy
+matplotlib
+seaborn
+ipykernel
+scikit-learn
+xgboost
+joblib
+ipympl
+pycountry
+babel
