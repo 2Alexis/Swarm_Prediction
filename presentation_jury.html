@@ -1,0 +1,800 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Swarm_Prediction — De la terre aux gens</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,900&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#f3ece0;        /* parchemin */
+    --ink:#2a2018;          /* encre terre */
+    --soil:#3c2a1e;         /* sol profond */
+    --ochre:#c97b3c;        /* terracotta */
+    --wheat:#d8b46a;        /* blé */
+    --olive:#6b7d3a;        /* végétation */
+    --moss:#42692f;
+    --blood:#9b2d2d;        /* la couche 2 — le sang */
+    --bloodlight:#c25b4e;
+    --strong:#3f7d4e;       /* R2 fort */
+    --mid:#c98a2e;          /* R2 moyen */
+    --weak:#b7a98c;         /* R2 faible */
+    --neg:#a83c34;          /* R2 negatif */
+    --line:rgba(60,42,30,.18);
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html,body{height:100%;overflow:hidden;background:#1d150f}
+  body{
+    font-family:'Inter',system-ui,sans-serif;
+    color:var(--ink);
+    -webkit-font-smoothing:antialiased;
+  }
+  .serif{font-family:'Fraunces','Georgia',serif}
+  .mono{font-family:'JetBrains Mono',monospace}
+
+  /* ---------- deck ---------- */
+  .deck{position:fixed;inset:0}
+  .slide{
+    position:absolute;inset:0;
+    display:none;
+    padding:clamp(28px,5vw,80px) clamp(32px,7vw,120px);
+    background:var(--paper);
+    overflow:hidden;
+    flex-direction:column;
+    /* subtle paper grain */
+    background-image:
+      radial-gradient(circle at 20% 10%, rgba(201,123,60,.05), transparent 60%),
+      radial-gradient(circle at 85% 90%, rgba(107,125,58,.05), transparent 55%);
+  }
+  .slide.active{display:flex;animation:fade .55s ease}
+  @keyframes fade{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+
+  .kicker{
+    font-size:.78rem;letter-spacing:.28em;text-transform:uppercase;
+    color:var(--ochre);font-weight:700;margin-bottom:.9rem;
+    display:flex;align-items:center;gap:.7rem;
+  }
+  .kicker::before{content:"";width:34px;height:2px;background:var(--ochre)}
+  h1{font-weight:900;line-height:1.02;letter-spacing:-.02em}
+  h2{font-weight:900;line-height:1.05;letter-spacing:-.015em;font-size:clamp(1.9rem,4.4vw,3.4rem);color:var(--soil)}
+  p.lead{font-size:clamp(1.05rem,1.7vw,1.4rem);line-height:1.55;max-width:54ch;color:#4a3829}
+  .muted{color:#6a584800}
+
+  /* ---------- cover ---------- */
+  #s-cover{padding:0;justify-content:flex-end}
+  .strata{position:absolute;inset:0;display:flex;flex-direction:column}
+  .strata > div{flex:1}
+  .st-sky{background:linear-gradient(#bcd0d6,#e7dcc4)}
+  .st-wheat{background:linear-gradient(#e7c878,#d8b46a);flex:.8}
+  .st-ochre{background:linear-gradient(#c97b3c,#a9622f);flex:1.1}
+  .st-soil{background:linear-gradient(#5a3d28,#3c2a1e);flex:1.4}
+  .st-rock{background:linear-gradient(#2c2017,#1d150f);flex:.8}
+  /* roots */
+  .roots{position:absolute;left:0;right:0;top:46%;height:40%;opacity:.5}
+  .cover-content{position:relative;z-index:3;padding:clamp(32px,7vw,120px);color:#f3ece0}
+  .cover-content h1{font-size:clamp(3rem,9vw,8rem);color:#fff;text-shadow:0 3px 24px rgba(0,0,0,.35)}
+  .cover-content .sub{font-size:clamp(1.1rem,2.4vw,2rem);color:#f3e6cf;margin-top:.4rem;font-weight:500}
+  .cover-meta{margin-top:2.2rem;display:flex;gap:2.4rem;flex-wrap:wrap;font-size:.95rem;color:#e7d6bb}
+  .cover-meta b{color:#fff;display:block;font-weight:700;letter-spacing:.04em}
+  .cover-meta span{font-size:.72rem;letter-spacing:.22em;text-transform:uppercase;color:var(--wheat)}
+  .seed{position:absolute;border-radius:50%;background:var(--wheat);box-shadow:0 0 0 4px rgba(216,180,106,.25)}
+
+  /* ---------- layout helpers ---------- */
+  .head{margin-bottom:1.6rem}
+  .cols{display:grid;gap:clamp(24px,3.5vw,56px);flex:1;min-height:0}
+  .c2{grid-template-columns:1fr 1fr}
+  .c-37{grid-template-columns:.9fr 1.1fr}
+  .center{justify-content:center}
+  .scroll{overflow:auto}
+
+  /* cards */
+  .card{background:#fbf6ec;border:1px solid var(--line);border-radius:14px;padding:1.3rem 1.4rem;
+        box-shadow:0 1px 0 rgba(255,255,255,.6) inset, 0 6px 18px rgba(60,42,30,.06)}
+  .card h3{font-family:'Fraunces',serif;font-size:1.15rem;color:var(--soil);margin-bottom:.4rem}
+  .card p{font-size:.95rem;line-height:1.5;color:#5a4736}
+
+  .pill{display:inline-flex;align-items:center;gap:.45rem;background:#efe4d2;border:1px solid var(--line);
+        border-radius:999px;padding:.32rem .8rem;font-size:.82rem;font-weight:600;color:var(--soil);margin:.2rem .25rem 0 0}
+  .pill.blood{background:#f3dcd6;border-color:#d9b3ab;color:var(--blood)}
+  .pill.land{background:#e6ecd2;border-color:#bcca94;color:var(--moss)}
+
+  /* big stat */
+  .stat{display:flex;flex-direction:column;gap:.1rem}
+  .stat .num{font-family:'Fraunces',serif;font-weight:900;line-height:.9;font-size:clamp(2.6rem,6vw,5.2rem);letter-spacing:-.03em}
+  .stat .lbl{font-size:.92rem;color:#6a5848;max-width:30ch}
+  .num.land{color:var(--moss)} .num.blood{color:var(--blood)} .num.ochre{color:var(--ochre)}
+
+  /* ---------- bar chart ---------- */
+  .chart{display:flex;flex-direction:column;gap:.55rem;width:100%}
+  .row{display:grid;grid-template-columns:minmax(120px,42%) 1fr auto;align-items:center;gap:.8rem}
+  .row .rl{font-size:.9rem;font-weight:500;color:#43342600;text-align:right;color:#43342}
+  .row .rl{color:#433426}
+  .track{height:18px;background:#e7dcca;border-radius:6px;overflow:hidden;position:relative}
+  .fill{height:100%;width:0;border-radius:6px;transition:width 1s cubic-bezier(.2,.7,.2,1)}
+  .fill.s{background:linear-gradient(90deg,#4f9a63,#3f7d4e)}
+  .fill.m{background:linear-gradient(90deg,#e0a542,#c98a2e)}
+  .fill.w{background:linear-gradient(90deg,#cabfa6,#b7a98c)}
+  .fill.n{background:repeating-linear-gradient(45deg,#c0524a,#c0524a 6px,#a83c34 6px,#a83c34 12px)}
+  .row .rv{font-family:'JetBrains Mono',monospace;font-size:.85rem;font-weight:500;color:#5a4736;min-width:46px;text-align:right}
+  .legend{display:flex;gap:1.1rem;flex-wrap:wrap;margin-top:.9rem;font-size:.78rem;color:#6a5848}
+  .legend i{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:.35rem;vertical-align:-1px}
+
+  /* arrow / flow diagram */
+  .flow{display:grid;grid-template-columns:1fr auto 1fr;align-items:stretch;gap:1.4rem;flex:1}
+  .layerbox{border-radius:16px;padding:1.6rem;display:flex;flex-direction:column;justify-content:center;gap:.7rem;color:#fff;position:relative;overflow:hidden}
+  .layerbox.terre{background:linear-gradient(160deg,#6b4a2f,#3c2a1e)}
+  .layerbox.sang{background:linear-gradient(160deg,#a83c34,#6e211f)}
+  .layerbox .big{font-family:'Fraunces',serif;font-size:1.5rem;font-weight:900}
+  .layerbox .tag{font-size:.72rem;letter-spacing:.22em;text-transform:uppercase;opacity:.8}
+  .layerbox ul{list-style:none;font-size:.9rem;line-height:1.7;opacity:.95}
+  .layerbox ul li::before{content:"›  ";opacity:.7}
+  .joiner{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.5rem;min-width:120px}
+  .joiner .key{font-family:'JetBrains Mono',monospace;background:var(--soil);color:var(--wheat);padding:.4rem .7rem;border-radius:8px;font-size:.82rem;white-space:nowrap}
+  .joiner .arr{font-size:2rem;color:var(--ochre);line-height:1}
+
+  /* sources grid */
+  .srcgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:.9rem}
+  .src{background:#fbf6ec;border:1px solid var(--line);border-radius:12px;padding:.9rem 1rem}
+  .src .nm{font-family:'Fraunces',serif;font-weight:600;color:var(--soil);font-size:1.02rem}
+  .src .ds{font-size:.82rem;color:#6a5848;line-height:1.4;margin-top:.15rem}
+
+  /* method steps */
+  .steps{display:flex;flex-direction:column;gap:1rem}
+  .step{display:grid;grid-template-columns:auto 1fr;gap:1rem;align-items:start}
+  .step .n{font-family:'Fraunces',serif;font-weight:900;font-size:1.6rem;color:var(--ochre);line-height:1}
+  .step h4{font-size:1.05rem;color:var(--soil);margin-bottom:.15rem}
+  .step p{font-size:.92rem;color:#5a4736;line-height:1.45}
+
+  ul.clean{list-style:none;display:flex;flex-direction:column;gap:.7rem}
+  ul.clean li{display:grid;grid-template-columns:auto 1fr;gap:.7rem;font-size:1rem;line-height:1.45;color:#4a3829}
+  ul.clean li b{color:var(--soil)}
+  ul.clean li::before{content:"●";color:var(--ochre);font-size:.7rem;margin-top:.45rem}
+
+  .footnote{position:absolute;bottom:18px;left:clamp(32px,7vw,120px);right:clamp(32px,7vw,120px);
+            display:flex;justify-content:space-between;align-items:center;font-size:.72rem;color:#8a7560;
+            border-top:1px solid var(--line);padding-top:8px}
+
+  /* nav */
+  .progress{position:fixed;top:0;left:0;height:4px;background:var(--ochre);z-index:50;transition:width .4s}
+  .nav{position:fixed;bottom:14px;right:18px;z-index:50;display:flex;gap:8px;align-items:center}
+  .nav button{background:var(--soil);color:var(--wheat);border:none;width:34px;height:34px;border-radius:9px;font-size:1rem;cursor:pointer;opacity:.85}
+  .nav button:hover{opacity:1}
+  .counter{font-family:'JetBrains Mono',monospace;color:var(--wheat);background:rgba(60,42,30,.7);padding:.35rem .6rem;border-radius:8px;font-size:.8rem}
+  .hint{position:fixed;bottom:16px;left:18px;z-index:50;font-size:.72rem;color:#8a7560}
+
+  /* ---------- panorama 7 sous-couches ---------- */
+  .pano{display:grid;grid-template-columns:repeat(4,1fr);grid-auto-rows:1fr;gap:.85rem;flex:1;min-height:0}
+  .pcard{background:#fbf6ec;border:1px solid var(--line);border-radius:14px;padding:.8rem .9rem;display:flex;flex-direction:column;gap:.45rem;
+         box-shadow:0 5px 16px rgba(60,42,30,.05)}
+  .pcard .ph{display:flex;align-items:center;gap:.45rem;margin-bottom:.1rem}
+  .pcard .ph .ic{font-size:1.2rem;line-height:1}
+  .pcard .ph .nm{font-family:'Fraunces',serif;font-weight:700;color:var(--soil);font-size:1.02rem;line-height:1}
+  .pcard .ph .ct{margin-left:auto;font-size:.66rem;color:#9a8568;font-family:'JetBrains Mono',monospace;white-space:nowrap}
+  .mrow{display:flex;flex-direction:column;gap:2px}
+  .mrow .mt{display:flex;justify-content:space-between;font-size:.74rem;color:#5a4736;line-height:1.15}
+  .mrow .mt b{font-family:'JetBrains Mono',monospace;font-weight:500;color:var(--soil)}
+  .mtrack{height:7px;background:#e7dcca;border-radius:4px;overflow:hidden}
+  .mfill{height:100%;width:0;border-radius:4px;transition:width .95s cubic-bezier(.2,.7,.2,1)}
+  .mfill.s{background:linear-gradient(90deg,#4f9a63,#3f7d4e)}
+  .mfill.m{background:linear-gradient(90deg,#e0a542,#c98a2e)}
+  .mfill.w{background:linear-gradient(90deg,#cabfa6,#b7a98c)}
+  .mfill.n{background:repeating-linear-gradient(45deg,#c0524a,#c0524a 5px,#a83c34 5px,#a83c34 10px)}
+  .pnote{font-size:.66rem;color:#8a7560;line-height:1.3;margin-top:auto;padding-top:.2rem}
+  .psum{background:linear-gradient(160deg,#6b4a2f,#3c2a1e);color:#f3e6cf;display:flex;flex-direction:column;
+        justify-content:center;align-items:center;gap:.15rem;border-radius:14px;text-align:center}
+  .psum .big{font-family:'Fraunces',serif;font-weight:900;font-size:2.4rem;color:#fff;line-height:.9}
+
+  /* ---------- board « Trello » (déroulement) ---------- */
+  .board{display:grid;grid-template-columns:repeat(6,1fr);gap:.6rem;flex:1;min-height:0}
+  .col{background:rgba(60,42,30,.055);border:1px solid var(--line);border-radius:12px;padding:.5rem .5rem;display:flex;flex-direction:column;gap:.4rem;min-height:0}
+  .col-h{display:flex;align-items:center;gap:.3rem;font-family:'Fraunces',serif;font-weight:700;color:var(--soil);font-size:.82rem;padding:.05rem .1rem}
+  .col-h .cnt{margin-left:auto;font-size:.62rem;font-family:'JetBrains Mono',monospace;background:#e7dcca;border-radius:6px;padding:.02rem .32rem;color:#6a5848}
+  .tcards{display:flex;flex-direction:column;gap:.35rem;overflow:auto}
+  .tcard{background:#fdfaf3;border:1px solid var(--line);border-left:3px solid var(--ochre);border-radius:7px;
+         padding:.36rem .45rem;font-size:.68rem;line-height:1.25;color:#5a4736;display:flex;gap:.3rem;align-items:flex-start;
+         box-shadow:0 1px 2px rgba(60,42,30,.06)}
+  .tcard .ck{color:var(--strong);font-weight:800;flex-shrink:0;font-size:.72rem}
+  .tcard b{color:var(--soil);font-weight:600}
+  .tcard.todo{opacity:.72}
+  .tcard.todo .ck{color:#b7a98c}
+
+  /* ---------- technologies ---------- */
+  .techgrid{display:grid;grid-template-columns:repeat(3,1fr);grid-auto-rows:1fr;gap:.9rem;flex:1;min-height:0}
+  .tech{background:#fbf6ec;border:1px solid var(--line);border-radius:14px;padding:.9rem 1.1rem;display:flex;align-items:center;gap:.95rem;
+        box-shadow:0 5px 16px rgba(60,42,30,.05)}
+  .tech img,.tech .badge{width:44px;height:44px;object-fit:contain;flex-shrink:0}
+  .tech .badge{background:linear-gradient(135deg,#4f9a63,#2f6b3f);color:#fff;border-radius:11px;display:flex;align-items:center;justify-content:center;
+        font-family:'Fraunces',serif;font-weight:900;font-size:.82rem}
+  .tech .nm{font-family:'Fraunces',serif;font-weight:700;color:var(--soil);font-size:1.06rem;line-height:1.1}
+  .tech .ds{font-size:.8rem;color:#6a5848;margin-top:.12rem}
+
+  /* ---------- schéma pipeline features → cibles ---------- */
+  .pipe{display:grid;grid-template-columns:1fr auto 1.12fr auto 1fr;align-items:stretch;gap:.55rem;flex:1;min-height:0}
+  .pcol{display:flex;flex-direction:column;gap:.5rem;min-height:0;justify-content:center}
+  .pcol-head{font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;color:var(--ochre);font-weight:700;text-align:center;margin-bottom:.1rem}
+  .pbox{background:#fbf6ec;border:1px solid var(--line);border-radius:12px;padding:.7rem .8rem;box-shadow:0 4px 12px rgba(60,42,30,.05)}
+  .pbox .ph{font-family:'Fraunces',serif;font-weight:700;color:var(--soil);font-size:.82rem;margin-bottom:.4rem;display:flex;align-items:center;gap:.35rem}
+  .pbox .ph .mono{margin-left:auto;font-size:.64rem;color:#8a7560;font-weight:400}
+  .feat{display:flex;flex-wrap:wrap;gap:.3rem}
+  .feat span{background:#efe4d2;border:1px solid var(--line);border-radius:7px;padding:.2rem .45rem;font-size:.68rem;color:var(--soil)}
+  .pstep{background:#fdfaf3;border:1px solid var(--line);border-left:3px solid var(--ochre);border-radius:9px;padding:.48rem .6rem;display:flex;gap:.5rem;align-items:flex-start}
+  .pstep .si{font-size:1.05rem;flex-shrink:0;line-height:1.1}
+  .pstep .st{font-size:.72rem;line-height:1.32;color:#5a4736}
+  .pstep .st b{color:var(--soil);font-family:'Fraunces',serif;font-weight:700}
+  .pstep.flag{border-left-color:var(--blood);background:#fbf0ec}
+  .parrow{display:flex;align-items:center;justify-content:center;color:var(--ochre);font-size:1.5rem;font-weight:700}
+  .outbox{border-radius:12px;padding:.7rem .8rem;color:#fff;display:flex;flex-direction:column;gap:.2rem}
+  .outbox.t{background:linear-gradient(160deg,#6b4a2f,#3c2a1e)}
+  .outbox.s{background:linear-gradient(160deg,#a83c34,#6e211f)}
+  .outbox .otop{display:flex;align-items:baseline;gap:.45rem}
+  .outbox .num{font-family:'Fraunces',serif;font-weight:900;font-size:1.7rem;line-height:1}
+  .outbox .on{font-family:'Fraunces',serif;font-weight:800;font-size:1rem}
+  .outbox .od{font-size:.7rem;opacity:.92;line-height:1.32}
+  .feednote{font-size:.66rem;color:var(--blood);text-align:center;font-weight:600}
+
+  .tag-terre{color:var(--moss)} .tag-sang{color:var(--blood)}
+  .divider{height:1px;background:var(--line);margin:1rem 0}
+  .big-quote{font-family:'Fraunces',serif;font-weight:600;font-size:clamp(1.5rem,3.4vw,2.6rem);line-height:1.25;color:var(--soil);max-width:24ch}
+  .big-quote em{color:var(--blood);font-style:normal}
+</style>
+</head>
+<body>
+<div class="progress" id="progress"></div>
+<div class="deck" id="deck">
+
+  <!-- 1. COVER -->
+  <section class="slide active" id="s-cover">
+    <div class="strata">
+      <div class="st-sky"></div><div class="st-wheat"></div><div class="st-ochre"></div><div class="st-soil"></div><div class="st-rock"></div>
+    </div>
+    <div class="cover-content">
+      <div class="kicker" style="color:var(--wheat)">Projet Data &amp; Machine Learning · Ynov B3 IA / Data</div>
+      <h1 class="serif">De la terre<br>aux gens</h1>
+      <div class="sub serif">Swarm_Prediction — comment l'environnement d'un pays façonne sa population</div>
+      <div class="cover-meta">
+        <div><span>Auteurs</span><b>Louey &amp; Alexis</b></div>
+        <div><span>Données</span><b>100 % réelles &amp; publiques</b></div>
+        <div><span>Couches</span><b>2 · reliées par (Pays, Année)</b></div>
+        <div><span>Modèles</span><b>72 cibles entraînées</b></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2. PROBLEMATIQUE -->
+  <section class="slide" id="s-pb">
+    <div class="head"><div class="kicker">La question du projet</div></div>
+    <div class="cols c2 center">
+      <div>
+        <div class="big-quote">Dans quelle mesure l'<em>environnement agricole</em> d'un pays — sa terre, son climat, ses récoltes — détermine-t-il la <em>santé et la démographie</em> de sa population ?</div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:1.1rem;justify-content:center">
+        <p class="lead">On ne génère <b>aucun chiffre au hasard.</b> Chaque variable vient d'une source publique (FAO, World Bank, NASA, WorldClim…), et chaque modèle est évalué <b>honnêtement</b> — y compris quand il échoue.</p>
+        <div>
+          <span class="pill land">🌍 Couche 1 — la Terre</span>
+          <span class="pill blood">🩸 Couche 2 — les Gens</span>
+          <span class="pill">🔑 jointes par (Pays, Année)</span>
+        </div>
+      </div>
+    </div>
+    <div class="footnote"><span>Swarm_Prediction · De la terre aux gens</span><span>02</span></div>
+  </section>
+
+  <!-- 3. LE PRINCIPE / ARCHITECTURE -->
+  <section class="slide" id="s-arch">
+    <div class="head"><div class="kicker">Le principe</div><h2>Deux couches de données, une seule histoire</h2></div>
+    <div class="flow">
+      <div class="layerbox terre">
+        <div class="tag">Couche 1</div>
+        <div class="big">🌍 La Terre</div>
+        <div style="font-size:.85rem;opacity:.8">environnement &amp; agriculture</div>
+        <ul>
+          <li>Atmosphère · Hydrologie</li>
+          <li>Sols &amp; écologie</li>
+          <li>Agriculture · Élevage · Pêche</li>
+          <li>Énergies</li>
+        </ul>
+        <div class="mono" style="margin-top:.4rem;font-size:.78rem;opacity:.85">7 sous-couches · 62 cibles · ~183 pays</div>
+      </div>
+      <div class="joiner">
+        <div class="arr">→</div>
+        <div class="key">clé = (Pays, Année)</div>
+        <div class="arr">→</div>
+        <div style="font-size:.78rem;color:#6a5848;text-align:center;max-width:130px">la terre nourrit<br>les gens</div>
+      </div>
+      <div class="layerbox sang">
+        <div class="tag">Couche 2</div>
+        <div class="big">🩸 Le Sang</div>
+        <div style="font-size:.85rem;opacity:.8">démographie &amp; santé</div>
+        <ul>
+          <li>Natalité, fécondité</li>
+          <li>Mortalité, espérance de vie</li>
+          <li>Malnutrition, stunting</li>
+          <li>Catastrophes humaines</li>
+        </ul>
+        <div class="mono" style="margin-top:.4rem;font-size:.78rem;opacity:.85">10 cibles · prédites depuis la Couche 1</div>
+      </div>
+    </div>
+    <div class="footnote"><span>Architecture en couches reliées</span><span>03</span></div>
+  </section>
+
+  <!-- 4. LES DONNEES / SOURCES -->
+  <section class="slide" id="s-src">
+    <div class="head"><div class="kicker">Les données</div><h2>11 sources publiques, 0 donnée inventée</h2></div>
+    <div class="cols c-37" style="min-height:0">
+      <div style="display:flex;flex-direction:column;gap:1rem;justify-content:center">
+        <div class="stat"><div class="num land">~183</div><div class="lbl">pays couverts, période 2010–2024</div></div>
+        <div class="divider"></div>
+        <div class="stat"><div class="num ochre">8 000+</div><div class="lbl">observations (pays × année) par cible</div></div>
+        <div class="divider"></div>
+        <p class="lead" style="font-size:1rem">Données <b>gitignorées</b> mais <b>100 % reproductibles</b> : tout se re-télécharge via les scripts <span class="mono">fetch_*.py</span>.</p>
+      </div>
+      <div class="srcgrid scroll">
+        <div class="src"><div class="nm">FAO / FAOSTAT</div><div class="ds">Rendements par culture, élevage, intrants, EcoCrop</div></div>
+        <div class="src"><div class="nm">World Bank</div><div class="ds">Démographie, mortalité, eau potable, irrigation</div></div>
+        <div class="src"><div class="nm">WorldClim BIO 1-19</div><div class="ds">Température, précipitations, saisonnalité</div></div>
+        <div class="src"><div class="nm">NASA POWER</div><div class="ds">T°, pluie, humidité du sol 1990-2024</div></div>
+        <div class="src"><div class="nm">Berkeley Earth</div><div class="ds">Anomalies de T° par pays 1743-2020</div></div>
+        <div class="src"><div class="nm">OWID</div><div class="ds">Émissions, énergie, aquaculture, viande</div></div>
+        <div class="src"><div class="nm">Hansen / OWID</div><div class="ds">Couverture forestière, déforestation</div></div>
+        <div class="src"><div class="nm">NOAA</div><div class="ds">ENSO, NAO, AMO, PDO, CO₂ Mauna Loa</div></div>
+        <div class="src"><div class="nm">Pew Research 2010</div><div class="ds">Composition religieuse par pays</div></div>
+        <div class="src"><div class="nm">Project Tycho</div><div class="ds">Épidémies historiques (Couche 2)</div></div>
+        <div class="src"><div class="nm">FAO EcoCrop</div><div class="ds">T_opt / P_opt → scores de suitability</div></div>
+      </div>
+    </div>
+    <div class="footnote"><span>Sources documentées dans le dépôt (SOURCES_DONNEES.txt)</span><span>04</span></div>
+  </section>
+
+  <!-- 5. DEROULEMENT (BOARD TRELLO) -->
+  <section class="slide" id="s-board">
+    <div class="head"><div class="kicker">Le déroulement du projet</div><h2>Comment on l'a construit, étape par étape</h2></div>
+    <div class="board" id="board"></div>
+    <div class="legend" style="margin-top:.55rem">
+      <span><i style="background:#3f7d4e"></i>fait</span>
+      <span><i style="background:#b7a98c"></i>à venir</span>
+      <span style="margin-left:auto">Pipeline reproductible — chaque étape = un script versionné dans le dépôt Git</span>
+    </div>
+    <div class="footnote"><span>De la donnée brute aux modèles validés</span><span></span></div>
+  </section>
+
+  <!-- 6. TECHNOLOGIES -->
+  <section class="slide" id="s-tech">
+    <div class="head"><div class="kicker">La stack technique</div><h2>Les technologies utilisées</h2></div>
+    <div class="techgrid" id="techgrid"></div>
+    <div class="legend" style="margin-top:.6rem"><span>100 % open-source · Python &amp; son écosystème data science</span><span style="margin-left:auto">+ joblib, pycountry, requests</span></div>
+    <div class="footnote"><span>Stack technique du projet</span><span></span></div>
+  </section>
+
+  <!-- 7. SCHEMA PIPELINE FEATURES -> CIBLES -->
+  <section class="slide" id="s-pipe">
+    <div class="head"><div class="kicker">L'architecture ML</div><h2>Le pipeline : des features aux modèles entraînés</h2></div>
+    <div class="pipe">
+      <!-- FEATURES -->
+      <div class="pcol">
+        <div class="pcol-head">① Features (entrées)</div>
+        <div class="pbox">
+          <div class="ph">🧬 Variables explicatives<span class="mono">8 400 × 741</span></div>
+          <div class="feat">
+            <span>🌡️ Climat (WorldClim · NASA · Berkeley)</span>
+            <span>🗺️ Géographie (lat · côte · altitude)</span>
+            <span>🪨 Sols & terrain</span>
+            <span>🌱 EcoCrop suitability (39 cultures)</span>
+            <span>🌀 Indices NOAA (ENSO · NAO · CO₂)</span>
+            <span>☪️ Religion (Pew)</span>
+            <span>🥩 Viande / type</span>
+            <span>🔢 Cluster climatique</span>
+          </div>
+        </div>
+      </div>
+      <div class="parrow">→</div>
+      <!-- PIPELINE -->
+      <div class="pcol">
+        <div class="pcol-head">② Pipeline (par cible)</div>
+        <div class="pstep flag"><span class="si">🛡️</span><span class="st"><b>Anti-leak / blacklist</b> — on retire les cibles, les rendements croisés, et <b>tout le socio-éco (PIB · IDH · population)</b> pour les cibles démographiques</span></div>
+        <div class="pstep"><span class="si">🎯</span><span class="st"><b>Sélection Top-80</b> — les 80 features les plus importantes (RandomForest)</span></div>
+        <div class="pstep"><span class="si">⚖️</span><span class="st"><b>Préprocessing</b> — imputation médiane → StandardScaler</span></div>
+        <div class="pstep"><span class="si">🤖</span><span class="st"><b>XGBoost</b> — 500 arbres · depth 6 · lr 0,05 · subsample 0,85</span></div>
+        <div class="pstep"><span class="si">🌍</span><span class="st"><b>Split par pays</b> — GroupShuffleSplit (test = pays jamais vus) · Global vs Global+Cluster</span></div>
+      </div>
+      <div class="parrow">→</div>
+      <!-- CIBLES / MODELES -->
+      <div class="pcol">
+        <div class="pcol-head">③ Cibles → modèles</div>
+        <div class="outbox t">
+          <div class="otop"><span class="num">62</span><span class="on">🌍 Couche 1 — la Planète</span></div>
+          <div class="od">10 sous-couches · 1 modèle XGBoost par cible</div>
+        </div>
+        <div class="feednote">↓ les sorties Couche 1 deviennent les entrées Couche 2 ↓</div>
+        <div class="outbox s">
+          <div class="otop"><span class="num">10</span><span class="on">🩸 Couche 2 — le Sang</span></div>
+          <div class="od">démographie / santé · features = environnement seul</div>
+        </div>
+        <div class="pbox" style="padding:.5rem .7rem">
+          <div class="st" style="font-size:.7rem;color:#5a4736">💾 <b style="font-family:Fraunces,serif;color:var(--soil)">72 modèles</b> sauvés en <span class="mono" style="color:#8a7560">best_target_*.joblib</span> (pipeline + liste des features)</div>
+        </div>
+      </div>
+    </div>
+    <div class="footnote"><span>Même pipeline appliqué indépendamment à chacune des 72 cibles</span><span></span></div>
+  </section>
+
+  <!-- 5. COUCHE 1 — PANORAMA DES 7 SOUS-COUCHES -->
+  <section class="slide" id="s-c1pano">
+    <div class="head"><div class="kicker tag-terre">🌍 Couche 1 — la Planète</div><h2>Une planète en 7 sous-couches</h2></div>
+    <div class="pano" id="pano"></div>
+    <div class="legend" style="margin-top:.7rem">
+      <span><i style="background:#3f7d4e"></i>R² ≥ 0,7</span>
+      <span><i style="background:#c98a2e"></i>0,4–0,7</span>
+      <span><i style="background:#b7a98c"></i>&lt; 0,4</span>
+      <span style="margin-left:auto">Chaque sous-couche = un système de la planète, prédit depuis le climat &amp; la géographie</span>
+    </div>
+    <div class="footnote"><span>62 cibles réparties en 7 sous-couches · R² évalué sur pays inconnus</span><span></span></div>
+  </section>
+
+  <!-- 6. COUCHE 1 — MEILLEURES PREDICTIONS -->
+  <section class="slide" id="s-c1top">
+    <div class="head"><div class="kicker tag-terre">🌍 Couche 1 — l'impact</div><h2>Ce que le climat prédit le mieux, toutes sous-couches confondues</h2></div>
+    <div class="cols c2" style="min-height:0">
+      <div style="display:flex;flex-direction:column;justify-content:center;gap:.8rem">
+        <p class="lead" style="font-size:1.02rem">À partir du seul <b>climat, sol et géographie</b>, les meilleures cibles dépassent <b>R² = 0,85</b> sur des <b>pays jamais vus</b> — et elles viennent de sous-couches très différentes : <b>atmosphère</b> (émissions), <b>écologie</b> (forêt), <b>élevage</b>, <b>énergies</b>.</p>
+        <div class="card" style="margin-top:.2rem">
+          <h3>Lire un R²</h3>
+          <p>1,0 = prédiction parfaite · 0 = aussi bon que la moyenne · négatif = pire que la moyenne. On affiche <b>tout</b>, même les échecs.</p>
+        </div>
+      </div>
+      <div style="display:flex;flex-direction:column;justify-content:center">
+        <div class="chart" id="chart-c1"></div>
+        <div class="legend">
+          <span><i style="background:#3f7d4e"></i>R² ≥ 0,7 (fort)</span>
+          <span><i style="background:#c98a2e"></i>0,4–0,7 (moyen)</span>
+          <span><i style="background:#b7a98c"></i>&lt; 0,4 (faible)</span>
+        </div>
+      </div>
+    </div>
+    <div class="footnote"><span>Top 14 cibles Couche 1 · R² évalué par pays</span><span></span></div>
+  </section>
+
+  <!-- 6. INSIGHT PAR CULTURE -->
+  <section class="slide" id="s-crop">
+    <div class="head"><div class="kicker tag-terre">🌍 Couche 1 · Agriculture — la trouvaille</div><h2>Prédire culture par culture, pas « les fruits » en bloc</h2></div>
+    <div class="cols c2 center">
+      <div style="display:flex;flex-direction:column;gap:1.1rem;justify-content:center">
+        <p class="lead">Prédire un agrégat (« rendement des oléagineux ») donnait un <b>R² ≈ 0,09</b> : un mélange de plantes trop différentes. En <b>séparant par culture</b>, chaque modèle apprend une vraie réponse au climat.</p>
+        <ul class="clean">
+          <li><b>Colza</b> → R² 0,55 · <b>Concombre</b> → 0,57 · <b>Tomate</b> → 0,54</li>
+          <li>Le climat <b>explique bien</b> les cultures sensibles à la température et à l'eau…</li>
+          <li>…et <b>échoue</b> sur celles dominées par la variété/technique (mangue, tournesol).</li>
+        </ul>
+      </div>
+      <div style="display:flex;flex-direction:column;justify-content:center">
+        <div class="chart" id="chart-crop"></div>
+        <div class="legend">
+          <span><i style="background:#3f7d4e"></i>fort</span>
+          <span><i style="background:#c98a2e"></i>moyen</span>
+          <span><i style="background:#b7a98c"></i>faible</span>
+          <span><i style="background:#a83c34"></i>négatif (climat insuffisant)</span>
+        </div>
+      </div>
+    </div>
+    <div class="footnote"><span>Granularité par culture · 36 cultures testées</span><span>06</span></div>
+  </section>
+
+  <!-- 7. COUCHE 2 RESULTATS -->
+  <section class="slide" id="s-c2">
+    <div class="head"><div class="kicker tag-sang">🩸 Couche 2 — les Gens</div><h2>Prédire la population à partir de la seule Terre</h2></div>
+    <div class="cols c2" style="min-height:0">
+      <div style="display:flex;flex-direction:column;justify-content:center;gap:.9rem">
+        <p class="lead" style="font-size:1.02rem">On prédit la démographie et la santé <b>uniquement</b> avec des variables physiques (climat, sol, rendements). Les variables socio-économiques (PIB, IDH) sont <b>volontairement interdites</b> — pour prouver le lien terre → gens.</p>
+        <div class="card">
+          <h3>Pourquoi blacklister le PIB ?</h3>
+          <p>Si on autorisait le PIB, le modèle « tricherait » en lisant la richesse. En l'interdisant, un bon score prouve que <b>l'environnement seul</b> structure déjà la population.</p>
+        </div>
+      </div>
+      <div style="display:flex;flex-direction:column;justify-content:center">
+        <div class="chart" id="chart-c2"></div>
+        <div class="legend">
+          <span><i style="background:#3f7d4e"></i>R² ≥ 0,7</span>
+          <span><i style="background:#c98a2e"></i>0,4–0,7</span>
+          <span><i style="background:#b7a98c"></i>&lt; 0,4</span>
+        </div>
+      </div>
+    </div>
+    <div class="footnote"><span>10 cibles démographie / santé · prédites depuis la Couche 1</span><span>07</span></div>
+  </section>
+
+  <!-- 8. LE RESULTAT PHARE -->
+  <section class="slide center" id="s-win">
+    <div class="head"><div class="kicker tag-sang">Le résultat phare</div></div>
+    <div class="cols c-37 center">
+      <div class="stat">
+        <div class="num blood" style="font-size:clamp(4rem,11vw,9rem)">0,95</div>
+        <div class="lbl" style="font-size:1.05rem">R² sur la <b>natalité</b>, en test sur des pays jamais vus</div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:1rem;justify-content:center">
+        <div class="big-quote">La <em>natalité</em> d'un pays se prédit à 95 % <em>sans aucune</em> donnée économique — juste avec le climat, le sol et l'agriculture.</div>
+        <p class="lead" style="font-size:1rem">La démographie est <b>largement structurée par l'environnement physique</b> : climats tropicaux humides → natalité forte ; agriculture productive &amp; climat tempéré → mortalité infantile basse. La fécondité suit l'humidité du sol racinaire (NASA GWETROOT).</p>
+        <div>
+          <span class="pill blood">Fécondité · 0,95</span>
+          <span class="pill blood">Mortalité infantile · 0,82</span>
+          <span class="pill blood">Espérance de vie · 0,75</span>
+        </div>
+      </div>
+    </div>
+    <div class="footnote"><span>La grande victoire scientifique du projet</span><span>08</span></div>
+  </section>
+
+  <!-- 9. LE LIEN INTER-COUCHES -->
+  <section class="slide" id="s-link">
+    <div class="head"><div class="kicker">Le fil narratif</div><h2>Le rendement agricole explique la malnutrition</h2></div>
+    <div class="cols c2 center">
+      <div style="display:flex;flex-direction:column;gap:1rem;justify-content:center">
+        <div class="stat"><div class="num ochre" style="font-size:clamp(3rem,8vw,6rem)">−0,45</div><div class="lbl">corrélation rendement agricole ↔ malnutrition</div></div>
+        <p class="lead" style="font-size:1.02rem">Le notebook <span class="mono">couche1_x_couche2</span> joint les deux couches sur (Pays, Année) : <b>plus un pays produit, moins sa population a faim.</b> Un modèle inter-couches prédit même la malnutrition à partir du seul agro-environnement (R² ≈ 0,17 sur pays inconnus).</p>
+      </div>
+      <div class="card center" style="display:flex;align-items:center;justify-content:center;text-align:center">
+        <div>
+          <div class="serif" style="font-size:1.3rem;color:var(--soil);margin-bottom:.6rem">🌍 → 🌾 → 🍽️ → 🩸</div>
+          <p style="font-size:1rem;line-height:1.6">Le climat fixe le <b>rendement</b>.<br>Le rendement fixe l'<b>accès à la nourriture</b>.<br>La nourriture fixe la <b>santé &amp; la démographie</b>.<br><b style="color:var(--blood)">C'est ça, « de la terre aux gens ».</b></p>
+        </div>
+      </div>
+    </div>
+    <div class="footnote"><span>Jointure analytique des deux couches</span><span>09</span></div>
+  </section>
+
+  <!-- 10. METHODOLOGIE -->
+  <section class="slide" id="s-method">
+    <div class="head"><div class="kicker">La rigueur</div><h2>Ce qui rend les résultats crédibles</h2></div>
+    <div class="cols c2">
+      <div class="steps">
+        <div class="step"><div class="n">1</div><div><h4>Split par pays, pas par année</h4><p>On teste sur des <b>pays jamais vus</b> (GroupShuffleSplit sur l'ISO). Sinon le modèle mémorise chaque pays et affiche un faux R² = 1,0.</p></div></div>
+        <div class="step"><div class="n">2</div><div><h4>Mesuré vs dérivé</h4><p>On ne « prédit » pas une variable qui est déjà une <b>formule physique</b> (érosion, risque de crue) : on la calcule. Seules les vraies mesures passent par le ML.</p></div></div>
+        <div class="step"><div class="n">3</div><div><h4>Variables socio-éco blacklistées</h4><p>PIB, IDH, urbanisation interdits en Couche 2 → un bon score prouve le lien <b>environnement → population</b>, pas la richesse.</p></div></div>
+      </div>
+      <div style="display:flex;flex-direction:column;justify-content:center;gap:1rem">
+        <div class="card">
+          <h3>🐛 Le bug qu'on a chassé</h3>
+          <p>4 cibles sortaient à un suspect <b>R² = 1,00</b>. Diagnostic : fuite de données — des variables constantes par pays + un mauvais split. Corrigé par le split par pays → les scores honnêtes sont redescendus (yield 0,69, etc.). <b>C'est cette honnêteté qu'on défend.</b></p>
+        </div>
+        <ul class="clean">
+          <li>Données <b>reproductibles</b> &amp; hors Git</li>
+          <li>Chaque notebook <b>ré-exécuté</b>, chaque figure vérifiée</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footnote"><span>Anti-fuite · évaluation honnête · reproductibilité</span><span>10</span></div>
+  </section>
+
+  <!-- 11. LIMITES -->
+  <section class="slide" id="s-lim">
+    <div class="head"><div class="kicker">L'honnêteté</div><h2>Ce que le climat ne suffit pas à prédire</h2></div>
+    <div class="cols c2 center">
+      <div style="display:flex;flex-direction:column;gap:1rem;justify-content:center">
+        <p class="lead">Un bon projet data <b>assume ses échecs.</b> Certaines cibles ont un R² négatif — et c'est <b>un résultat en soi</b> : il dit que le climat seul ne les explique pas.</p>
+        <ul class="clean">
+          <li><b>Mangue, tournesol, pois chiche</b> → trop dépendants de la variété &amp; des techniques.</li>
+          <li><b>Carcasses animales</b> → plafonnent (manque la race, l'intensification).</li>
+          <li><b>Migration nette</b> → relève de la <b>politique</b>, pas de la terre.</li>
+        </ul>
+      </div>
+      <div style="display:flex;flex-direction:column;justify-content:center">
+        <div class="chart" id="chart-lim"></div>
+        <div class="legend"><span><i style="background:#a83c34"></i>R² négatif — climat insuffisant, et on le dit</span></div>
+      </div>
+    </div>
+    <div class="footnote"><span>Limites assumées &amp; documentées</span><span>11</span></div>
+  </section>
+
+  <!-- 12. OU ON EN EST -->
+  <section class="slide" id="s-state">
+    <div class="head"><div class="kicker">Bilan</div><h2>Où on en est arrivé</h2></div>
+    <div class="cols c2">
+      <div style="display:flex;flex-direction:column;gap:.9rem;justify-content:center">
+        <ul class="clean">
+          <li><b>2 pipelines de données réelles</b> complets, reliés par (Pays, Année).</li>
+          <li><b>72 modèles</b> entraînés &amp; évalués honnêtement (62 Terre + 10 Gens).</li>
+          <li>Un <b>résultat fort</b> : la natalité prédite à 0,95 depuis l'environnement seul.</li>
+          <li>Une <b>histoire</b> qui tient : la terre → les récoltes → la nourriture → les gens.</li>
+        </ul>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:1rem;justify-content:center">
+        <div class="card"><h3>Forces à défendre</h3><p>Données 100 % réelles · méthodo anti-fuite · échecs assumés · narratif clair de bout en bout.</p></div>
+        <div class="card"><h3>Pistes d'amélioration</h3><p>Enrichir les cibles faibles (race animale, techniques agricoles) · ajouter une couche « politique » pour migration &amp; conflits · dashboard interactif.</p></div>
+      </div>
+    </div>
+    <div class="footnote"><span>Swarm_Prediction · état actuel</span><span>12</span></div>
+  </section>
+
+  <!-- 13. MERCI -->
+  <section class="slide center" id="s-end" style="background:linear-gradient(160deg,#3c2a1e,#1d150f)">
+    <div style="position:relative;z-index:2">
+      <div class="kicker" style="color:var(--wheat)">Merci de votre attention</div>
+      <h1 class="serif" style="font-size:clamp(2.6rem,7vw,5.5rem);color:#fff">Des questions ?</h1>
+      <p class="lead" style="color:#e7d6bb;margin-top:1rem">Swarm_Prediction — <em style="color:var(--wheat);font-style:normal">de la terre aux gens.</em><br>Données : FAO · World Bank · NASA · WorldClim · OWID · Project Tycho.</p>
+      <div class="cover-meta" style="margin-top:2rem;color:#e7d6bb">
+        <div><span style="color:var(--wheat)">Auteurs</span><b style="color:#fff">Louey &amp; Alexis</b></div>
+        <div><span style="color:var(--wheat)">Dépôt</span><b style="color:#fff">github.com/2Alexis/Swarm_Prediction</b></div>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<div class="nav">
+  <span class="counter" id="counter">01 / 13</span>
+  <button id="prev">‹</button>
+  <button id="next">›</button>
+</div>
+<div class="hint">← → ou clic pour naviguer · F plein écran</div>
+
+<script>
+  // ---------- données réelles (R² évalué par pays) ----------
+  const C1 = [
+    ["Émissions N₂O",0.96],["Émissions CH₄",0.96],["Production charbon",0.89],
+    ["% forêt national",0.88],["Production œufs",0.85],["Production pétrole",0.85],
+    ["Rendement lait",0.82],["Anomalie thermique",0.82],["Accès eau potable",0.80],
+    ["Hydroélectrique",0.77],["Production gaz",0.78],["Éolien",0.77],
+    ["Émissions CO₂",0.73],["Solaire",0.72]
+  ];
+  const CROP = [
+    ["Concombre",0.57],["Colza",0.55],["Tomate",0.54],["Pois sec",0.44],
+    ["Pomme de terre",0.44],["Pomme",0.36],["Citron",0.30],["Tournesol",-0.34],["Mangue",-1.33]
+  ];
+  const C2 = [
+    ["Natalité",0.95],["Taux de fécondité",0.94],["Mortalité infantile",0.83],
+    ["Espérance de vie",0.75],["Croissance démo.",0.69],["Stunting",0.67],
+    ["Mortalité brute",0.61],["Décès catastrophes",0.54],["Personnes affectées",0.54],["Migration nette",0.08]
+  ];
+  const LIM = [
+    ["Pois chiche",-0.45],["Tournesol",-0.34],["Poire",-0.32],["Abricot",-0.22],["Mangue",-1.33]
+  ];
+
+  function cls(v){ if(v<0) return 'n'; if(v>=0.7) return 's'; if(v>=0.4) return 'm'; return 'w'; }
+  function width(v){ // map -1.4..1 -> visible; clamp
+    if(v<=0) return Math.min(18, Math.max(4, 10+v*4)); // small stub for negatives
+    return Math.max(4, v*100);
+  }
+  function render(id,data){
+    const el=document.getElementById(id); if(!el) return;
+    el.innerHTML = data.map(([n,v])=>`
+      <div class="row">
+        <div class="rl">${n}</div>
+        <div class="track"><div class="fill ${cls(v)}" data-w="${width(v)}"></div></div>
+        <div class="rv">${v.toFixed(2).replace('.',',')}</div>
+      </div>`).join('');
+  }
+  render('chart-c1',C1); render('chart-crop',CROP); render('chart-c2',C2); render('chart-lim',LIM);
+
+  // ---------- panorama : les 7 sous-couches de la Planète ----------
+  const PANO=[
+    {ic:'🌫️',nm:'Atmosphère',ct:'4 cibles',rows:[['Émissions N₂O',0.96],['Émissions CH₄',0.96],['Anomalie thermique',0.82]]},
+    {ic:'💧',nm:'Hydrologie',ct:'3 cibles',rows:[['Accès eau potable',0.80],['Stress hydrique',0.65],['Humidité du sol',0.49]]},
+    {ic:'🪨',nm:'Sols & écologie',ct:'3 cibles',rows:[['% forêt national',0.88],['Dégradation du sol',0.63],['Perte couvert arboré',0.58]]},
+    {ic:'🌾',nm:'Agriculture',ct:'38 cibles',rows:[['Céréales',0.61],['Concombre',0.57],['Colza',0.55]],note:'Par culture : céréales, oléagineux, fruits, légumes, légumineuses'},
+    {ic:'🐄',nm:'Élevage',ct:'7 cibles',rows:[['Production œufs',0.85],['Rendement lait',0.82],['Rendement œufs',0.55]]},
+    {ic:'🐟',nm:'Pêche',ct:'1 cible',rows:[['Aquaculture',0.60]],note:'+ exploration FAO : capture vs aquaculture, espèces ISSCAAP'},
+    {ic:'⚡',nm:'Énergies',ct:'6 cibles',rows:[['Charbon',0.89],['Pétrole',0.85],['Gaz',0.78]]}
+  ];
+  function renderPanorama(){
+    const el=document.getElementById('pano'); if(!el) return;
+    el.innerHTML = PANO.map(c=>`
+      <div class="pcard">
+        <div class="ph"><span class="ic">${c.ic}</span><span class="nm">${c.nm}</span><span class="ct">${c.ct}</span></div>
+        ${c.rows.map(([n,v])=>`<div class="mrow"><div class="mt"><span>${n}</span><b>${v.toFixed(2).replace('.',',')}</b></div><div class="mtrack"><div class="mfill ${cls(v)}" data-w="${width(v)}"></div></div></div>`).join('')}
+        ${c.note?`<div class="pnote">${c.note}</div>`:''}
+      </div>`).join('')
+      + `<div class="psum"><div class="big">62</div><div style="font-size:.74rem;letter-spacing:.03em">cibles entraînées</div><div style="font-size:.68rem;opacity:.82;margin-top:.25rem">~183 pays · 2010–2024</div></div>`;
+  }
+  renderPanorama();
+
+  // ---------- déroulement : board type Trello (étapes réelles tirées des notebooks) ----------
+  const BOARD=[
+    {ic:'📥',nm:'Collecte',ac:'#c97b3c',cards:[
+      ['FAO / FAOSTAT','rendements, élevage, intrants',1],
+      ['World Bank','démographie, eau potable',1],
+      ['WorldClim · NASA · Berkeley','climat 1743–2024',1],
+      ['OWID · Hansen · Pew · NOAA','énergie, forêt, religion',1],
+      ['FAO Global Fish','1,15 M lignes (1950–2022)',1]
+    ]},
+    {ic:'🧹',nm:'Nettoyage',ac:'#6b7d3a',cards:[
+      ['clean_data.py','encodings, types, unités',1],
+      ['clean_fish — 9 étapes','190 Mo nettoyés',1],
+      ['Jointures ISO','alpha-2/3 (pycountry)',1],
+      ['Outliers & NaN','ISO NaN, water_stress',1]
+    ]},
+    {ic:'⚙️',nm:'Enrichissement',ac:'#b07d3a',cards:[
+      ['Fusion (Pays, Année)','toutes les sources',1],
+      ['EcoCrop suitability','39 cultures (T/P_opt)',1],
+      ['Religion + viande/type','Pew 2010 + OWID',1],
+      ['→ dataset_final_v12','8 400 × 741 colonnes',1]
+    ]},
+    {ic:'📊',nm:'Exploration',ac:'#7a6a3a',cards:[
+      ['Couverture & distributions','EDA notebooks',1],
+      ['Corrélations','rendement ↔ malnutrition',1],
+      ['Fish : ISSCAAP','capture vs aquaculture',1],
+      ['Clustering climatique','8 clusters',1]
+    ]},
+    {ic:'🤖',nm:'Modélisation',ac:'#42692f',cards:[
+      ['Split par pays','GroupShuffleSplit',1],
+      ['XGBoost','500 arbres · depth 6 · lr 0,05',1],
+      ['Couche 1 — 62 cibles','par sous-couche',1],
+      ['Couche 2 — 10 cibles','démographie / santé',1],
+      ['Global vs +Cluster','comparaison',1]
+    ]},
+    {ic:'✅',nm:'Validation & résultats',ac:'#9b2d2d',cards:[
+      ['🐛 Fuite R²=1,0 corrigée','split par pays',1],
+      ['R² honnêtes','natalité 0,95 · forêt 0,88',1],
+      ['Jointure C1 × C2','r = −0,45',1],
+      ['Cibles fish V13','enrich → v13',0],
+      ['Merge sur main','+ README à jour',0]
+    ]}
+  ];
+  function renderBoard(){
+    const el=document.getElementById('board'); if(!el) return;
+    el.innerHTML = BOARD.map(c=>`
+      <div class="col">
+        <div class="col-h"><span>${c.ic}</span><span>${c.nm}</span><span class="cnt">${c.cards.length}</span></div>
+        <div class="tcards">
+          ${c.cards.map(([t,d,done])=>`<div class="tcard ${done?'':'todo'}" style="border-left-color:${done?c.ac:'#b7a98c'}"><span class="ck">${done?'✓':'○'}</span><span><b>${t}</b><br>${d}</span></div>`).join('')}
+        </div>
+      </div>`).join('');
+  }
+  renderBoard();
+
+  // ---------- technologies (logos inlinés en base64) ----------
+  const LOGO = {"python": "data:image/svg+xml;base64,PHN2ZyBmaWxsPSIjMzc3NkFCIiByb2xlPSJpbWciIHZpZXdCb3g9IjAgMCAyNCAyNCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48dGl0bGU+UHl0aG9uPC90aXRsZT48cGF0aCBkPSJNMTQuMjUuMThsLjkuMi43My4yNi41OS4zLjQ1LjMyLjM0LjM0LjI1LjM0LjE2LjMzLjEuMy4wNC4yNi4wMi4yLS4wMS4xM1Y4LjVsLS4wNS42My0uMTMuNTUtLjIxLjQ2LS4yNi4zOC0uMy4zMS0uMzMuMjUtLjM1LjE5LS4zNS4xNC0uMzMuMS0uMy4wNy0uMjYuMDQtLjIxLjAySDguNzdsLS42OS4wNS0uNTkuMTQtLjUuMjItLjQxLjI3LS4zMy4zMi0uMjcuMzUtLjIuMzYtLjE1LjM3LS4xLjM1LS4wNy4zMi0uMDQuMjctLjAyLjIxdjMuMDZIMy4xN2wtLjIxLS4wMy0uMjgtLjA3LS4zMi0uMTItLjM1LS4xOC0uMzYtLjI2LS4zNi0uMzYtLjM1LS40Ni0uMzItLjU5LS4yOC0uNzMtLjIxLS44OC0uMTQtMS4wNS0uMDUtMS4yMy4wNi0xLjIyLjE2LTEuMDQuMjQtLjg3LjMyLS43MS4zNi0uNTcuNC0uNDQuNDItLjMzLjQyLS4yNC40LS4xNi4zNi0uMS4zMi0uMDUuMjQtLjAxaC4xNmwuMDYuMDFoOC4xNnYtLjgzSDYuMThsLS4wMS0yLjc1LS4wMi0uMzcuMDUtLjM0LjExLS4zMS4xNy0uMjguMjUtLjI2LjMxLS4yMy4zOC0uMi40NC0uMTguNTEtLjE1LjU4LS4xMi42NC0uMS43MS0uMDYuNzctLjA0Ljg0LS4wMiAxLjI3LjA1em0tNi4zIDEuOThsLS4yMy4zMy0uMDguNDEuMDguNDEuMjMuMzQuMzMuMjIuNDEuMDkuNDEtLjA5LjMzLS4yMi4yMy0uMzQuMDgtLjQxLS4wOC0uNDEtLjIzLS4zMy0uMzMtLjIyLS40MS0uMDktLjQxLjA5em0xMy4wOSAzLjk1bC4yOC4wNi4zMi4xMi4zNS4xOC4zNi4yNy4zNi4zNS4zNS40Ny4zMi41OS4yOC43My4yMS44OC4xNCAxLjA0LjA1IDEuMjMtLjA2IDEuMjMtLjE2IDEuMDQtLjI0Ljg2LS4zMi43MS0uMzYuNTctLjQuNDUtLjQyLjMzLS40Mi4yNC0uNC4xNi0uMzYuMDktLjMyLjA1LS4yNC4wMi0uMTYtLjAxaC04LjIydi44Mmg1Ljg0bC4wMSAyLjc2LjAyLjM2LS4wNS4zNC0uMTEuMzEtLjE3LjI5LS4yNS4yNS0uMzEuMjQtLjM4LjItLjQ0LjE3LS41MS4xNS0uNTguMTMtLjY0LjA5LS43MS4wNy0uNzcuMDQtLjg0LjAxLTEuMjctLjA0LTEuMDctLjE0LS45LS4yLS43My0uMjUtLjU5LS4zLS40NS0uMzMtLjM0LS4zNC0uMjUtLjM0LS4xNi0uMzMtLjEtLjMtLjA0LS4yNS0uMDItLjIuMDEtLjEzdi01LjM0bC4wNS0uNjQuMTMtLjU0LjIxLS40Ni4yNi0uMzguMy0uMzIuMzMtLjI0LjM1LS4yLjM1LS4xNC4zMy0uMS4zLS4wNi4yNi0uMDQuMjEtLjAyLjEzLS4wMWg1Ljg0bC42OS0uMDUuNTktLjE0LjUtLjIxLjQxLS4yOC4zMy0uMzIuMjctLjM1LjItLjM2LjE1LS4zNi4xLS4zNS4wNy0uMzIuMDQtLjI4LjAyLS4yMVY2LjA3aDIuMDlsLjE0LjAxem0tNi40NyAxNC4yNWwtLjIzLjMzLS4wOC40MS4wOC40MS4yMy4zMy4zMy4yMy40MS4wOC40MS0uMDguMzMtLjIzLjIzLS4zMy4wOC0uNDEtLjA4LS40MS0uMjMtLjMzLS4zMy0uMjMtLjQxLS4wOC0uNDEuMDh6Ii8+PC9zdmc+", "pandas": "data:image/svg+xml;base64,PHN2ZyBmaWxsPSIjMTUwNDU4IiByb2xlPSJpbWciIHZpZXdCb3g9IjAgMCAyNCAyNCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48dGl0bGU+cGFuZGFzPC90aXRsZT48cGF0aCBkPSJNMTYuOTIyIDBoMi42MjN2MTguMTA0aC0yLjYyM3ptLTQuMTI2IDEyLjk0aDIuNjIzdjIuNTdoLTIuNjIzem0wLTcuMDM3aDIuNjIzdjUuNDQ2aC0yLjYyM3ptMCAxMS4xOTdoMi42MjN2NS40NDZoLTIuNjIzek00LjQ1NiA1Ljg5NmgyLjYyMlYyNEg0LjQ1NXptNC4yMTMgMi41NTloMi42MjN2Mi41N0g4LjY3em0wIDQuMTUxaDIuNjIzdjUuNDQ3SDguNjd6bTAtMTEuMTg3aDIuNjIzdjUuNDQ2SDguNjdaIi8+PC9zdmc+", "numpy": "data:image/svg+xml;base64,PHN2ZyBmaWxsPSIjMDEzMjQzIiByb2xlPSJpbWciIHZpZXdCb3g9IjAgMCAyNCAyNCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48dGl0bGU+TnVtUHk8L3RpdGxlPjxwYXRoIGQ9Ik0xMC4zMTUgNC44NzZMNi4zMDQ4IDIuODUxN2wtNC40MDEgMi4xOTY1IDQuMTE4NiAyLjA2ODN6bTEuODM4MS45Mjc3bDQuMjA0NSAyLjEyMjMtNC4zNjIyIDIuMTkwNi00LjEyNS0yLjA3MTh6bTUuNjE1My0yLjkyMTNsNC4zMTkzIDIuMTY1OC0zLjg2MyAxLjk0MDItNC4yMTMxLTIuMTI1MnptLTEuODU5LS45MzI5TDEyLjAyMSAwIDguMTc0MiAxLjkxOTNsNC4wMDY4IDIuMDIwOHptLTMuMDQwMSAxNi43NDQzVjI0bDQuNzEwNy0yLjM1MDctLjAwNTMtNS4zMDg1em00LjcwMzctNC4yMDU3bC0uMDA1Mi01LjI1MjgtNC42OTg1IDIuMzM1NnY1LjI1NDZ6bTUuNjU1My0uOTg0NXY1LjMyN2wtNC4wMTc4IDIuMDA1Mi0uMDAyOS01LjMwMjh6bTAtMS44NjI2VjYuNDIxNGwtNC4wMjUzIDIuMDAxLjAwMzQgNS4yNjMzek0xMS4yMDYyIDExLjU3MUw4LjAzMzMgOS45NzU2djYuODk1cy0zLjg4MDQtOC4yNTY0LTQuMjM5OS04Ljk5OGMtLjA0NjMtLjA5NTctLjIzNzEtLjIwMDctLjI4NTgtLjIyNjJDMi44MTE4IDcuMjgxMi43NzMgNi4yNDg1Ljc3MyA2LjI0ODVWMTguNDNsMi44MjA0IDEuNTA3NnYtNi4zNjc0czMuODM5MiA3LjM3NzUgMy44NzggNy40NThjLjAzODkuMDgwNy40MjQ1Ljg1ODIuODM2MiAxLjEzMTQuNTQ4NS4zNjMgMi44OTkyIDEuNzc2NiAyLjg5OTIgMS43NzY2eiIvPjwvc3ZnPg==", "scikitlearn": "data:image/svg+xml;base64,PHN2ZyBmaWxsPSIjRjc5MzFFIiByb2xlPSJpbWciIHZpZXdCb3g9IjAgMCAyNCAyNCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48dGl0bGU+c2Npa2l0LWxlYXJuPC90aXRsZT48cGF0aCBkPSJNMTUuNjAxIDUuNTNjLTEuOTEuMDM1LTMuOTgxLjkxLTUuNjMgMi41Ni0yLjkzIDIuOTMtMi4wODMgOC41My0xLjA4OCA5LjUyNS44MDUuODA0IDYuNTk1IDEuODQzIDkuNTI2LTEuMDg4YTkuNzQgOS43NCAwIDAgMCAuNTg0LS42NDNjLjA0My0uMjkyLjIwNS0uNjYuNDg5LTEuMTA2YTEuODQ4IDEuODQ4IDAgMCAxLS41MzcuMTc2Yy0uMTQ0LjI2NS0uMzcuNTUtLjY3Ni44NTUtLjM1NC4zMzUtLjYwNy41NTQtLjc2LjY1NmEuNzk1Ljc5NSAwIDAgMS0uNDM3LjE1MmMtLjM1IDAtLjUxNC0uMzA4LS40OTQtLjkyNC0uMjIuMzE2LS40MjUuNTQ5LS42MTIuN2EuOTE0LjkxNCAwIDAgMS0uNTc4LjIyNGMtLjE5NCAwLS4zNi0uMDktLjQ5Ni0uMjczYTEuMDMgMS4wMyAwIDAgMS0uMTkzLS41MDcgNC4wMTYgNC4wMTYgMCAwIDEtLjcyNi41ODNjLS4yMjQuMTMyLS40Ny4xOTctLjc0LjE5Ny0uMyAwLS41NDMtLjA5Ni0uNzI3LS4yODhhLjk3OC45NzggMCAwIDEtLjI1Ny0uNTI0di4wMDRjLS4zLjI3Ni0uNTY0LjQ4LS43OS42MTFhMS4yOTUgMS4yOTUgMCAwIDEtLjY0OS4xOTcuNjkzLjY5MyAwIDAgMS0uNTcxLS4yNzVjLS4xNDUtLjE4My0uMjE4LS40My0uMjE4LS43MzkgMC0uNDY0LjEwMS0xLjAyLjMwMi0xLjY3LjIwMS0uNjUuNDQ1LTEuMjUuNzMzLTEuNzk3bC44NDItLjMxMmEuMjEuMjEgMCAwIDEgLjA2LS4wMTNjLjA2MyAwIC4xMTYuMDQ3LjE1Ny4xNC4wNC4wOTUuMDYxLjIyMS4wNjEuMzggMCAuNDUxLS4xMDQuODg4LS4zMTIgMS4zMS0uMjA3LjQyMi0uNTMyLjg3My0uOTc0IDEuMzUyLS4wMTguMjMtLjAyNy4zODgtLjAyNy40NzQgMCAuMTkzLjAzNi4zNDUuMTA2LjQ1OC4wNzEuMTEzLjE2NS4xNjkuMjgyLjE2OWEuNzEuNzEgMCAwIDAgLjM4Mi0uMTNjLjEzMi0uMDg0LjMzMy0uMjYuNjAyLS41MjMuMDI4LS40MTguMTg3LS43OTguNDgyLTEuMTQyLjMyNC0uMzguNjg1LS41NjkgMS4wOC0uNTY5LjIwNiAwIC4zNy4wNTQuNDk0LjE2YS41MjQuNTI0IDAgMCAxIC4xODYuNDE3YzAgLjQ1OC0uNDg2LjgyOS0xLjQ1OSAxLjExNC4wODguNDMuMzIuNjQ2LjY5My42NDZhLjgwNy44MDcgMCAwIDAgLjQxNy0uMTE3Yy4xMjktLjA3Ni4zMjEtLjI0My41NzUtLjQ5Ny4wMzItLjI1Mi4xMTgtLjQ5NS4yNTktLjcyOC4xODItLjMuNDE2LS41NDQuNzAxLS43My4yODUtLjE4NS41MzctLjI3OC43NTYtLjI3OC4yNzYgMCAuNDcuMTI3LjU4LjM4MWwuNjc3LS4zNzRoLjE4NmwtLjI5Mi45NzFjLS4xNS40ODgtLjIyNi44MjMtLjIyNiAxLjAwNCAwIC4xOS4wNjcuMjg1LjIwMi4yODUuMDg2IDAgLjE4MS0uMDQ1LjI4NS0uMTM3LjEwNC0uMDkyLjI1LS4yMzIuNDM3LS40MnYuMDAxYy4xNDMtLjE1NS4yNzQtLjMyLjM5Mi0uNDk0LS4xOS0uMDg0LS4yODUtLjIxLS4yODUtLjM3NSAwLS4xNy4wNTgtLjM1Mi4xNzQtLjU0NS4xMTYtLjE5NC4yNzUtLjI5LjQ3OS0uMjkuMTcyIDAgLjI1OC4wODguMjU4LjI2NSAwIC4xMzktLjA1LjMzOC0uMTQ5LjU5Ni4zNjctLjA0LjY4Ny0uMzIuOTYxLS44NDJsLjIyOC0uMDFjMS4wNTktMi40MzguODI4LTUuMDc1LS44My02LjczMi0xLjAxOS0xLjAyLTIuNDA4LTEuNS0zLjg5NS0xLjQ3MXptNC43MjUgOC4yMDNhOC45MzggOC45MzggMCAwIDEtMS4zMzMgMi4xNTEgMS4wOSAxLjA5IDAgMCAwLS4wMTIuMTQ3YzAgLjE2OC4wNDcuMzA5LjE0LjQyMy4wOTIuMTEzLjIwNi4xNy4zNC4xNy4yOTYgMCAuNzE0LS4yNjQgMS4yNTQtLjc4Ny0uMDAxLjA0LS4wMDMuMDgtLjAwMy4xMjEgMCAuMTQ2LjAxMi4zNjguMDM2LjY2NmwuNzMzLS4xNzJjMC0uMi4wMDMtLjM1Ny4wMS0uNDc0LjAxLS4xNTcuMDMzLS4zMy4wNjYtLjUxNy4wMi0uMTEuMDctLjIxNi4xNTItLjMxNWwuMTg2LS4yMTZhNS4yNzYgNS4yNzYgMCAwIDEgLjM3OC0uMzk3Yy4wNjItLjA1NS4xMTYtLjA5OS4xNjItLjEzYS4yNi4yNiAwIDAgMSAuMTIzLS4wNDZjLjA1NSAwIC4wODMuMDM1LjA4My4xMDYgMCAuMDctLjA1Mi4yMzYtLjE1Ni40OTctLjE5NC40ODYtLjI5Mi44NDgtLjI5MiAxLjA4NCAwIC4xNzUuMDQ2LjMxNC4xMzYuNDE4YS40NS40NSAwIDAgMCAuMzU4LjE1NWMuMzY1IDAgLjgwMy0uMjY5IDEuMzEzLS44MDh2LS4zODFjLS4zNjEuNDI2LS42MjMuNjQtLjc4NC42NC0uMTA5IDAtLjE2My0uMDY3LS4xNjMtLjIgMC0uMS4wNjUtLjMxNi4xOTUtLjY1LjE5LS40ODYuMjg1LS44MzYuMjg1LTEuMDQ4YS40NjQuNDY0IDAgMCAwLS4xMTItLjMxOS4zNi4zNiAwIDAgMC0uMjgyLS4xMjdjLS4xNjUgMC0uMzU0LjA3Ny0uNTY3LjIzMy0uMjEzLjE1Ni0uNS40MzYtLjg2My44NC4wNTMtLjI2Mi4xNjUtLjYyMi4zMzUtMS4wOGwtLjgwOS4xNTZhNi41NCA2LjU0IDAgMCAwLS4zOTkgMS4wNzRjLS4wNC4xNTYtLjA3LjMxNi0uMDkyLjQ4YTcuNDQ3IDcuNDQ3IDAgMCAxLS40OS40NS4zOC4zOCAwIDAgMS0uMjI5LjA4LjIwOC4yMDggMCAwIDEtLjE3NC0uMDgyLjM1Mi4zNTIgMCAwIDEtLjA2NC0uMjIyYzAtLjEuMDE5LS4yMTQuMDU2LS4zNDMuMDM4LS4xMy4xMi0uMzczLjI0OS0uNzMxbC4zMDgtLjg0OXptLTE3LjIxLTIuOTI3Yy0uODYzLS4wMTYtMS42Ny4yNjMtMi4yNjEuODU0LTEuMzUyIDEuMzUyLTEuMDcgMy44MjcuNjMxIDUuNTI3IDEuNyAxLjcwMSA0Ljk1IDEuMjEgNS41MjcuNjMyLjQ2Ny0uNDY2IDEuMDctMy44MjctLjYzMS01LjUyNy0uOTU3LS45NTctMi4xNTgtMS40NjUtMy4yNjctMS40ODZ6bTEyLjI4NS4zNThoLjE2NnYuMjFIMTUuNHptLjQyNyAwaC4xNjZ2Ljg2NWwuNDYtLjQ1NWguMTk1bC0uMzY0LjM2Mi40MjguNjg0aC0uMTk4bC0uMzU3LS41NzUtLjE2NC4xNjZ2LjQxaC0uMTY2em0xLjAxNiAwaC4xNjZ2LjIxaC0uMTY2em0uNDgxLjEyMmguMTY2di4yODhoLjE3MnYuMTM1aC0uMTcydi43MTdjMCAuMDM3LjAwNi4wNjIuMDIuMDc1LjAxMi4wMTMuMDM3LjAyLjA3NC4wMmEuMjMuMjMgMCAwIDAgLjA3OC0uMDF2LjE0MWEuODAyLjgwMiAwIDAgMS0uMTM2LjAxNC4yMy4yMyAwIDAgMS0uMTUtLjA0My4xNS4xNSAwIDAgMS0uMDUyLS4xMjN2LS43OWgtLjE0MXYtLjEzNmguMTQxem0tMy41NjIuMjU4Yy4wODEgMCAuMTUuMDEyLjIwNy4wMzguMDU3LjAyNC4xLjA2MS4xMy4xMXMuMDQ1LjEwNi4wNDUuMTczaC0uMTc2Yy0uMDA2LS4xMTEtLjA3NS0uMTY3LS4yMDgtLjE2N2EuMjg1LjI4NSAwIDAgMC0uMTY0LjA0MS4xMzQuMTM0IDAgMCAwLS4wNi4xMTdjMCAuMDM1LjAxNS4wNjUuMDQ1LjA4OC4wMy4wMjQuMDguMDQ0LjE1LjA2bC4xNi4wMzlhLjQ3LjQ3IDAgMCAxIC4yMjQuMTA1Yy4wNDcuMDQ2LjA3LjEwOC4wNy4xODZhLjMuMyAwIDAgMS0uMDUyLjE3NS4zMjcuMzI3IDAgMCAxLS4xNTIuMTE2LjU4NS41ODUgMCAwIDEtLjIyNi4wNDFjLS4xMzYgMC0uMjQtLjAzLS4zMDktLjA4OC0uMDY5LS4wNTktLjEwNS0uMTQ5LS4xMDktLjI2OWguMTc2Yy4wMDQuMDM3LjAxLjA2NS4wMTcuMDg0YS4xNjYuMTY2IDAgMCAwIC4wMzQuMDU0Yy4wNDQuMDQzLjExMi4wNjUuMjA0LjA2NWEuMzEuMzEgMCAwIDAgLjE3Ny0uMDQ1LjEzOS4xMzkgMCAwIDAgLjA2Ny0uMTE5LjExNi4xMTYgMCAwIDAtLjAzOC0uMDkuMjg3LjI4NyAwIDAgMC0uMTI0LS4wNTVsLS4xNTYtLjAzOGExLjI0OCAxLjI0OCAwIDAgMS0uMTU5LS4wNS4zNTkuMzU5IDAgMCAxLS4wOTgtLjA2MS4yMi4yMiAwIDAgMS0uMDU4LS4wODMuMzIuMzIgMCAwIDEtLjAxNi0uMTA4YzAtLjA5Ni4wMzYtLjE3NC4xMDktLjIzMmEuNDUuNDUgMCAwIDEgLjI5LS4wODd6bTEuMDM1IDBhLjQ2LjQ2IDAgMCAxIC4yMDIuMDQzLjM1MS4zNTEgMCAwIDEgLjE4Ny4yMTIuNTc3LjU3NyAwIDAgMSAuMDIzLjEyNmgtLjE2OGEuMjU2LjI1NiAwIDAgMC0uMDc4LS4xNjguMjQyLjI0MiAwIDAgMC0uMTctLjA2LjI0OC4yNDggMCAwIDAtLjE1NS4wNS4zMDYuMzA2IDAgMCAwLS4xLjE0NC42NjIuNjYyIDAgMCAwLS4wMzQuMjI0LjU4LjU4IDAgMCAwIC4wMzUuMjE0LjI5OS4yOTkgMCAwIDAgLjEwMS4xMzUuMjYxLjI2MSAwIDAgMCAuMTU3LjA0OGMuMTQyIDAgLjIyNy0uMDg0LjI1Ni0uMjUyaC4xNjdhLjUxOS41MTkgMCAwIDEtLjA2NS4yMi4zNS4zNSAwIDAgMS0uMTQ2LjEzOC40NjQuNDY0IDAgMCAxLS4yMTYuMDQ4LjQ0OC40NDggMCAwIDEtLjI0Ni0uMDY2LjQ0MS40NDEgMCAwIDEtLjE2MS0uMTkyLjcwMy43MDMgMCAwIDEtLjA1Ny0uMjkzYzAtLjA4NS4wMS0uMTYzLjAzMi0uMjMzYS41MjIuNTIyIDAgMCAxIC4wOTUtLjE4Mi40MDMuNDAzIDAgMCAxIC4xNS0uMTE3LjQ1My40NTMgMCAwIDEgLjE5MS0uMDR6bS42MDMuMDNoLjE2NnYxLjA0NkgxNS40em0xLjQ0MyAwaC4xNjZ2MS4wNDZoLS4xNjZ6bS01LjA1LjYxOGMtLjA4IDAtLjIuMjA0LS4zNTYuNjExLS4xNTUuNDA3LS4zMDguOTc3LS40NTkgMS43MS4yODEtLjMxMi41MDktLjY2Mi42ODMtMS4wNS4xNzUtLjM4Ny4yNjItLjcyLjI2Mi0uOTk5YS40NTUuNDU1IDAgMCAwLS4wMzYtLjE5N2MtLjAyNS0uMDUtLjA1Ni0uMDc1LS4wOTMtLjA3NXptNC42NjIgMS43OTdjLS4yMjEgMC0uNDMxLjE4OC0uNjI5LjU2My0uMTk3LjM3Ni0uMjk2LjcyMi0uMjk2IDEuMDM4IDAgLjEyLjAyOS4yMTYuMDg4LjI5YS4yNzMuMjczIDAgMCAwIC4yMjMuMTExYy4yMjEgMCAuNDMtLjE4OC42MjUtLjU2NS4xOTYtLjM3Ny4yOTQtLjcyNS4yOTQtMS4wNDNhLjQ1Ny40NTcgMCAwIDAtLjA4My0uMjkuMjY5LjI2OSAwIDAgMC0uMjIyLS4xMDR6bS0yLjg0OC4wMDdjLS4xNDYgMC0uMjg1LjExLS40MTcuMzMzLS4xMzMuMjIyLS4yLjUxLS4yLjg2Ni41NjYtLjE1OS44NDktLjQ1Mi44NDktLjg4MSAwLS4yMTItLjA3Ny0uMzE4LS4yMzItLjMxOFoiLz48L3N2Zz4=", "jupyter": "data:image/svg+xml;base64,PHN2ZyBmaWxsPSIjRjM3NjI2IiByb2xlPSJpbWciIHZpZXdCb3g9IjAgMCAyNCAyNCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48dGl0bGU+SnVweXRlcjwvdGl0bGU+PHBhdGggZD0iTTcuMTU3IDIyLjIwMUExLjc4NCAxLjc5OSAwIDAgMSA1LjM3NCAyNGExLjc4NCAxLjc5OSAwIDAgMS0xLjc4NC0xLjc5OSAxLjc4NCAxLjc5OSAwIDAgMSAxLjc4NC0xLjc5OSAxLjc4NCAxLjc5OSAwIDAgMSAxLjc4MyAxLjc5OXpNMjAuNTgyIDEuNDI3YTEuNDE1IDEuNDI3IDAgMCAxLTEuNDE1IDEuNDI4IDEuNDE1IDEuNDI3IDAgMCAxLTEuNDE2LTEuNDI4QTEuNDE1IDEuNDI3IDAgMCAxIDE5LjE2NyAwYTEuNDE1IDEuNDI3IDAgMCAxIDEuNDE1IDEuNDI3ek00Ljk5MiAzLjMzNkExLjA0NyAxLjA1NiAwIDAgMSAzLjk0NiA0LjM5YTEuMDQ3IDEuMDU2IDAgMCAxLTEuMDQ3LTEuMDU1QTEuMDQ3IDEuMDU2IDAgMCAxIDMuOTQ2IDIuMjhhMS4wNDcgMS4wNTYgMCAwIDEgMS4wNDYgMS4wNTZ6bTcuMzM2IDEuNTE3YzMuNzY5IDAgNy4wNiAxLjM4IDguNzY4IDMuNDI0YTkuMzYzIDkuMzYzIDAgMCAwLTMuMzkzLTQuNTQ3IDkuMjM4IDkuMjM4IDAgMCAwLTUuMzc3LTEuNzI4QTkuMjM4IDkuMjM4IDAgMCAwIDYuOTUgMy43M2E5LjM2MyA5LjM2MyAwIDAgMC0zLjM5NCA0LjU0N2MxLjcxMy0yLjA0IDUuMDA0LTMuNDI0IDguNzcyLTMuNDI0em0uMDAxIDEzLjI5NWMtMy43NjggMC03LjA2LTEuMzgxLTguNzY4LTMuNDI1YTkuMzYzIDkuMzYzIDAgMCAwIDMuMzk0IDQuNTQ3QTkuMjM4IDkuMjM4IDAgMCAwIDEyLjMzIDIxYTkuMjM4IDkuMjM4IDAgMCAwIDUuMzc3LTEuNzI5IDkuMzYzIDkuMzYzIDAgMCAwIDMuMzkzLTQuNTQ3Yy0xLjcxMiAyLjA0NC01LjAwMyAzLjQyNS04Ljc3MiAzLjQyNVoiLz48L3N2Zz4=", "git": "data:image/svg+xml;base64,PHN2ZyBmaWxsPSIjRjA1MDMyIiByb2xlPSJpbWciIHZpZXdCb3g9IjAgMCAyNCAyNCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48dGl0bGU+R2l0PC90aXRsZT48cGF0aCBkPSJNMjMuNTQ2IDEwLjkzTDEzLjA2Ny40NTJjLS42MDQtLjYwMy0xLjU4Mi0uNjAzLTIuMTg4IDBMOC43MDggMi42MjdsMi43NiAyLjc2Yy42NDUtLjIxNSAxLjM3OS0uMDcgMS44ODkuNDQxLjUxNi41MTUuNjU4IDEuMjU4LjQzOCAxLjlsMi42NTggMi42NmMuNjQ1LS4yMjMgMS4zODctLjA3OCAxLjkuNDM1LjcyMS43Mi43MjEgMS44ODQgMCAyLjYwNC0uNzE5LjcxOS0xLjg4MS43MTktMi42IDAtLjUzOS0uNTQxLS42NzQtMS4zMzctLjQwNC0xLjk5NkwxMi44NiA4Ljk1NXY2LjUyNWMuMTc2LjA4Ni4zNDIuMjAzLjQ4OC4zNDguNzEzLjcyMS43MTMgMS44ODMgMCAyLjYtLjcxOS43MjEtMS44ODkuNzIxLTIuNjA5IDAtLjcxOS0uNzE5LS43MTktMS44NzkgMC0yLjU5OC4xODItLjE4LjM4Ny0uMzE2LjYwNS0uNDA2VjguODM1Yy0uMjE3LS4wOTEtLjQyNC0uMjIyLS42LS40MDEtLjU0NS0uNTQ1LS42NzYtMS4zNDItLjM5Ni0yLjAwOUw3LjYzNiAzLjcuNDUgMTAuODgxYy0uNi42MDUtLjYgMS41ODQgMCAyLjE4OWwxMC40OCAxMC40NzdjLjYwNC42MDQgMS41ODIuNjA0IDIuMTg2IDBsMTAuNDMtMTAuNDNjLjYwNS0uNjAzLjYwNS0xLjU4MiAwLTIuMTg3Ii8+PC9zdmc+", "github": "data:image/svg+xml;base64,PHN2ZyBmaWxsPSIjMTgxNzE3IiByb2xlPSJpbWciIHZpZXdCb3g9IjAgMCAyNCAyNCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48dGl0bGU+R2l0SHViPC90aXRsZT48cGF0aCBkPSJNMTIgLjI5N2MtNi42MyAwLTEyIDUuMzczLTEyIDEyIDAgNS4zMDMgMy40MzggOS44IDguMjA1IDExLjM4NS42LjExMy44Mi0uMjU4LjgyLS41NzcgMC0uMjg1LS4wMS0xLjA0LS4wMTUtMi4wNC0zLjMzOC43MjQtNC4wNDItMS42MS00LjA0Mi0xLjYxQzQuNDIyIDE4LjA3IDMuNjMzIDE3LjcgMy42MzMgMTcuN2MtMS4wODctLjc0NC4wODQtLjcyOS4wODQtLjcyOSAxLjIwNS4wODQgMS44MzggMS4yMzYgMS44MzggMS4yMzYgMS4wNyAxLjgzNSAyLjgwOSAxLjMwNSAzLjQ5NS45OTguMTA4LS43NzYuNDE3LTEuMzA1Ljc2LTEuNjA1LTIuNjY1LS4zLTUuNDY2LTEuMzMyLTUuNDY2LTUuOTMgMC0xLjMxLjQ2NS0yLjM4IDEuMjM1LTMuMjItLjEzNS0uMzAzLS41NC0xLjUyMy4xMDUtMy4xNzYgMCAwIDEuMDA1LS4zMjIgMy4zIDEuMjMuOTYtLjI2NyAxLjk4LS4zOTkgMy0uNDA1IDEuMDIuMDA2IDIuMDQuMTM4IDMgLjQwNSAyLjI4LTEuNTUyIDMuMjg1LTEuMjMgMy4yODUtMS4yMy42NDUgMS42NTMuMjQgMi44NzMuMTIgMy4xNzYuNzY1Ljg0IDEuMjMgMS45MSAxLjIzIDMuMjIgMCA0LjYxLTIuODA1IDUuNjI1LTUuNDc1IDUuOTIuNDIuMzYuODEgMS4wOTYuODEgMi4yMiAwIDEuNjA2LS4wMTUgMi44OTYtLjAxNSAzLjI4NiAwIC4zMTUuMjEuNjkuODI1LjU3QzIwLjU2NSAyMi4wOTIgMjQgMTcuNTkyIDI0IDEyLjI5N2MwLTYuNjI3LTUuMzczLTEyLTEyLTEyIi8+PC9zdmc+", "matplotlib": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMjggMTI4Ij48cGF0aCBmaWxsPSIjZmZmIiBkPSJNNjMuOTc1IDEyNS4wOWMtMTYuMzE3IDAtMzEuNjU4LTYuMzU1LTQzLjE5Ny0xNy44OTNTMi44ODUgODAuMzE4IDIuODg1IDY0IDkuMjQgMzIuMzQxIDIwLjc3OCAyMC44MDMgNDcuNjU3IDIuOTEgNjMuOTc1IDIuOTFzMzEuNjU5IDYuMzU1IDQzLjE5OCAxNy44OTNTMTI1LjA2NSA0Ny42ODIgMTI1LjA2NSA2NHMtNi4zNTUgMzEuNjU5LTE3Ljg5MyA0My4xOTgtMjYuODc5IDE3Ljg5Mi00My4xOTcgMTcuODkyeiIvPjxwYXRoIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzg1ODU4NSIgc3Ryb2tlLWRhc2hhcnJheT0iLjQwNywuODEzOSIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBzdHJva2UtbWl0ZXJsaW1pdD0iNy45NzYiIHN0cm9rZS13aWR0aD0iLjg1NiIgZD0iTTYzLjk3NCA2My43ODRoNjEuMDltLTYxLjA5IDAgNDMuMTk3LTQzLjE5Nk02My45NzQgNjMuNzg0VjIuNjk0bTAgNjEuMDlMMjAuNzc4IDIwLjU4OG00My4xOTYgNDMuMTk2SDIuODg0bTYxLjA5IDAtNDMuMTk2IDQzLjE5N200My4xOTYtNDMuMTk3djYxLjA5bTAtNjEuMDkgNDMuMTk3IDQzLjE5NyIgb3BhY2l0eT0iLjkiLz48ZyBmaWxsPSJub25lIiBzdHJva2U9IiM4MTgxODEiIHN0cm9rZS1kYXNoYXJyYXk9Ii40MDcsLjgxMzkiIHN0cm9rZS1saW5lY2FwPSJzcXVhcmUiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIHN0cm9rZS1taXRlcmxpbWl0PSIxOTkuNDA5IiBzdHJva2Utd2lkdGg9Ii44NTYiPjxwYXRoIGQ9Im03MC43NjQgNjMuNzg0LS4yMDItMS42NDMtLjU5My0xLjU0My0uOTQ5LTEuMzU1LTEuMjUtMS4wODUtMS40NzQtLjc1MS0xLjYxLS4zNzMtMS42NTQuMDMtMS41OTkuNDI5LTEuNDQ3LjgwMS0xLjIwOSAxLjEyOC0uOSAxLjM4OC0uNTM5IDEuNTY1LS4xNDUgMS42NDkuMjU5IDEuNjM0LjY0NiAxLjUyMy45OTQgMS4zMjEgMS4yODYgMS4wNDEgMS41LjY5OCAxLjYyMy4zMTYgMS42NTMtLjA4NiAxLjU4Mi0uNDg0IDEuNDE4LS44NTIgMS4xNy0xLjE3Ljg1MS0xLjQxNy40ODQtMS41ODIuMTA1LTEuMTgyaDAiIG9wYWNpdHk9Ii45Ii8+PHBhdGggZD0ibTg0LjMzOSA2My43ODQtLjE5OC0yLjgzMy0uNTktMi43NzktLjk3My0yLjY2OS0xLjMzMy0yLjUwOS0xLjY3LTIuMjk5LTEuOTczLTIuMDQ0LTIuMjM4LTEuNzUtMi40NjEtMS40Mi0yLjYzMy0xLjA2NC0yLjc1OC0uNjg4LTIuODI1LS4yOTctMi44NC4wOTktMi43OTcuNDk0LTIuNzAyLjg3Ny0yLjU1NCAxLjI0Ni0yLjM1NiAxLjU4OC0yLjExMSAxLjkwMS0xLjgyNiAyLjE3Ny0xLjUwNiAyLjQwOC0xLjE1NSAyLjU5Ni0uNzgyIDIuNzMtLjM5NiAyLjgxNHYyLjg0MmwuMzk2IDIuODE0Ljc4MiAyLjczIDEuMTU1IDIuNTk2IDEuNTA2IDIuNDA4IDEuODI2IDIuMTc3IDIuMTExIDEuOTAyIDIuMzU2IDEuNTg4IDIuNTU0IDEuMjQ1IDIuNzAyLjg3NyAyLjc5OC40OTQgMi44NC4xIDIuODI0LS4yOTggMi43NTgtLjY4NyAyLjYzMy0xLjA2NSAyLjQ2MS0xLjQyIDIuMjM4LTEuNzUgMS45NzMtMi4wNDQgMS42Ny0yLjI5OSAxLjMzMy0yLjUxLjk3Mi0yLjY2OC41OTEtMi43NzkuMTk4LTIuODNoMCIgb3BhY2l0eT0iLjkiLz48cGF0aCBkPSJtOTcuOTE0IDYzLjc4NC0uMTg1LTMuNTQ4LS41NTUtMy41MDktLjkyLTMuNDMtMS4yNzItMy4zMTctMS42MTMtMy4xNjYtMS45MzUtMi45NzgtMi4yMzYtMi43NjItMi41MTItMi41MTEtMi43NjEtMi4yMzYtMi45NzktMS45MzUtMy4xNjUtMS42MTMtMy4zMTctMS4yNzMtMy40My0uOTE5LTMuNTEtLjU1NS0zLjU0OC0uMTg1LTMuNTQ4LjE4NS0zLjUwOC41NTUtMy40My45Mi0zLjMxOCAxLjI3Mi0zLjE2NSAxLjYxMy0yLjk3OSAxLjkzNS0yLjc2MSAyLjIzNi0yLjUxMiAyLjUxMS0yLjIzNiAyLjc2Mi0xLjkzNSAyLjk3OC0xLjYxMyAzLjE2Ni0xLjI3MyAzLjMxNy0uOTE5IDMuNDMtLjU1NSAzLjUwOS0uMTg1IDMuNTQ4LjE4NSAzLjU0OC41NTUgMy41MDkuOTIgMy40MyAxLjI3MiAzLjMxNyAxLjYxMyAzLjE2NiAxLjkzNSAyLjk3OCAyLjIzNiAyLjc2MiAyLjUxMiAyLjUxMSAyLjc2MSAyLjIzNiAyLjk3OSAxLjkzNSAzLjE2NSAxLjYxNCAzLjMxNyAxLjI3MiAzLjQzLjkyIDMuNTEuNTU1IDMuNTQ3LjE4NSAzLjU0OS0uMTg1IDMuNTA4LS41NTYgMy40My0uOTE5IDMuMzE4LTEuMjcyIDMuMTY1LTEuNjE0IDIuOTc5LTEuOTM1IDIuNzYxLTIuMjM2IDIuNTEyLTIuNTExIDIuMjM2LTIuNzYyIDEuOTM1LTIuOTc4IDEuNjEzLTMuMTY2IDEuMjcyLTMuMzE3LjkyLTMuNDMuNTU1LTMuNTA5LjE4NS0zLjU0OGgwIiBvcGFjaXR5PSIuOSIvPjxwYXRoIGQ9Im0xMTEuNDg5IDYzLjc4NC0uMjYtNC45NjYtLjc4LTQuOTExLTEuMjg2LTQuODA0LTEuNzgyLTQuNjQyLTIuMjU3LTQuNDMyLTIuNzA5LTQuMTcxLTMuMTMtMy44NjYtMy41MTYtMy41MTctMy44NjYtMy4xMy00LjE3MS0yLjcwOUw4My4zIDIwLjM4bC00LjY0Mi0xLjc4MS00LjgwNC0xLjI4Ny00LjkxMi0uNzc5LTQuOTY2LS4yNi00Ljk2Ni4yNi00LjkxLjc3OS00LjgwNSAxLjI4Ny00LjY0MiAxLjc4MS00LjQzMiAyLjI1Ny00LjE3IDIuNzEtMy44NjcgMy4xMy0zLjUxNyAzLjUxNi0zLjEzIDMuODY2LTIuNzA4IDQuMTctMi4yNTcgNC40MzMtMS43ODIgNC42NDItMS4yODcgNC44MDQtLjc3OCA0LjkxMS0uMjYxIDQuOTY2LjI2IDQuOTY2Ljc3OSA0LjkxMSAxLjI4NyA0LjgwNSAxLjc4MiA0LjY0MiAyLjI1NyA0LjQzMSAyLjcwOSA0LjE3MSAzLjEzIDMuODY2IDMuNTE2IDMuNTE3IDMuODY2IDMuMTMgNC4xNzEgMi43MDkgNC40MzIgMi4yNTcgNC42NDIgMS43ODEgNC44MDQgMS4yODggNC45MTEuNzc4IDQuOTY2LjI2IDQuOTY2LS4yNiA0LjkxMi0uNzc4IDQuODA0LTEuMjg4IDQuNjQyLTEuNzgxIDQuNDMyLTIuMjU3IDQuMTctMi43MSAzLjg2Ny0zLjEyOSAzLjUxNi0zLjUxNyAzLjEzLTMuODY2IDIuNzEtNC4xNyAyLjI1Ni00LjQzMiAxLjc4Mi00LjY0MiAxLjI4Ny00LjgwNS43NzgtNC45MS4yNjEtNC45NjdoMCIgb3BhY2l0eT0iLjkiLz48L2c+PHBhdGggZmlsbD0iIzExNTU3YyIgZD0iTTY0IDEyNmMtMTYuNTYgMC0zMi4xMy02LjQ0OS00My44NC0xOC4xNTlTMiA4MC41NjEgMiA2NHM2LjQ0OS0zMi4xMyAxOC4xNTktNDMuODQxUzQ3LjQzOSAyIDY0IDJzMzIuMTMxIDYuNDQ5IDQzLjg0MSAxOC4xNTlTMTI2IDQ3LjQzOSAxMjYgNjRzLTYuNDQ5IDMyLjEzMS0xOC4xNTkgNDMuODQxUzgwLjU2MSAxMjYgNjQgMTI2ek02NCAzLjgyYy0xNi4wNzQgMC0zMS4xODcgNi4yNi00Mi41NTMgMTcuNjI2QzEwLjA4IDMyLjgxMyAzLjgyIDQ3LjkyNSAzLjgyIDY0YzAgMTYuMDc1IDYuMjYgMzEuMTg4IDE3LjYyNiA0Mi41NTRTNDcuOTI1IDEyNC4xOCA2NCAxMjQuMThjMTYuMDc1IDAgMzEuMTg4LTYuMjYgNDIuNTU0LTE3LjYyNlMxMjQuMTggODAuMDc1IDEyNC4xOCA2NGMwLTE2LjA3NS02LjI2LTMxLjE4Ny0xNy42MjYtNDIuNTU0Qzk1LjE4NyAxMC4wOCA4MC4wNzUgMy44MiA2NCAzLjgyeiIvPjxwYXRoIGZpbGw9IiMwMDRjZmYiIGQ9Im02My45NzUgNjMuNzg0LjEyOS0uMDQyLjEyOS0uMDQyLjEyOS0uMDQyLjEyOS0uMDQyLjEyOS0uMDQyLjEyOS0uMDQyLjEyOS0uMDQyLjEyOS0uMDQyLjEyOS0uMDQyLjEyOS0uMDQyLjEyOS0uMDQyLjEyOS0uMDQyLjEyOS0uMDQyLjEyOS0uMDQyLjEyOS0uMDQyLjEyOS0uMDQyLjEyOS0uMDQyLjEyOS0uMDQyLjEyOS0uMDQyLjEyOS0uMDQyLjEyOS0uMDQyLjEyOS0uMDQyLjEyOS0uMDQyLjEyOS0uMDQyLjEyOS0uMDQyLjEyOS0uMDQyLjEyOS0uMDQyLjEyOS0uMDQyLjEyOS0uMDQyLjEyOS0uMDQyLjEyOS0uMDQyLjEyOS0uMDQyLjEyOS0uMDQyLjEyOS0uMDQyLjEyOS0uMDQyLjEyOS0uMDQyLjEyOS0uMDQyLjEyOS0uMDQyLjEyOS0uMDQyLjEyOS0uMDQyLjEyOS0uMDQyLjEyOS0uMDQyLjEyOS0uMDQyLjEyOS0uMDQyLjEyOS0uMDQyLjEyOS0uMDQyLjEyOS0uMDQyLjEyOS0uMDQyLjEyOS0uMDQyLjEyOS0uMDQyLjEyOS0uMDQyLjEyOS0uMDQyLjEyOS0uMDQyLjEyOS0uMDQyLjEyOS0uMDQyLjEyOS0uMDQyLjEyOS0uMDQyLjEyOS0uMDQyLjEyOS0uMDQyLjEyOS0uMDQyLjEyOS0uMDQyLjEyOS0uMDQyLjEyOS0uMDQyLjEyOS0uMDQyLjEyOS0uMDQyLjEyOS0uMDQyLjEyOS0uMDQyLjEyOS0uMDQyLjEyOS0uMDQyLjEyOS0uMDQyLjEyOS0uMDQyLjEyOS0uMDQyLjEyOS0uMDQyLjEyOS0uMDQyLjEyOS0uMDQyLjEyOS0uMDQyLjEyOS0uMDQyLjEyOS0uMDQyLjEyOS0uMDQyLjEyOS0uMDQyLjEyOS0uMDQyLjEyOS0uMDQyLjEyOS0uMDQyLjEyOS0uMDQyLjEyOS0uMDQyLjEyOS0uMDQyLjEyOS0uMDQyLjEyOS0uMDQyLjEyOS0uMDQyLjEyOS0uMDQyLjEyOS0uMDQyLjEyOS0uMDQyLjEyOS0uMDQyLjEyOS0uMDQyLjEyOS0uMDQyLjEyOS0uMDQyLjEyOS0uMDQyLjEyOS0uMDQyLjEyOS0uMDQyLjEyOS0uMDQyLjAyNS4wNDYuMDEzLjA0MS4wMTMuMDQxLjAxMy4wNDEuMDEzLjA0MS4wMTMuMDQxLjAxMi4wNDEuMDEyLjA0MS4wMTEuMDM5LjAxMi4wNDEuMDEyLjA0MS4wMTIuMDQxLjAxMi4wNDEuMDExLjA0MS4wMTEuMDQxLjAxMS4wNDEuMDExLjA0MS4wMTEuMDQxLjAxMS4wNDEuMDExLjA0MS4wMTEuMDQxLjAxLjA0MS4wMS4wNDEuMDEuMDQxLjAxLjA0MS4wMS4wNDEuMDEuMDQyLjAxLjA0Mi4wMDkuMDQyLjAwOS4wNDIuMDA5LjA0Mi4wMDkuMDQyLjAwOS4wNDIuMDA5LjA0Mi4wMDkuMDQyLjAwOS4wNDIuMDA5LjA0Mi4wMDguMDQyLjAwOC4wNDIuMDA4LjA0Mi4wMDguMDQyLjAwOC4wNDIuMDA4LjA0Mi4wMDcuMDQyLjAwNy4wNDIuMDA3LjA0Mi4wMDcuMDQyLjAwNy4wNDIuMDA3LjA0Mi4wMDcuMDQyLjAwNy4wNDIuMDA3LjA0Mi4wMDYuMDQyLjAwNi4wNDIuMDA2LjA0Mi4wMDYuMDQyLjAwNi4wNDIuMDA2LjA0Mi4wMDYuMDQyLjAwNS4wNDIuMDA1LjA0Mi4wMDUuMDQyLjAwNS4wNDIuMDA1LjA0Mi4wMDUuMDQyLjAwNS4wNDIuMDA1LjA0Mi4wMDQuMDQyLjAwNC4wNDIuMDA0LjA0Mi4wMDQuMDQyLjAwNC4wNDIuMDA0LjA0Mi4wMDQuMDQzLjAwMy4wNDMuMDAzLjA0My4wMDMuMDQzLjAwMy4wNDMuMDAzLjA0My4wMDMuMDQzLjAwMy4wNDMuMDAzLjA0My4wMDIuMDQzLjAwMi4wNDMuMDAyLjA0My4wMDIuMDQzLjAwMi4wNDMuMDAyLjA0My4wMDIuMDQzLjAwMS4wNDMuMDAxLjA0My4wMDEuMDQzLjAwMS4wNDMuMDAxLjA0My4wMDEuMDQzLjAwMS4wNDN2LjE3Mkg2NC4xMWwtLjEzNS0uMDA0eiIgb3BhY2l0eT0iLjYiLz48cGF0aCBmaWxsPSIjY2VmZjI5IiBkPSJtNjMuOTc1IDYzLjc4NC4xNDMtLjM4MS4xNDMtLjM4MS4xNDMtLjM4MS4xNDMtLjM4MS4xNDMtLjM4MS4xNDMtLjM4MS4xNDMtLjM4MS4xNDMtLjM4MS4xNDMtLjM4MS4xNDMtLjM4MS4xNDMtLjM4MS4xNDMtLjM4MS4xNDMtLjM4MS4xNDMtLjM4MS4xNDMtLjM4MS4xNDMtLjM4MS4xNDMtLjM4MS4xNDMtLjM4MS4xNDMtLjM4MS4xNDMtLjM4MS4xNDMtLjM4MS4xNDMtLjM4MS4xNDMtLjM4MS4xNDMtLjM4MS4xNDMtLjM4MS4xNDMtLjM4MS4xNDMtLjM4MS4xNDMtLjM4MS4xNDMtLjM4MS4xNDMtLjM4MS4xNDMtLjM4MS4xNDMtLjM4MS4xNDMtLjM4MS4xNDMtLjM4MS4xNDMtLjM4MS4xNDMtLjM4MS4xNDMtLjM4MS4xNDMtLjM4MS4xNDMtLjM4MS4xNDMtLjM4MS4xNDMtLjM4MS4xNDMtLjM4MS4xNDMtLjM4MS4xNDMtLjM4MS4xNDMtLjM4MS4xNDMtLjM4MS4xNDMtLjM4MS4xNDMtLjM4MS4xNDMtLjM4MS4xNDMtLjM4MS4xNDMtLjM4MS4xNDMtLjM4MS4xNDMtLjM4MS4xNDMtLjM4MS4xNDMtLjM4MS4xNDMtLjM4MS4xNDMtLjM4MS4xNDMtLjM4MS4xNDMtLjM4MS4xNDMtLjM4MS4xNDMtLjM4MS4xNDMtLjM4MS4xNDMtLjM4MS4xNDMtLjM4MS4xNDMtLjM4MS4xNDMtLjM4MS4xNDMtLjM4MS4xNDMtLjM4MS4xNDMtLjM4MS4xNDMtLjM4MS4xNDMtLjM4MS4xNDMtLjM4MS4xNDMtLjM4MS4xNDMtLjM4MS4xNDMtLjM4MS4xNDMtLjM4MS4xNDMtLjM4MS4xNDMtLjM4MS4xNDMtLjM4MS4xNDMtLjM4MS4xNDMtLjM4MS4xNDMtLjM4MS4xNDMtLjM4MS4xNDMtLjM4MS4xNDMtLjM4MS4xNDMtLjM4MS4xNDMtLjM4MS4xNDMtLjM4MS4xNDMtLjM4MS4xNDMtLjM4MS4xNDMtLjM4MS4xNDMtLjM4MS4xNDMtLjM4MS4xNDMtLjM4MS4xNDMtLjM4MS4xNDMtLjM4MS4xNDMtLjM4MS4xNTQtLjQxMS4xNDMtLjM4MS4xNDMtLjM4MS4xMi4wNDUuMTIuMDQ2LjExOS4wNDYuMTE5LjA0Ni4xMTkuMDQ3LjExOS4wNDcuMTE5LjA0Ny4xMTkuMDQ4LjExOS4wNDguMTE4LjA0OS4xMTguMDQ5LjExOC4wNDkuMTE4LjA1LjExOC4wNS4xMTguMDUuMTE3LjA1MS4xMTcuMDUxLjExNy4wNTEuMTE3LjA1Mi4xMTcuMDUyLjExNy4wNTMuMTE2LjA1My4xMTYuMDUzLjExNi4wNTQuMTE2LjA1NC4xMTYuMDU0LjExNi4wNTUuMTE1LjA1NS4xMTUuMDU1LjExNS4wNTYuMTE1LjA1Ni4xMTUuMDU3LjExNS4wNTcuMTE0LjA1Ny4xMTQuMDU4LjExNC4wNTguMTE0LjA1OC4xMTQuMDU5LjExMy4wNTkuMTEzLjA1OS4xMTMuMDYuMTEzLjA2LjExMy4wNjEuMTEzLjA2MS4xMTIuMDYxLjExMi4wNjIuMTEyLjA2Mi4xMTIuMDYyLjExMi4wNjMuMTExLjA2My4xMTEuMDYzLjExMS4wNjQuMTExLjA2NC4xMTEuMDY0LjExLjA2NS4xMS4wNjUuMTEuMDY1LjExLjA2Ni4xMS4wNjYuMTA5LjA2Ni4xMDkuMDY3LjEwOS4wNjcuMTA5LjA2Ny4xMDguMDY4LjEwOC4wNjguMTA4LjA2OC4xMDguMDY5LjEwOC4wNjkuMTA3LjA2OS4xMDcuMDcuMTA3LjA3LjEwNy4wNzEuMTA3LjA3MS4xMDYuMDcxLjEwNi4wNzIuMTA2LjA3Mi4xMDYuMDcyLjEwNS4wNzMuMTA1LjA3My4xMDUuMDczLjEwNS4wNzQuMTA0LjA3NC4xMDQuMDc0LjEwNC4wNzQuMTA0LjA3NS4xMDQuMDc1LjEwMy4wNzUuMTAzLjA3Ni4xMDMuMDc2LjEwMy4wNzYuMTAyLjA3Ny4xMDIuMDc3LjEwMi4wNzcuMTAyLjA3OC4xMDEuMDc4LjEwMS4wNzguMTAxLjA3OS4xMDEuMDc5LjEuMDc5LjEuMDgtLjI1NC4zMTgtLjI1NC4zMTgtLjI1NC4zMTgtLjI1NC4zMTgtLjI1NC4zMTgtLjI1NC4zMTgtLjI1NC4zMTgtLjI1NC4zMTgtLjI1NC4zMTgtLjI1NC4zMTgtLjI1NC4zMTgtLjI1NC4zMTgtLjI1NC4zMTgtLjI1Mi4zMjQtLjI1NC4zMTgtLjI1NC4zMTgtLjI1NC4zMTgtLjI1NC4zMTgtLjI1NC4zMTgtLjI1My4zMi0uMjU0LjMxOC0uMjU0LjMxOC0uMjU0LjMxOC0uMjU0LjMxOC0uMjU0LjMxOC0uMjU0LjMxOC0uMjU0LjMxOC0uMjU0LjMxOC0uMjU0LjMxOC0uMjU0LjMxOC0uMjU0LjMxOC0uMjU0LjMxOC0uMjU0LjMxOC0uMjU0LjMxOC0uMjU0LjMxOC0uMjU0LjMxOC0uMjU0LjMxOC0uMjU0LjMxOC0uMjU0LjMxOC0uMjU0LjMxOC0uMjU0LjMxOC0uMjU0LjMxOC0uMjU0LjMxOC0uMjU0LjMxOC0uMjU0LjMxOC0uMjU0LjMxOC0uMjU0LjMxOC0uMjU0LjMxOC0uMjU0LjMxOC0uMjU0LjMxOC0uMjU0LjMxOC0uMjUyLjMzMi0uMjU0LjMxOC0uMjU0LjMxOC0uMjU0LjMxOC0uMjU0LjMxOC0uMjU0LjMxOC0uMjU0LjMyLS4yNTQuMzE4LS4yNTQuMzE4LS4yNTQuMzE4LS4yNTQuMzE4LS4yNTQuMzE4LS4yNTQuMzE4LS4yNTQuMzE4LS4yNTQuMzE4LS4yNTQuMzE4LS4yNTQuMzE4LS4yNTQuMzE4LS4yNTQuMzE4LS4yNTQuMzE4LS4yNTQuMzE4LS4yNTQuMzE4LS4yNTQuMzE4LS4yNTQuMzE4LS4yNTQuMzE4LS4yNTQuMzE4LS4yNTQuMzE4LS4yNTQuMzE4LS4yNTQuMzE4LS4yNTIuMzI4LS4yNTQuMzE4LS4yNTQuMzE4LS4yNTQuMzE4LS4yNTQuMzE4LS4yNTQuMzE4LS4yNTQuMzE4LS4yNTQuMzE4LS4yNTQuMzE4LS4yNTQuMzE4LS4yNTQuMzE4LS4yNTQuMzE4LS4yNTQuMzE4LS4yNTQuMzE4LS4yNTQuMzE4LS4yNTQuMzE4LS4yNTQuMzE4LS4yNTQuMzE4LS4yNTQuMzE4LS4yNTMuMzI2eiIgb3BhY2l0eT0iLjYiLz48cGF0aCBmaWxsPSIjZmY2ODAwIiBkPSJtNjMuOTc1IDYzLjc4NC0uMzQ4LS40MTctLjM0OC0uNDE3LS4zNDgtLjQxNy0uMzQ4LS40MTctLjM0OC0uNDE3LS4zNDgtLjQxNy0uMzQ4LS40MTctLjM0OC0uNDE3LS4zNDgtLjQxNy0uMzQ4LS40MTctLjM0OC0uNDE3LS4zNDgtLjQxNy0uMzQ4LS40MTctLjM0OC0uNDE3LS4zNDgtLjQxNy0uMzQ4LS40MTctLjM0OC0uNDE3LS4zNDgtLjQxNy0uMzQ4LS40MTctLjM0OC0uNDE3LS4zNDgtLjQxNy0uMzQ4LS40MTctLjM0OC0uNDE3LS4zNDgtLjQxNy0uMzQ4LS40MTctLjM0OC0uNDE3LS4zNDgtLjQxNy0uMzQ4LS40MTctLjM0OC0uNDE3LS4zNDgtLjQxNy0uMzQ4LS40MTctLjM0OC0uNDE3LS4zNDgtLjQxNy0uMzQ4LS40MTctLjM0OC0uNDE3LS4zNDgtLjQxNy0uMzQ4LS40MTctLjM0OC0uNDE3LS4zNDgtLjQxNy0uMzQ4LS40MTctLjM0OC0uNDE3LS4zNDgtLjQxNy0uMzQ4LS40MTctLjM0OC0uNDE3LS4zNDgtLjQxNy0uMzQ4LS40MTctLjM0OC0uNDE3LS4zNDgtLjQxNy0uMzQ4LS40MTctLjM0OC0uNDE3LS4zNDgtLjQxNy0uMzQ4LS40MTctLjM0OC0uNDE3LS4zNDgtLjQxNy0uMzQ4LS40MTctLjM0OC0uNDE3LS4zNDgtLjQxNy0uMzQ4LS40MTctLjM0OC0uNDE3LS4zNDgtLjQxNy0uMzQ4LS40MTctLjM0OC0uNDE3LS4zNDgtLjQxNy0uMzQ4LS40MTctLjM0OC0uNDE3LS4zNDgtLjQxNy0uMzQ4LS40MTctLjM0OC0uNDE3LS4zNDgtLjQxNy0uMzQ4LS40MTctLjM0OC0uNDE3LS4zNDgtLjQxNy0uMzQ4LS40MTctLjM0OC0uNDE3LS4zNDgtLjQxNy0uMzQ4LS40MTctLjM0OC0uNDE3LS4zNDgtLjQxNy0uMzQ4LS40MTctLjM0OC0uNDE3LS4zNDgtLjQxNy0uMzQ4LS40MTctLjM0OC0uNDE3LS4zNDgtLjQxNy0uMzQ4LS40MTctLjM0OC0uNDE3LS4zNDgtLjQxNy0uMzQ4LS40MTctLjM0OC0uNDE3LS4zNDgtLjQxNy0uMzQ4LS40MTctLjM0OC0uNDE3LS4zNDgtLjQxNy0uMzQ5LS40MDMtLjM0OC0uNDE3LS4zNDgtLjQxNy0uMzQ4LS40MTctLjM0OC0uNDE3LS4zNDgtLjQxNy0uMzQ4LS40MTcuMTk3LS4xNjQuMTk4LS4xNjMuMTk4LS4xNjIuMTk5LS4xNjEuMi0uMTYuMjAxLS4xNTkuMjAxLS4xNTguMjAyLS4xNTcuMjAzLS4xNTYuMjA0LS4xNTUuMjA0LS4xNTQuMjA1LS4xNTMuMjA2LS4xNTIuMjA2LS4xNTEuMjA3LS4xNS4yMDgtLjE0OS4yMDktLjE0OC4yMDktLjE0Ny4yMS0uMTQ2LjIxMS0uMTQ1LjIxMS0uMTQ0LjIxMi0uMTQzLjIxMy0uMTQyLjIxMy0uMTQxLjIxNC0uMTQuMjE1LS4xMzkuMjE1LS4xMzguMjE2LS4xMzcuMjE3LS4xMzYuMjE3LS4xMzUuMjE4LS4xMzQuMjE5LS4xMzMuMjE5LS4xMzIuMjItLjEzMS4yMi0uMTMuMjIxLS4xMjkuMjIyLS4xMjguMjIyLS4xMjcuMjIzLS4xMjYuMjIzLS4xMjUuMjI0LS4xMjQuMjI1LS4xMjMuMjI1LS4xMjIuMjI2LS4xMjEuMjI2LS4xMi4yMjctLjExOC4yMjctLjExNy4yMjgtLjExNi4yMjgtLjExNS4yMjktLjExNC4yMy0uMTEzLjIzLS4xMTIuMjMxLS4xMTEuMjMxLS4xMS4yMzItLjEwOS4yMzItLjEwOC4yMzMtLjEwNy4yMzMtLjEwNS4yMzQtLjEwNC4yMzQtLjEwMy4yMzUtLjEwMi4yMzUtLjEwMS4yMzYtLjEuMjM2LS4wOTkuMjM3LS4wOTguMjM3LS4wOTcuMjM3LS4wOTUuMjM4LS4wOTQuMjM4LS4wOTMuMjM5LS4wOTIuMjM5LS4wOTEuMjQtLjA5LjI0LS4wODkuMjQtLjA4OC4yNDEtLjA4Ni4yNDEtLjA4NS4yNDItLjA4NC4yNDItLjA4My4yNDItLjA4Mi4yNDMtLjA4MS4yNDMtLjA4LjI0NC0uMDc4LjI0NC0uMDc3LjI0NC0uMDc2LjI0NS0uMDc1LjI0NS0uMDc0LjI0NS0uMDczLjI0Ni0uMDcyLjI0Ni0uMDcuMjQ2LS4wNjkuMjQ3LS4wNjguMjQ3LS4wNjcuMjQ3LS4wNjYuMjQ4LS4wNjUuMjQ4LS4wNjMuMjQ4LS4wNjIuMjQ5LS4wNjEuMjQ5LS4wNi4yNDktLjA1OS4yNDktLjA1OC4xMjEuNTI5LjEyMS41MjkuMTIxLjUyOS4xMjEuNTI5LjEyMS41MjkuMTIxLjUyOS4xMjEuNTI5LjEyMS41MjkuMTIxLjUyOS4xMjEuNTI5LjEyMS41MjkuMTIxLjUyOS4xMjEuNTI5LjEyMS41MjkuMTIxLjUyOS4xMjEuNTI5LjEyMS41MjkuMTIxLjUyOS4xMjEuNTI5LjEyMS41MjkuMTIxLjUyOS4xMjEuNTI5LjEyMS41MjkuMTIxLjUyOS4xMjEuNTI5LjEyMS41MjkuMTIxLjUyOS4xMjEuNTI5LjEyMS41MjkuMTIxLjUyOS4xMjEuNTI5LjEyMS41MjkuMTIxLjUyOS4xMTMuNTQzLjEyMS41MjkuMTIxLjUyOS4xMjEuNTI5LjEyMS41MjkuMTIxLjUyOS4xMjEuNTI5LjEyMS41MjkuMTIxLjUyOS4xMjEuNTI5LjEyMS41MjkuMTIxLjUyOS4xMjEuNTI5LjEyMS41MjkuMTIxLjUyOS4xMjEuNTI5LjEyMS41MjkuMTIxLjUyOS4xMjEuNTI5LjEyMS41MjkuMTIxLjUyOS4xMjEuNTI5LjEyMS41MjkuMTIxLjUyOS4xMjEuNTI5LjEyMS41MjkuMTIxLjUyOS4xMjEuNTI5LjEyMS41MjkuMTIxLjUyOS4xMjEuNTI5LjEyMS41MjkuMTIxLjUyOS4xMjEuNTI5LjEyMS41MjkuMTIxLjUyOS4xMjEuNTI5LjEyMS41MjkuMTIxLjUyOS4xMjEuNTI5LjEyMS41MjkuMTIxLjUyOS4xMjEuNTI5LjEyMS41MjkuMTIxLjUyOS4xMjEuNTI5LjEyMS41MjkuMTIxLjUyOS4xMjEuNTI5LjEyMS41MjkuMTIxLjUyOS4xMjEuNTI5LjEyMS41MjkuMTIxLjUyOS4xMjEuNTI5LjEyMS41MjkuMTIxLjUyOS4xMjEuNTI5LjEyMS41MjkuMTIxLjUyOS4xMjEuNTI5LjEyMS41MjkuMTIxLjUyOS4xMjEuNTI5LjEyMS41MjkuMTIxLjUyOS4xMS41NTZ6IiBvcGFjaXR5PSIuNiIvPjxwYXRoIGZpbGw9IiNmZmM0MDAiIGQ9Im02My45NzUgNjMuNzg0LS40NjguMDg1LS40NjguMDg1LS40NjguMDg1LS40NjguMDg1LS40NjguMDg1LS40NjguMDg1LS40NjguMDg1LS40NjguMDg1LS40NjguMDg1LS40NjMuMDgzLS40NjguMDg1LS40NjguMDg1LS40NjguMDg1LS40NjguMDg1LS40NjguMDg1LS40NjguMDg1LS40NjguMDg1LS40NjguMDg1LS40NjguMDg1LS40NjguMDg1LS40NjguMDg1LS40NjIuMDgzLS40NjguMDg1LS40NjguMDg1LS40NjguMDg1LS40NjYuMDg1LS40NjguMDg1LS40NjguMDg1LS40NjguMDg1LS40NjguMDg1LS40NjguMDg1LS40NjguMDg1LS40NjguMDg1LS40NjguMDg1LS40NjguMDg1LS40NjguMDg1LS40NjguMDg1LS40NjguMDg1LS40NjguMDg1LS40NjguMDg1LS40NjguMDg1LS40NjguMDg1LS40NjguMDg1LS40NjguMDg1LS40NjguMDg1LS40NjguMDg1LS40NjguMDg1LS40NjguMDg1LS40NjguMDg1LS40NTYuMDgxLS40NjguMDg1LS40NjguMDg1LS40NjguMDg1LS40NjguMDg1LS40NjguMDg1LS40NjguMDg1LS40NjguMDg1LS40NjguMDg1LS40NjguMDg1LS40NjguMDg1LS40NjguMDg1LS40NjguMDg1LS40NjguMDg1LS40NjguMDg1LS40NjguMDg1LS40NjguMDg1LS40NjguMDg1LS40NjguMDg1LS40NjguMDg1LS40NjguMDg1LS40NjguMDg1LS40NjguMDg1LS40NjguMDg1LS40NjguMDg1LS40NjguMDg1LS40NjguMDg1LS40NjguMDg1LS40NjguMDg1LS40NjguMDg1LS40NjguMDg1LS40NjguMDg1LS40NjguMDg1LS40NjguMDg1LS40NjguMDg1LS40NjguMDg1LS40NS4wNzktLjQ2OC4wODUtLjQ2OC4wODUtLjQ2OC4wODUtLjQ2Ni4wODUtLjQ2OC4wODUtLjQ2OC4wODUtLjQ2OC4wODUtLjQ2OC4wODUtLjQ2OC4wODUtLjQ2OC4wODUtLjQ2OC4wODUtLjQ2OC4wODUtLjQ2OC4wODUtLjQ2OC4wODUtLjA1Mi0uMjk0LS4wNTEtLjI5NC0uMDQ5LS4yOTUtLjA0Ny0uMjk1LS4wNDUtLjI5NS0uMDM4LS4yOTctLjA0MS0uMjk2LS4wMzktLjI5Ni0uMDM4LS4yOTYtLjAzNi0uMjk2LS4wMzQtLjI5Ny0uMDMyLS4yOTctLjAzLS4yOTctLjAyOC0uMjk3LS4wMjYtLjI5Ny0uMDI0LS4yOTgtLjAyMy0uMjk4LS4wMjEtLjI5OC0uMDE5LS4yOTgtLjAxNy0uMjk4LS4wMTUtLjI5OC0uMDEzLS4yOTgtLjAxMS0uMjk4LS4wMDktLjI5OC0uMDA4LS4yOTgtLjAwNi0uMjk4LS4wMDQtLjI5OS0uMDAyLS4yOTl2LS4yOTlsLjAwMi0uMjk5LjAwNC0uMjk5LjAwNS0uMjk4LjAwNy0uMjk4LjAwOS0uMjk4LjAxMS0uMjk4LjAxMy0uMjk4LjAxNS0uMjk4LjAxNy0uMjk4LjAxOS0uMjk4LjAyLS4yOTguMDIyLS4yOTguMDI0LS4yOTguMDI2LS4yOTcuMDI4LS4yOTcuMDMtLjI5Ny4wMzItLjI5Ny4wMzQtLjI5Ny4wMzUtLjI5Ni4wMzctLjI5Ni4wMzktLjI5Ni4wNDEtLjI5Ni4wNDMtLjI5NS4wNDUtLjI5NS4wNDctLjI5NS4wNDgtLjI5NS4wNS0uMjk0LjA1Mi0uMjk0LjA1NC0uMjk0LjA1Ni0uMjkzLjA1OC0uMjkzLjA1OS0uMjkzLjA2MS0uMjkyLjA2My0uMjkyLjA2NS0uMjkxLjA2Ny0uMjkxLjA2OS0uMjkxLjA3LS4yOS4wNzItLjI5LjA3NC0uMjg5LjA3Ni0uMjg5LjA3OC0uMjg4LjA4LS4yODguMDgxLS4yODcuMDgzLS4yODcuMDg1LS4yODYuMDg3LS4yODYuMDg5LS4yODUuMDktLjI4NS4wOTItLjI4NC4wOTQtLjI4My4wOTYtLjI4My4wOTctLjI4Mi4wOTktLjI4Mi4xMDEtLjI4MS4xMDMtLjI4LjEwNS0uMjguMTA2LS4yNzkuMTA4LS4yNzguMTEtLjI3OC4xMTItLjI3Ny4xMTMtLjI3Ni4xMTUtLjI3Ni4xMTctLjI3NS4xMTgtLjI3NC4xMi0uMjczLjEyMi0uMjczLjEyNC0uMjcyLjEyNS0uMjcxLjEyNy0uMjcuMTI5LS4yNjkuNDI4LjIwNi40MjguMjA2LjQyOC4yMDYuNDI4LjIwNi40MjguMjA2LjQyOC4yMDYuNDI4LjIwNi40MjguMjA2LjQyOC4yMDYuNDI4LjIwNi40MjguMjA2LjQyOC4yMDYuNDI4LjIwNi40MjguMjA2LjQyOC4yMDYuNDI4LjIwNi40MjguMjA2LjQyOC4yMDYuNDI4LjIwNi40MjguMjA2LjQyOC4yMDYuNDI4LjIwNi40MjguMjA2LjQyOC4yMDYuNDI4LjIwNi40MjguMjA2LjQyOC4yMDYuNDI4LjIwNi40MjguMjA2LjQyOC4yMDYuNDI4LjIwNi40MjguMjA2LjQyOC4yMDYuNDI4LjIwNi40MjguMjA2LjQyOC4yMDYuNDI4LjIwNi40MjguMjA2LjQyOC4yMDYuNDI4LjIwNi40MjguMjA2LjQyOC4yMDYuNDI4LjIwNi40MjguMjA2LjQyOC4yMDYuNDI4LjIwNi40MjguMjA2LjQyOC4yMDYuNDI4LjIwNi40MjguMjA2LjQyOC4yMDYuNDI4LjIwNi40MjguMjA2LjQyOC4yMDYuNDI4LjIwNi40MjguMjA2LjQyOC4yMDYuNDI4LjIwNi40MjguMjA2LjQyOC4yMDYuNDI4LjIwNi40MjguMjA2LjQyOC4yMDYuNDI4LjIwNi40MjguMjA2LjQyOC4yMDYuNDI4LjIwNi40MjguMjA2LjQyOC4yMDYuNDI4LjIwNi40MjguMjA2LjQyOC4yMDYuNDI4LjIwNi40MjguMjA2LjQyOC4yMDYuNDI4LjIwNi40MjguMjA2LjQyOC4yMDYuNDI4LjIwNi40MjguMjA2LjQyOC4yMDYuNDI4LjIwNi40MjguMjA2LjQyOC4yMDYuNDI4LjIwNi40MjguMjA2LjQyOC4yMDYuNDI4LjIwNi40MjguMjA2LjQyOC4yMDYuNDI4LjIwNi40MjguMjA2LjQyOC4yMDYuNDI4LjIwNi40MjguMjA2LjQyOC4yMDYuNDI4LjIwNi40MjguMjA2LjQyOC4yMDYuNDM2LjIyM3oiIG9wYWNpdHk9Ii42Ii8+PHBhdGggZmlsbD0iIzI5ZmZjZSIgZD0ibTYzLjk3NSA2My43ODQtLjIyMy4xNTUtLjIyMy4xNTUtLjIyMy4xNTUtLjIyMy4xNTUtLjIyMy4xNTUtLjIyMy4xNTUtLjIyMy4xNTUtLjIyNC4xNTEtLjIyMy4xNTUtLjIyMy4xNTUtLjIyMy4xNTUtLjIyMy4xNTUtLjIyMy4xNTUtLjIyMy4xNTUtLjIyMy4xNTUtLjIyMy4xNTUtLjIyMy4xNTUtLjIyMy4xNTUtLjIyMy4xNTUtLjIyMy4xNTUtLjIyMy4xNTUtLjIyMy4xNTUtLjIyMy4xNTUtLjIyMy4xNTUtLjIyMy4xNTUtLjIyMy4xNTUtLjIyMy4xNTUtLjIyMy4xNTUtLjIyMy4xNTUtLjIyMy4xNTUtLjIyMy4xNTUtLjIyMy4xNTUtLjIyMy4xNTUtLjIyMy4xNTUtLjIyMy4xNTUtLjIyMy4xNTUtLjIyMy4xNTUtLjIyMy4xNTUtLjIyMy4xNTUtLjIyMy4xNTUtLjIyMy4xNTUtLjIyMy4xNTUtLjIyMy4xNTUtLjIyMy4xNTUtLjIyMy4xNTUtLjIyMy4xNTUtLjIyMy4xNTUtLjIyMy4xNTUtLjIyMy4xNTUtLjIyMy4xNTUtLjIyMy4xNTUtLjIyMy4xNTUtLjIyMy4xNTUtLjIyMy4xNTUtLjIzMi4xMzctLjIyMy4xNTUtLjIyMy4xNTUtLjIyMy4xNTUtLjIyMy4xNTUtLjIyMy4xNTUtLjIyMy4xNTUtLjIyMy4xNTUtLjIyMy4xNTUtLjIyMy4xNTUtLjIyMy4xNTUtLjIyMy4xNTUtLjIyMy4xNTUtLjIyMy4xNTUtLjIyMy4xNTUtLjIyMy4xNTUtLjIyMy4xNTUtLjIyMy4xNTUtLjIyMy4xNTUtLjIyMy4xNTUtLjIyMy4xNTUtLjIyMy4xNTUtLjIyMy4xNTUtLjIyMy4xNTUtLjIyMy4xNTUtLjIyMy4xNTUtLjIyMy4xNTUtLjIyMy4xNTUtLjIyMy4xNTUtLjIyMy4xNTUtLjIyMy4xNTUtLjIyMy4xNTUtLjIyMy4xNTUtLjIyMy4xNTUtLjIyMy4xNTUtLjIyMy4xNTUtLjIyMy4xNTUtLjIyMy4xNTUtLjIyMy4xNTUtLjIyMy4xNTUtLjIyMy4xNTUtLjIyMy4xNTUtLjIyMy4xNTUtLjIyMy4xNTUtLjIzMS4xMzgtLjIyMy4xNTUtLjAyNC0uMDM1LS4wMjQtLjAzNS0uMDI0LS4wMzUtLjAyNC0uMDM1LS4wMjQtLjAzNS0uMDI0LS4wMzUtLjAyNC0uMDM1LS4wMjQtLjAzNS0uMDI0LS4wMzUtLjAyNC0uMDM1LS4wMjQtLjAzNS0uMDI0LS4wMzUtLjAyNC0uMDM2LS4wMjQtLjAzNi0uMDIzLS4wMzYtLjAyMy0uMDM2LS4wMjMtLjAzNi0uMDIzLS4wMzYtLjAyMy0uMDM2LS4wMjMtLjAzNi0uMDIzLS4wMzYtLjAyMy0uMDM2LS4wMjMtLjAzNi0uMDIzLS4wMzYtLjAyMy0uMDM2LS4wMjMtLjAzNi0uMDIzLS4wMzYtLjAyMy0uMDM2LS4wMjMtLjAzNi0uMDIzLS4wMzYtLjAyMy0uMDM2LS4wMjMtLjAzNi0uMDIyLS4wMzYtLjAyMi0uMDM2LS4wMjItLjAzNi0uMDIyLS4wMzYtLjAyMi0uMDM2LS4wMjItLjAzNi0uMDIyLS4wMzYtLjAyMi0uMDM2LS4wMjItLjAzNy0uMDIyLS4wMzctLjAyMi0uMDM3LS4wMjItLjAzNy0uMDIyLS4wMzctLjAyMi0uMDM3LS4wMjItLjAzNy0uMDIyLS4wMzctLjAyMi0uMDM3LS4wMjEtLjAzNy0uMDIxLS4wMzctLjAyMS0uMDM3LS4wMjEtLjAzNy0uMDIxLS4wMzctLjAyMS0uMDM3LS4wMjEtLjAzNy0uMDIxLS4wMzctLjAyMS0uMDM3LS4wMjEtLjAzNy0uMDIxLS4wMzctLjAyMS0uMDM3LS4wMjEtLjAzNy0uMDIxLS4wMzctLjAyMS0uMDM3LS4wMjEtLjAzNy0uMDIxLS4wMzctLjAyMS0uMDM3LS4wMi0uMDM3LS4wMi0uMDM3LS4wMi0uMDM3LS4wMi0uMDM4LS4wMi0uMDM4LS4wMi0uMDM4LS4wMi0uMDM4LS4wMi0uMDM4LS4wMi0uMDM4LS4wMi0uMDM4LS4wMi0uMDM4LS4wMi0uMDM4LS4wMi0uMDM4LS4wMi0uMDM4LS4wMi0uMDM4LS4wMi0uMDM4LS4wMTktLjAzOC0uMDE5LS4wMzgtLjAxOS0uMDM4LS4wMTktLjAzOC0uMDE5LS4wMzgtLjAxOS0uMDM4LS4wMTktLjAzOC0uMDE5LS4wMzgtLjAxOS0uMDM4LS4wMTktLjAzOC0uMDE5LS4wMzgtLjAxOS0uMDM4LS4wMTktLjAzOC0uMDE5LS4wMzgtLjAxOS0uMDQxLS4wMTktLjAzOC0uMDE5LS4wMzguMjQ1LS4xMTguMjQ1LS4xMTguMjQ1LS4xMTguMjQ1LS4xMTguMjQ1LS4xMTguMjQ1LS4xMTguMjQ1LS4xMTguMjQ1LS4xMTguMjQ1LS4xMTguMjQ1LS4xMTguMjQ1LS4xMTguMjQ1LS4xMTguMjQ1LS4xMTguMjQ1LS4xMTguMjQ1LS4xMTguMjQ1LS4xMTguMjQ1LS4xMTguMjQ1LS4xMTguMjQ1LS4xMTguMjQ1LS4xMTguMjQ1LS4xMTguMjQ1LS4xMTguMjQ1LS4xMTguMjQ1LS4xMTguMjQ1LS4xMTguMjQ1LS4xMTguMjQ1LS4xMTguMjQ1LS4xMTguMjQ1LS4xMTguMjQ1LS4xMTguMjQ1LS4xMTguMjQ1LS4xMTguMjQ1LS4xMTguMjQ1LS4xMTguMjQ1LS4xMTguMjQ1LS4xMTguMjQ1LS4xMTguMjQ1LS4xMTguMjQ1LS4xMTguMjQ1LS4xMTguMjQ1LS4xMTguMjQ1LS4xMTguMjQ1LS4xMTguMjQ1LS4xMTguMjQ1LS4xMTguMjQ1LS4xMTguMjQ1LS4xMTguMjQ1LS4xMTguMjQ1LS4xMTguMjQ1LS4xMTguMjQ1LS4xMTguMjQ1LS4xMTguMjQ1LS4xMTguMjQ1LS4xMTguMjQ1LS4xMTguMjQ1LS4xMTguMjQ1LS4xMTguMjQ1LS4xMTguMjQ1LS4xMTguMjQ1LS4xMTguMjQ1LS4xMTguMjQ1LS4xMTguMjQ1LS4xMTguMjQ1LS4xMTguMjQ1LS4xMTguMjQ1LS4xMTguMjQ1LS4xMTguMjQ1LS4xMTguMjQ1LS4xMTguMjQ1LS4xMTguMjQ1LS4xMTguMjQ1LS4xMTguMjQ1LS4xMTguMjQ1LS4xMTguMjQ1LS4xMTguMjQ1LS4xMTguMjQ1LS4xMTguMjQ1LS4xMTguMjQ1LS4xMTguMjQ1LS4xMTguMjQ1LS4xMTguMjQ1LS4xMTguMjQ1LS4xMTguMjQ1LS4xMTguMjQ1LS4xMTguMjQ1LS4xMTguMjQ1LS4xMTguMjQ1LS4xMTguMjQ1LS4xMTguMjQ1LS4xMTguMjQ1LS4xMTguMjQ1LS4xMTguMjQ1LS4xMTguMjQ1LS4xMTguMjQ1LS4xMTguMjQ1LS4xMTguMjQ1LS4xMTguMjQ1LS4xMTguMjQ1LS4xMTguMjA4LS4wOTh6IiBvcGFjaXR5PSIuNiIvPjxwYXRoIGZpbGw9IiM3ZGZmN2EiIGQ9Im02My45NzUgNjMuNzg0LjA1Ny4zMzUuMDU3LjMzNS4wNTcuMzM1LjA1Ny4zMzUuMDU3LjMzNS4wNTcuMzM1LjA1Ny4zMzUuMDU3LjMzNS4wNTcuMzM1LjA1Ny4zMzUuMDU3LjMzNS4wNTcuMzM1LjA1Ny4zMzUuMDU3LjMzNS4wNTcuMzM1LjA1Ny4zMzUuMDU3LjMzNS4wNTcuMzM1LjA1Ny4zMzUuMDU3LjMzNS4wNTcuMzM1LjA1Ny4zMzUuMDU3LjMzNS4wNTcuMzM1LjA1Ny4zMzUuMDU3LjMzNS4wNTcuMzM1LjA1Ny4zMzUuMDU3LjMzNS4wNTcuMzM1LjA1Ny4zMzUuMDU3LjMzNS4wNTcuMzM1LjA1Ny4zMzUuMDU3LjMzNS4wNTcuMzM1LjA1Ny4zMzUuMDU3LjMzNS4wNTcuMzM1LjA1Ny4zMzUuMDU3LjMzNS4wNTcuMzM1LjA1Ny4zMzUuMDU3LjMzNS4wNTcuMzM1LjA1Ny4zMzUuMDU3LjMzNS4wNTcuMzM1LjA1Ny4zMzUuMDU3LjMzNS4wNTcuMzM1LjA1Ny4zMzUuMDU3LjMzNS4wNTcuMzM1LjA1Ny4zMzUuMDU3LjMzNS4wNTcuMzM1LjA1Ny4zMzUuMDU3LjMzNS4wNTcuMzM1LjA1Ny4zMzUuMDU3LjMzNS4wNTcuMzM1LjA1Ny4zMzUuMDU3LjMzNS4wNTcuMzM1LjA1Ny4zMzUuMDU3LjMzNS4wNTcuMzM1LjA1Ny4zMzUuMDU3LjMzNS4wNTcuMzM1LjA1Ny4zMzUuMDU3LjMzNS4wNTcuMzM1LjA1Ny4zMzUuMDU3LjMzNS4wNTcuMzM1LjA1Ny4zMzUuMDU3LjMzNS4wNTcuMzM1LjA1Ny4zMzUuMDU3LjMzNS4wNTcuMzM1LjA1Ny4zMzUuMDU3LjMzNS4wNTcuMzM1LjA1Ny4zMzUuMDU3LjMzNS4wNTcuMzM1LjA1Ny4zMzUuMDU3LjMzNS4wNTcuMzM1LjA1Ny4zMzUuMDU3LjMzNS4wNTcuMzM1LjA1Ny4zMzUuMDU3LjMzNS4wNTcuMzM1LjA1Ny4zMzUtLjEzMS4wMjItLjEzMi4wMjItLjEzMi4wMjEtLjEzMi4wMjEtLjEzMi4wMi0uMTMyLjAxOS0uMTMyLjAxOS0uMTMyLjAxOC0uMTMyLjAxOC0uMTMyLjAxNy0uMTMyLjAxNy0uMTMyLjAxNi0uMTMyLjAxNi0uMTMyLjAxNS0uMTMyLjAxNS0uMTMyLjAxNC0uMTMzLjAxNC0uMTMzLjAxMy0uMTMzLjAxMy0uMTMzLjAxMi0uMTMzLjAxMi0uMTMzLjAxMS0uMTMzLjAxMS0uMTMzLjAxLS4xMzMuMDEtLjEzMy4wMDktLjEzMy4wMDktLjEzMy4wMDgtLjEzMy4wMDctLjEzMy4wMDctLjEzMy4wMDctLjEzMy4wMDYtLjEzMy4wMDUtLjEzMy4wMDUtLjEzMy4wMDQtLjEzMy4wMDQtLjEzMy4wMDMtLjEzMy4wMDMtLjEzMy4wMDItLjEzMy4wMDItLjEzMy4wMDEtLjEzMy4wMDFoLS4yNjZsLS4xMzMtLjAwMS0uMTMzLS4wMDEtLjEzMy0uMDAyLS4xMzMtLjAwMi0uMTMzLS4wMDMtLjEzMy0uMDAzLS4xMzMtLjAwNC0uMTUzLS4wNDctLjEzMy0uMDA1LS4xMzMtLjAwNS0uMTMzLS4wMDYtLjEzMy0uMDA3LS4xMzQtLjAwNy0uMTMzLS4wMDgtLjEzMy0uMDA4LS4xMzMtLjAwOS0uMTMzLS4wMDktLjEzMy0uMDEtLjEzMy0uMDEtLjEzMy0uMDExLS4xMzMtLjAxMS0uMTMzLS4wMTItLjEzMy0uMDEyLS4xMzMtLjAxMy0uMTMzLS4wMTMtLjEzMy0uMDE0LS4xMzItLjAxNS0uMTMtLjAxNS0uMTMyLS4wMTUtLjEzMi0uMDE2LS4xMzItLjAxNy0uMTMyLS4wMTctLjEzMi0uMDE4LS4xMzItLjAxOC0uMTMyLS4wMTktLjEzMi0uMDE5LS4xMzItLjAyLS4xMzItLjAyLS4xMzItLjAyMS0uMTMyLS4wMjEtLjEzMS0uMDIyLS4xMzEtLjAyMi0uMTMxLS4wMjMtLjEzMS0uMDIzLS4xMzEtLjAyNC0uMTMxLS4wMjQtLjEzMS0uMDI1LS4xMzEtLjAyNS0uMTMxLS4wMjYtLjEzMS0uMDI2LS4xMzEtLjAyNy0uMTMtLjAyNy0uMTMtLjAyOC0uMTMtLjAyOC0uMTMtLjAyOS0uMTMtLjAyOS4wNzYtLjMzMS4wNzYtLjMzMS4wNzYtLjMzMS4wNzYtLjMzMS4wNzYtLjMzMS4wNzYtLjMzMS4wNzYtLjMzMS4wNzYtLjMzMS4wNzYtLjMzMS4wNzYtLjMzMS4wNzYtLjMzMS4wNzYtLjMzMS4wNzYtLjMzMS4wNzYtLjMzMS4wNzYtLjMzMS4wNzYtLjMzMS4wNzYtLjMzMS4wNzYtLjMzMS4wNzYtLjMzMS4wNzYtLjMzMS4wNzYtLjMzMS4wNzYtLjMzMS4wNzYtLjMzMS4wNzYtLjMzMS4wNzYtLjMzMS4wNzYtLjMzMS4wNzYtLjMzMS4wNzYtLjMzMS4wNzYtLjMzMS4wNzYtLjMzMS4wNzYtLjMzMS4wNzYtLjMzMS4wNzYtLjMzMS4wNzYtLjMzMS4wNzYtLjMzMS4wNzYtLjMzMS4wNzYtLjMzMS4wNzYtLjMzMS4wNzYtLjMzMS4wNzYtLjMzMS4wNzYtLjMzMS4wNzYtLjMzMS4wNzYtLjMzMS4wNzYtLjMzMS4wNzYtLjMzMS4wNzYtLjMzMS4wNzYtLjMzMS4wNzYtLjMzMS4wNzYtLjMzMS4wNzYtLjMzMS4wNzYtLjMzMS4wNzYtLjMzMS4wNzYtLjMzMS4wNzYtLjMzMS4wNzYtLjMzMS4wNzYtLjMzMS4wNzYtLjMzMS4wNzYtLjMzMS4wNzYtLjMzMS4wNzYtLjMzMS4wNzYtLjMzMS4wNzYtLjMzMS4wNzYtLjMzMS4wNzYtLjMzMS4wNzYtLjMzMS4wNzYtLjMzMS4wNzYtLjMzMS4wNzYtLjMzMS4wNzYtLjMzMS4wNzYtLjMzMS4wNzYtLjMzMS4wNzYtLjMzMS4wNzYtLjMzMS4wNzYtLjMzMS4wNzYtLjMzMS4wNzYtLjMzMS4wNzYtLjMzMS4wNzYtLjMzMS4wNzYtLjMzMS4wNzYtLjMzMS4wNzYtLjMzMS4wNzYtLjMzMS4wNzYtLjMzMS4wNzYtLjMzMS4wNzYtLjMzMS4wNzYtLjMzMS4wNzYtLjMzMS4wNzYtLjMzMS4wNzYtLjMzMS4wNzYtLjMzMS4wNzYtLjMzMS4wNzYtLjMzMS4wNzYtLjMzMS4wNzYtLjMzMS4wNzYtLjMzMS4wNzYtLjMzMS4wNzYtLjMzMS4wNzYtLjMzMS4wNzYtLjMzMS4wMjctLjMxOHoiIG9wYWNpdHk9Ii42Ii8+PHBhdGggZmlsbD0iI2ZmNjgwMCIgZD0ibTYzLjk3NSA2My43ODQuNDI4LjMzNC40MjguMzM0LjQyOC4zMzQuNDI4LjMzNC40MjguMzM0LjQyOC4zMzQuNDI4LjMzNC40MjguMzM0LjQyOC4zMzQuNDI4LjMzNC40MjguMzM0LjQyOC4zMzQuNDI4LjMzNC40MjguMzM0LjQzMy4zMy40MjguMzM0LjQyOC4zMzQuNDI4LjMzNC40MjguMzM0LjQyOC4zMzQuNDI4LjMzNC40MjguMzM0LjQyOC4zMzQuNDI4LjMzNC40MjguMzM0LjQyOC4zMzQuNDI4LjMzNC40MjguMzM0LjQyOC4zMzQuNDI4LjMzNC40MjguMzM0LjQyOC4zMzQuNDI4LjMzNC40MjguMzM0LjQyOC4zMzQuNDI4LjMzNC40MjguMzM0LjQyOC4zMzQuNDI4LjMzNC40MjguMzM0LjQyOC4zMzQuNDI4LjMzNC40MjguMzM0LjQyOC4zMzQuNDI4LjMzNC40MjguMzM0LjQyOC4zMzQuNDI4LjMzNC40MjguMzM0LjQyOC4zMzQuNDI4LjMzNC40MjguMzM0LjQyOC4zMzQuNDI4LjMzNC40MjguMzM0LjQyOC4zMzQuNDI4LjMzNC40MjguMzM0LjQyOC4zMzQuNDI4LjMzNC40MjguMzM0LjQyOC4zMzQuNDI4LjMzNC40MjguMzM0LjQyOC4zMzQuNDI4LjMzNC40MjguMzM0LjQyOC4zMzQuNDI4LjMzNC40MjguMzM0LjQyOC4zMzQuNDI4LjMzNC40MjguMzM0LjQyOC4zMzQuNDI4LjMzNC40MjguMzM0LjQyOC4zMzQuNDI4LjMzNC40MjguMzM0LjQyOC4zMzQuNDI4LjMzNC40MjguMzM0LjQyOC4zMzQuNDI4LjMzNC40MjguMzM0LjQyOC4zMzQuNDI4LjMzNC40MjguMzM0LjQyOC4zMzQuNDI4LjMzNC40MjguMzM0LjQyOC4zMzQuNDI4LjMzNC40MjguMzM0LjQyOC4zMzQuNDI4LjMzNC40MjguMzM0LjQyOC4zMzQuNDI4LjMzNC40MjguMzM0LS4wNzkuMTAxLS4wNzkuMTAxLS4wNzkuMS0uMDc5LjEtLjA4LjEtLjA4LjEtLjA4LjEtLjA4LjEtLjA4MS4wOTktLjA4MS4wOTktLjA4MS4wOTktLjA4MS4wOTktLjA4Mi4wOTktLjA4Mi4wOTgtLjA4Mi4wOTgtLjA4Mi4wOTgtLjA4My4wOTgtLjA4My4wOTgtLjA4My4wOTctLjA4My4wOTctLjA4My4wOTctLjA4NC4wOTctLjA4NC4wOTctLjA4NC4wOTYtLjA4NC4wOTYtLjA4NS4wOTYtLjA4NS4wOTYtLjA4NS4wOTYtLjA4NS4wOTUtLjA4NS4wOTUtLjA4Ni4wOTUtLjA4Ni4wOTUtLjA4Ni4wOTUtLjA4Ni4wOTQtLjA4Ny4wOTQtLjA4Ny4wOTQtLjA4Ny4wOTQtLjA4Ny4wOTQtLjA4Ny4wOTMtLjA4OC4wOTMtLjA4OC4wOTMtLjA4OC4wOTMtLjA4OC4wOTMtLjA4OS4wOTItLjA4OS4wOTItLjA4OS4wOTItLjA4OS4wOTItLjA4OS4wOTItLjA5LjA5MS0uMDkuMDkxLS4wOS4wOTEtLjA5LjA5MS0uMDkuMDktLjA5MS4wOS0uMDkxLjA5LS4wOTEuMDktLjA5MS4wOS0uMDkyLjA4OS0uMDkyLjA4OS0uMDkyLjA4OS0uMDkyLjA4OS0uMDkyLjA4OS0uMDkzLjA4OC0uMDkzLjA4OC0uMDkzLjA4OC0uMDkzLjA4OC0uMDkzLjA4Ny0uMDk0LjA4Ny0uMDk0LjA4Ny0uMDk0LjA4Ny0uMDk0LjA4Ny0uMDk0LjA4Ni0uMDY4LjA2Ni0uMDk1LjA4Ni0uMDk1LjA4Ni0uMDk1LjA4NS0uMDk1LjA4NS0uMDk2LjA4NS0uMDk2LjA4NS0uMDk2LjA4NC0uMDk2LjA4NC0uMDk2LjA4NC0uMDk3LjA4NC0uMDk3LjA4NC0uMDk3LjA4My0uMDk3LjA4My0uMDk3LjA4My0uMDk4LjA4My0uMDk4LjA4Mi0uMDk4LjA4Mi0uMDk4LjA4Mi0uMDk4LjA4Mi0uMDk5LjA4Mi0uMDk5LjA4MS0uMDk5LjA4MS0uMDk5LjA4MS0uMDk5LjA4MS0uMS4wOC0uMS4wOC0uMS4wOC0uMzM5LS40MjUtLjMzOC0uNDI0LS4zMzktLjQyNS0uMzM5LS40MjUtLjMzOS0uNDI1LS4zMzktLjQyNS0uMzM5LS40MjUtLjMzOS0uNDI1LS4zMzktLjQyNS0uMzM5LS40MjUtLjMzOS0uNDI1LS4zMzktLjQyNS0uMzM5LS40MjUtLjMzOS0uNDI1LS4zMzktLjQyNS0uMzM5LS40MjUtLjMzOS0uNDI1LS4zMzktLjQyNS0uMzM5LS40MjUtLjMzOS0uNDI1LS4zMzktLjQyNS0uMzM5LS40MjUtLjMzOS0uNDI1LS4zMzktLjQyNS0uMzM5LS40MjUtLjMzLS40MTQtLjMzOS0uNDI1LS4zMzktLjQyNS0uMzM5LS40MjUtLjMzOS0uNDI1LS4zMzktLjQyNS0uMzM5LS40MjUtLjMzOS0uNDI1LS4zMzktLjQyNS0uMzM5LS40MjUtLjMzOS0uNDI1LS4zMzktLjQyNS0uMzM5LS40MjUtLjMzOS0uNDI1LS4zMzktLjQyNS0uMzM5LS40MjUtLjMzOS0uNDI1LS4zMzktLjQyNS0uMzM5LS40MjUtLjMzOS0uNDI1LS4zMzktLjQyNS0uMzM5LS40MjUtLjMzOS0uNDI1LS4zMzktLjQyNS0uMzM5LS40MjUtLjMzOS0uNDI1LS4zMzktLjQyNS0uMzM5LS40MjUtLjMzOS0uNDI1LS4zMzktLjQyNS0uMzM5LS40MjUtLjMzOS0uNDI1LS4zMzktLjQyNS0uMzM5LS40MjUtLjMzOS0uNDI1LS4zMzktLjQyNS0uMzM5LS40MjUtLjMzOS0uNDI1LS4zMzktLjQyNS0uMzM5LS40MjUtLjMzOS0uNDI1LS4zMzktLjQyNS0uMzM5LS40MjUtLjMzOS0uNDI1LS4zMzktLjQyNS0uMzM5LS40MjUtLjMzOS0uNDI1LS4zMzktLjQyNS0uMzM5LS40MjUtLjMzOS0uNDI1LS4zMzktLjQyNS0uMzM5LS40MjUtLjMzOS0uNDI1LS4zMzktLjQyNS0uMzM5LS40MjUtLjMzOS0uNDI1LS4zMzktLjQyNS0uMzM5LS40MjUtLjMzOS0uNDI1LS4zMzktLjQyNS0uMzM5LS40MjUtLjMzOS0uNDI1LS4zMzktLjQyNS0uMzM5LS40MjUtLjMzOS0uNDI1LS4zMzktLjQyNS0uMzM5LS40MjUtLjMzOS0uNDI1LS4zMzktLjQyNS0uMzM5LS40MjUtLjMzOS0uNDI1LS4zMzktLjQyNS0uMzM5LS40MjUtLjMzOS0uNDI1LS4zMDctLjM5MXoiIG9wYWNpdHk9Ii42Ii8+PHBhdGggZmlsbD0iIzJjMmMyYyIgZD0ibTc3LjU1MSA2NC4xOTgtMTMuNTc2LS4wMDFhLjQxNC40MTQgMCAwIDEtLjEyOC0uODA2bDEyLjkxMi00LjE5NGEuNDEzLjQxMyAwIDAgMSAuNTIxLjI2NWMuNDU1IDEuMzk4LjY4NSAyLjg1My42ODQgNC4zMjNhLjQxMy40MTMgMCAwIDEtLjQxMy40MTN6bS0xMC45NjUtLjgyOGgxMC41NDVhMTMuMTE0IDEzLjExNCAwIDAgMC0uNTE2LTMuMjU4TDY2LjU4NiA2My4zN3oiLz48cGF0aCBmaWxsPSIjMmMyYzJjIiBkPSJNNjMuOTc1IDY0LjE5N2EuNDE0LjQxNCAwIDAgMS0uMzg3LS41NThMNzcuODk5IDI1LjUxYS40MTIuNDEyIDAgMCAxIC41MzItLjI0MiA0MSA0MSAwIDAgMSAxMS4xOTYgNi4zNTEuNDE0LjQxNCAwIDAgMSAuMDY2LjU4MUw2NC4yOTggNjQuMDQxYS40MTUuNDE1IDAgMCAxLS4zMjMuMTU2em0xNC41NTItMzguMDA4TDY1LjI4IDYxLjQ4NGwyMy41MDctMjkuNDc1YTQwLjE2MyA0MC4xNjMgMCAwIDAtMTAuMjYtNS44MnoiLz48cGF0aCBmaWxsPSIjMmMyYzJjIiBkPSJNNjMuOTc1IDY0LjE5N2EuNDE1LjQxNSAwIDAgMS0uMzE3LS4xNDhMMjguODU3IDIyLjM2NGEuNDEyLjQxMiAwIDAgMSAuMDUyLS41ODJBNTQuNzg0IDU0Ljc4NCAwIDAgMSA1MS44MDEgMTAuNDRhLjQxNC40MTQgMCAwIDEgLjQ5NS4zMTJsMTIuMDgzIDUyLjk0MWEuNDE1LjQxNSAwIDAgMS0uMjIuNDYzLjQ0NC40NDQgMCAwIDEtLjE4NC4wNDF6TTI5Ljc1NyAyMi4xNTJsMzMuNDMxIDQwLjA0NC0xMS42MDctNTAuODU3YTUzLjk2NyA1My45NjcgMCAwIDAtMjEuODI0IDEwLjgxM3oiLz48cGF0aCBmaWxsPSIjMmMyYzJjIiBkPSJNMTcuMjI0IDcyLjY4MWEuNDEzLjQxMyAwIDAgMS0uNDA2LS4zMzljLTEuODEzLTkuODg0LS40MDEtMjAuMzA5IDMuOTc3LTI5LjM1NWEuNDE0LjQxNCAwIDAgMSAuNTUyLS4xOTNsNDIuODA4IDIwLjYxNWEuNDEzLjQxMyAwIDAgMS0uMTA2Ljc4bC00Ni43NSA4LjQ4NWEuMzE4LjMxOCAwIDAgMS0uMDc1LjAwN3ptNC4xMzYtMjguOTZjLTQuMTAzIDguNjc4LTUuNDQ4IDE4LjYxLTMuODAxIDI4LjA2N2w0NS4wOS04LjE4M0wyMS4zNiA0My43MjF6Ii8+PHBhdGggZmlsbD0iIzJjMmMyYyIgZD0iTTQxLjY1NyA3OS42NTlhLjQyLjQyIDAgMCAxLS4zNDEtLjE3OCAyNy42NzMgMjcuNjczIDAgMCAxLTIuMTc3LTMuNzM4LjQxMy40MTMgMCAwIDEgLjE5My0uNTUybDI0LjQ2Mi0xMS43OGEuNDEzLjQxMyAwIDAgMSAuNDE1LjcxM0w0MS44OTMgNzkuNTg2YS40MTQuNDE0IDAgMCAxLS4yMzYuMDczem0tMS41OS0zLjkwNGEyNy4wNTggMjcuMDU4IDAgMCAwIDEuNjk3IDIuOTEzTDU5LjQyIDY2LjQzNmwtMTkuMzUzIDkuMzE5eiIvPjxwYXRoIGZpbGw9IiMyYzJjMmMiIGQ9Ik02My45OSA5OC4xMzJjLTIuNTggMC01LjE2NS0uMjg3LTcuNjYtLjg1N2EuNDE1LjQxNSAwIDAgMS0uMzExLS40OTZsNy41NTItMzMuMDg4Yy4wNDQtLjE5Mi4yMjMtLjM1NC40MTUtLjMyMWEuNDEyLjQxMiAwIDAgMSAuMzk2LjM0NGw1LjY4NSAzMy40NmEuNDE0LjQxNCAwIDAgMS0uMzM5LjQ3NyAzNC4yMDEgMzQuMjAxIDAgMCAxLTUuNzM4LjQ4MXptLTcuMDcyLTEuNTc0YzQgLjg2IDguMjIuOTggMTIuMjY0LjM0NGwtNS4yNjctMzAuOTk5LTYuOTk3IDMwLjY1NXoiLz48cGF0aCBmaWxsPSIjMmMyYzJjIiBkPSJNOTcuODMyIDEwNi42NTJhLjQxMy40MTMgMCAwIDEtLjMyNC0uMTU2TDYzLjY1MSA2NC4wNDFhLjQxMy40MTMgMCAwIDEgLjU3Ny0uNTg0bDQyLjgzMyAzMy4zNzlhLjQxNC40MTQgMCAwIDEgLjA3Mi41ODEgNTQuNjk3IDU0LjY5NyAwIDAgMS05LjA0NSA5LjE0Ni40MDkuNDA5IDAgMCAxLS4yNTYuMDg5ek02Ni40NzcgNjYuMjU4bDMxLjQyIDM5LjM5OWE1My45ODUgNTMuOTg1IDAgMCAwIDguMzI5LTguNDIzTDY2LjQ3NyA2Ni4yNTh6Ii8+PC9zdmc+Cg=="};
+  const TECH=[
+    {k:'python',nm:'Python 3.13',ds:'Langage principal'},
+    {k:'pandas',nm:'pandas',ds:'Manipulation des données'},
+    {k:'numpy',nm:'NumPy',ds:'Calcul numérique'},
+    {k:'scikitlearn',nm:'scikit-learn',ds:'Pipelines · split par pays'},
+    {k:'xgboost',nm:'XGBoost',ds:'Modèle principal (boosting)',badge:'XGB'},
+    {k:'matplotlib',nm:'Matplotlib / Seaborn',ds:'Visualisations'},
+    {k:'jupyter',nm:'Jupyter',ds:"Notebooks d'analyse"},
+    {k:'git',nm:'Git',ds:'Versioning par branches'},
+    {k:'github',nm:'GitHub',ds:'2Alexis/Swarm_Prediction'}
+  ];
+  function renderTech(){
+    const el=document.getElementById('techgrid'); if(!el) return;
+    el.innerHTML = TECH.map(t=>{
+      const ic = LOGO[t.k] ? `<img src="${LOGO[t.k]}" alt="${t.nm}">` : `<div class="badge">${t.badge||t.nm.slice(0,3)}</div>`;
+      return `<div class="tech">${ic}<div><div class="nm">${t.nm}</div><div class="ds">${t.ds}</div></div></div>`;
+    }).join('');
+  }
+  renderTech();
+
+  // ---------- navigation ----------
+  const slides=[...document.querySelectorAll('.slide')];
+  let i=0;
+  const progress=document.getElementById('progress');
+  const counter=document.getElementById('counter');
+  function animateBars(s){
+    s.querySelectorAll('.fill,.mfill').forEach(f=>{f.style.width='0';
+      requestAnimationFrame(()=>requestAnimationFrame(()=>{f.style.width=f.dataset.w+'%';}));});
+  }
+  // numérotation automatique des pages dans les footnotes
+  slides.forEach((s,k)=>{const f=s.querySelector('.footnote');if(f){const sp=f.querySelectorAll('span');if(sp.length)sp[sp.length-1].textContent=String(k+1).padStart(2,'0');}});
+  function show(n){
+    i=Math.max(0,Math.min(slides.length-1,n));
+    slides.forEach((s,k)=>s.classList.toggle('active',k===i));
+    progress.style.width=((i+1)/slides.length*100)+'%';
+    counter.textContent=String(i+1).padStart(2,'0')+' / '+String(slides.length).padStart(2,'0');
+    animateBars(slides[i]);
+  }
+  document.getElementById('next').onclick=()=>show(i+1);
+  document.getElementById('prev').onclick=()=>show(i-1);
+  document.addEventListener('keydown',e=>{
+    if(e.key==='ArrowRight'||e.key===' '||e.key==='PageDown'){e.preventDefault();show(i+1);}
+    else if(e.key==='ArrowLeft'||e.key==='PageUp'){e.preventDefault();show(i-1);}
+    else if(e.key==='Home')show(0); else if(e.key==='End')show(slides.length-1);
+    else if(e.key.toLowerCase()==='f'){ if(!document.fullscreenElement)document.documentElement.requestFullscreen(); else document.exitFullscreen(); }
+  });
+  document.querySelector('.deck').addEventListener('click',e=>{
+    if(e.target.closest('.nav')||e.target.closest('a'))return;
+    const x=e.clientX/window.innerWidth; if(x>0.62)show(i+1); else if(x<0.32)show(i-1);
+  });
+  const startHash=parseInt(location.hash.replace('#',''),10);
+  show(Number.isFinite(startHash)?startHash:0);
+</script>
+</body>
+</html>
